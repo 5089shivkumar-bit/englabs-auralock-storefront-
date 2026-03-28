@@ -27,7 +27,9 @@ import {
   Home as HomeIcon,
   Navigation,
   Volume2,
-  Scan
+  Scan,
+  Dumbbell,
+  Building2
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -112,7 +114,7 @@ export default function Home() {
         
         <div className="hidden md:flex items-center gap-10 text-[11px] font-bold uppercase tracking-widest text-gray-400">
           <button onClick={() => setActiveTab('home')} className={`hover:text-white transition ${activeTab === 'home' ? 'text-orange-500' : ''}`}>Ecosystem</button>
-          <button onClick={() => setActiveTab('products')} className={`hover:text-white transition ${activeTab === 'products' ? 'text-orange-500' : ''}`}>Hardware</button>
+          <button onClick={() => setActiveTab('products')} className={`hover:text-white transition ${activeTab === 'products' ? 'text-orange-500' : ''}`}>Product</button>
           <Link href="/track" className="hover:text-white transition">Tracking</Link>
           <button onClick={() => setActiveTab('contact')} className="hover:text-white transition">Intelligence</button>
         </div>
@@ -123,7 +125,7 @@ export default function Home() {
       </nav>
 
       {/* Main Content */}
-      <main className="pt-32 pb-24">
+      <main className="pt-32 pb-10">
         
         {activeTab === 'home' && (
           <motion.div 
@@ -132,21 +134,45 @@ export default function Home() {
             animate="visible"
             className="max-w-7xl mx-auto px-6"
           >
-            {/* Split Screen Video Hero (Riotters style) */}
-            <div className="relative min-h-[90vh] flex flex-col lg:flex-row overflow-hidden rounded-[3rem] border border-white/5 mb-32 shadow-[0_30px_100px_rgba(0,0,0,1)] bg-[#020202] group">
+            {/* Full Width Video Hero */}
+            <div className="relative min-h-[90vh] flex flex-col justify-center overflow-hidden rounded-[3rem] border border-white/5 mb-12 shadow-[0_30px_100px_rgba(0,0,0,1)] bg-black group p-10 lg:p-20">
                
-               {/* Left Content (50%) */}
-               <div className="w-full lg:w-1/2 p-10 lg:p-20 z-10 flex flex-col justify-center relative bg-gradient-to-br from-[#050505] to-[#111111]">
-                  {/* Subtle architectural grid */}
-                  <div className="absolute inset-0 pointer-events-none opacity-10" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
+               {/* Background Video */}
+               <div className="absolute inset-0 z-0 bg-[#020617] overflow-hidden">
+                 <video 
+                   autoPlay 
+                   loop 
+                   muted 
+                   playsInline 
+                   className="absolute inset-0 w-full h-full object-cover opacity-100 mix-blend-lighten scale-[1.02] hover:scale-100 transition-transform duration-[10s] ease-out filter contrast-125 saturate-150"
+                 >
+                   <source src="https://www.shutterstock.com/shutterstock/videos/3906850375/preview/stock-footage-futuristic-cybersecurity-technology-animation-digital-shield-lock.webm" type="video/webm" />
+                   <source src="https://www.shutterstock.com/shutterstock/videos/3906850375/preview/stock-footage-futuristic-cybersecurity-technology-animation-digital-shield-lock.mp4" type="video/mp4" />
+                 </video>
+                 
+                 {/* Premium Lighting Overlays & Glow Effects */}
+                 <div className="absolute inset-0 bg-gradient-to-r from-[#020617]/95 via-[#020617]/60 to-transparent z-10" />
+                 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#020617]/20 to-[#020617] opacity-90 z-10" />
+                 
+                 {/* Enhancing the Cyan and Orange Vibe */}
+                 <div className="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-cyan-500/20 blur-[130px] shadow-[0_0_100px_rgba(6,182,212,0.5)] pointer-events-none rounded-full mix-blend-screen z-10" />
+                 <div className="absolute bottom-[-20%] left-[-10%] w-[500px] h-[500px] bg-orange-600/15 blur-[150px] pointer-events-none rounded-full mix-blend-screen z-10" />
+                 
+                 {/* HD Overlay Indicator */}
+                 <div className="absolute bottom-10 right-10 z-20 hidden md:flex items-center gap-3 bg-black/60 backdrop-blur-lg px-5 py-2.5 border border-[#0dcaf0]/30 rounded-full shadow-[0_0_30px_rgba(13,202,240,0.15)] transition-all hover:bg-black/80">
+                    <span className="w-2.5 h-2.5 rounded-full bg-[#0dcaf0] animate-pulse" />
+                    <span className="text-[#0dcaf0] text-[10px] font-black uppercase tracking-[0.2em]">Active Shield</span>
+                 </div>
+               </div>
 
+               {/* Overlay Text Content */}
+               <div className="relative z-10 w-full max-w-3xl lg:mt-[-5%]">
                   <motion.div 
                     initial={{ opacity: 0, x: -50 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
-                    className="relative z-10"
                   >
-                    <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-orange-600/10 border border-orange-600/20 text-orange-500 text-[10px] font-black tracking-widest uppercase mb-8">
+                    <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-orange-600/10 border border-orange-600/20 text-orange-500 text-[10px] font-black tracking-[0.2em] uppercase mb-8 backdrop-blur-sm shadow-[0_0_20px_rgba(234,88,12,0.1)]">
                       <span className="relative flex h-2 w-2">
                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
                         <span className="relative inline-flex rounded-full h-2 w-2 bg-orange-600"></span>
@@ -154,64 +180,34 @@ export default function Home() {
                       Liveness Verification Active
                     </div>
                     
-                    <h1 className="text-5xl lg:text-7xl xl:text-8xl font-black tracking-tighter leading-[0.9] text-white mb-8 pr-4">
-                      Redefining <br/>
-                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-orange-600 to-red-600 italic px-2 -ml-2">Access Protocols.</span>
+                    <h1 className="text-5xl md:text-7xl lg:text-[5.5rem] font-black tracking-tighter leading-[1.0] text-white mb-8 pr-4 drop-shadow-2xl">
+                      No Keys.<br/>
+                      No Guards.<br/>
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-orange-600 to-red-600 italic">No Hassle.</span>
                     </h1>
                     
-                    <p className="text-lg text-gray-400 font-medium max-w-md mb-12 leading-relaxed">
-                      The intersection of high-security hardware and intelligent neural interfaces. Define your sanctuary through unique interactions.
+                    <p className="text-lg md:text-xl text-gray-300 font-medium max-w-md mb-12 leading-relaxed drop-shadow-lg">
+                      AuraLock turns any space into a fully automated secure zone.
                     </p>
                     
-                    <div className="flex flex-col sm:flex-row gap-4">
-                      <button onClick={() => setActiveTab('products')} className="px-10 py-5 bg-white text-black font-black uppercase italic tracking-tighter text-xl rounded-2xl hover:bg-orange-600 hover:text-white transition-all duration-500 shadow-[0_20px_40px_rgba(255,255,255,0.1)] hover:shadow-[0_20px_40px_rgba(234,88,12,0.4)]">
+                    <div className="flex flex-col sm:flex-row gap-5">
+                      <button onClick={() => setActiveTab('products')} className="px-10 py-5 bg-white text-black font-black uppercase italic tracking-tighter text-xl rounded-2xl hover:bg-orange-600 hover:text-white transition-all duration-500 shadow-[0_20px_40px_rgba(255,255,255,0.1)] hover:shadow-[0_20px_40px_rgba(234,88,12,0.4)] hover:scale-[1.02]">
                         Get Started
                       </button>
-                      <button className="flex items-center justify-center gap-3 px-8 py-5 bg-transparent border border-white/20 text-white font-black uppercase italic tracking-tighter text-xl rounded-2xl hover:bg-white/5 transition-all duration-500">
+                      <button className="flex items-center justify-center gap-3 px-8 py-5 bg-black/40 backdrop-blur-md border border-white/20 text-white font-black uppercase italic tracking-tighter text-xl rounded-2xl hover:bg-white/10 transition-all duration-500 hover:scale-[1.02]">
                         <Video className="w-6 h-6" /> Watch Film
                       </button>
                     </div>
                   </motion.div>
                </div>
-
-               {/* Right Video Showcase (50%) - Shutterstock Clip 3906850375 */}
-               <motion.div 
-                 initial={{ opacity: 0, scale: 0.95 }}
-                 animate={{ opacity: 1, scale: 1 }}
-                 transition={{ duration: 1.5, ease: "easeOut", delay: 0.5 }}
-                 className="w-full lg:w-1/2 h-[60vh] lg:h-auto relative bg-[#0a0a0a] overflow-hidden"
-               >
-                 <video 
-                   autoPlay 
-                   loop 
-                   muted 
-                   playsInline 
-                   className="absolute inset-0 w-full h-full object-cover opacity-90 mix-blend-screen scale-[1.02] hover:scale-100 transition-transform duration-[10s] ease-out"
-                 >
-                   <source src="https://www.shutterstock.com/shutterstock/videos/3906850375/preview/stock-footage-futuristic-cybersecurity-technology-animation-digital-shield-lock.webm" type="video/webm" />
-                   <source src="https://www.shutterstock.com/shutterstock/videos/3906850375/preview/stock-footage-futuristic-cybersecurity-technology-animation-digital-shield-lock.mp4" type="video/mp4" />
-                 </video>
-
-                 {/* Dramatic Edge Overlays to seamlessly blend the video into the layout */}
-                 <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-transparent pointer-events-none lg:w-48 z-10" />
-                 <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black pointer-events-none opacity-70 z-10" />
-                 {/* Color Correcting Tint */}
-                 <div className="absolute inset-0 bg-[#0dcaf0]/5 mix-blend-overlay pointer-events-none z-10" />
-
-                 {/* Subtle HUD Overlay element to match the tech theme */}
-                 <div className="absolute bottom-8 right-8 z-20 flex items-center gap-3 bg-black/60 backdrop-blur-md px-4 py-2 border border-[#0dcaf0]/30 rounded-full shadow-[0_0_20px_rgba(13,202,240,0.2)]">
-                    <span className="w-2 h-2 rounded-full bg-[#0dcaf0] animate-pulse" />
-                    <span className="text-[#0dcaf0] text-[10px] font-black uppercase tracking-widest">Active Shield</span>
-                 </div>
-               </motion.div>
             </div>
 
             {/* Feature Highlights */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-32">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
                {[
-                 { icon: ShieldCheck, title: "Neural Defense", desc: "Military-grade encryption with liveness verification protocols." },
-                 { icon: Cpu, title: "Edge Processing", desc: "Local AI recognition ensures operation even during network outages." },
-                 { icon: Smartphone, title: "Cloud Telemetry", desc: "Real-time access logs and hardware health monitoring." }
+                 { icon: ScanFace, title: "Smart Face Recognition", desc: "Secure, contactless entry powered by AI." },
+                 { icon: Cpu, title: "Always Active", desc: "Works even without internet connection." },
+                 { icon: Smartphone, title: "Real-Time Monitoring", desc: "Track access and activity instantly." }
                ].map((feat, i) => (
                  <motion.div 
                    key={i}
@@ -228,17 +224,50 @@ export default function Home() {
                ))}
             </div>
 
+            {/* Target Use Cases Section */}
+            <motion.div variants={itemVariants} className="mb-32 mt-12 text-center">
+               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-600/10 border border-cyan-600/20 text-cyan-500 text-[10px] font-black tracking-widest uppercase mb-6">
+                 Who is this for?
+               </div>
+               <h2 className="text-4xl md:text-5xl font-black tracking-tighter uppercase italic leading-[1.1] mb-12">
+                 Transform Any <span className="text-cyan-500">Space.</span>
+               </h2>
+               
+               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto px-4">
+                 {[
+                   { icon: Dumbbell, title: "Gyms", desc: "24/7 autonomous access without staff members.", color: "text-red-500", bg: "bg-red-500/10", border: "border-red-500/30", glow: "group-hover:shadow-[0_0_40px_rgba(239,68,68,0.2)]" },
+                   { icon: HomeIcon, title: "Airbnbs", desc: "Seamless remote self check-in for guests.", color: "text-amber-500", bg: "bg-amber-500/10", border: "border-amber-500/30", glow: "group-hover:shadow-[0_0_40px_rgba(245,158,11,0.2)]" },
+                   { icon: Building2, title: "Offices", desc: "Enterprise-grade secure entry tracking.", color: "text-blue-500", bg: "bg-blue-500/10", border: "border-blue-500/30", glow: "group-hover:shadow-[0_0_40px_rgba(59,130,246,0.2)]" }
+                 ].map((useCase, i) => (
+                   <motion.div 
+                     key={i}
+                     whileHover={{ y: -8 }}
+                     className={`group relative overflow-hidden bg-gradient-to-br from-[#0a0a0a] to-[#020202] p-8 rounded-[2rem] border border-white/5 transition-all duration-300 hover:border-white/20 ${useCase.glow}`}
+                   >
+                      <div className={`absolute top-0 right-0 w-32 h-32 ${useCase.bg} blur-[40px] rounded-full group-hover:opacity-100 transition-opacity opacity-20`} />
+                      
+                      <div className={`w-14 h-14 rounded-2xl ${useCase.bg} flex items-center justify-center ${useCase.color} mb-6 border ${useCase.border}`}>
+                        <useCase.icon className="w-7 h-7" />
+                      </div>
+                      <h3 className="text-2xl font-black italic uppercase tracking-tighter mb-2 z-10 relative">{useCase.title}</h3>
+                      <p className="text-sm text-gray-500 font-medium z-10 relative">{useCase.desc}</p>
+                   </motion.div>
+                 ))}
+               </div>
+            </motion.div>
+
             {/* Digital Experience Showcase */}
-            <motion.div variants={itemVariants} className="mb-32">
+            <motion.div variants={itemVariants} className="mb-10">
                <div className="text-center mb-16">
                  <motion.div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-600/10 border border-orange-600/20 text-orange-500 text-[10px] font-black tracking-widest uppercase mb-6">
                    Digital Interface
                  </motion.div>
-                 <h2 className="text-4xl md:text-6xl font-black tracking-tighter uppercase italic leading-none mb-6">
-                   Complete <span className="text-orange-600">Control.</span>
+                 <h2 className="text-4xl md:text-6xl font-black tracking-tighter uppercase italic leading-[1.1] mb-6">
+                   Control Every Entry.<br/>
+                   <span className="text-orange-600">In Real Time.</span>
                  </h2>
                  <p className="text-gray-400 font-medium max-w-2xl mx-auto">
-                   Manage your entire architectural ecosystem from the palm of your hand. The AuraLock mobile application offers uncompromising utility paired with luxurious aesthetics.
+                   Monitor access, manage users, and track activity — all from your phone.
                  </p>
                </div>
 
@@ -623,7 +652,7 @@ export default function Home() {
         )}
       </AnimatePresence>
 
-      <footer className="py-20 border-t border-white/5 bg-[#020202]">
+      <footer className="py-12 border-t border-white/5 bg-[#020202]">
         <div className="max-w-7xl mx-auto px-6 text-center">
           <div className="text-3xl font-black tracking-tighter uppercase italic mb-8">Aura<span className="text-orange-600">Lock</span></div>
           <p className="text-gray-600 text-[10px] font-bold uppercase tracking-[0.5em] mb-12">Building the future of architectural security</p>
