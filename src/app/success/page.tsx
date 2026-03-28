@@ -33,7 +33,7 @@ function SuccessContent() {
 
         <h1 className="text-4xl font-bold mb-4 relative z-10">Order Confirmed</h1>
         <p className="text-gray-400 mb-10 leading-relaxed text-lg relative z-10">
-          Thank you for choosing Englabs. Your payment has been securely processed and your hardware is being manually prepared for dispatch.
+          Thank you for choosing Englabs. Your digital transaction payload was securely verified via GPay/Razorpay. Our automated dispatch team is now physically staging your encrypted hardware systems for rapid transit.
         </p>
 
         {/* Dynamic Detail Card */}

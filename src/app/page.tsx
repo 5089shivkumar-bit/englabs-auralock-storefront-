@@ -3,16 +3,31 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { 
   ArrowRight, 
-  PlayCircle, 
-  BrainCircuit, 
-  SmartphoneNfc, 
-  ThumbsUp, 
-  Wrench, 
-  Mail, 
-  MapPin, 
-  Phone,
   Search,
-  X
+  X,
+  ShieldCheck,
+  Fingerprint,
+  ScanFace,
+  KeyRound,
+  Battery,
+  Settings,
+  Bell,
+  Lock,
+  Smartphone,
+  Cpu,
+  ChevronRight,
+  Grip,
+  ChevronDown,
+  Video,
+  Mic,
+  Unlock,
+  ChevronsRight,
+  Key,
+  Grid3X3,
+  Home as HomeIcon,
+  Navigation,
+  Volume2,
+  Scan
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -21,25 +36,19 @@ export default function Home() {
   const [showSplash, setShowSplash] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedProduct, setSelectedProduct] = useState<any | null>(null);
-  const [settings, setSettings] = useState({ phone: '+91 98765 43210', email: 'support@englabs.in' });
-  
-  // Tab-based navigation so sections don't bleed into each other
-  const [activeTab, setActiveTab] = useState("products");
-
-  const filteredProducts = products.filter(p => p.name.toLowerCase().includes(searchQuery.toLowerCase()));
+  const [mounted, setMounted] = useState(false);
+  const [activeTab, setActiveTab] = useState("home");
 
   useEffect(() => {
-    // Check if splash has already been played in this browser session
-    const splashPlayed = sessionStorage.getItem('englabs_splash_played');
-    
+    setMounted(true);
+    const splashPlayed = sessionStorage.getItem('auralock_splash_played');
     if (splashPlayed) {
       setShowSplash(false);
     } else {
-      // 3 second cinematic delay before revealing the true home page for the first time
       const timer = setTimeout(() => {
         setShowSplash(false);
-        sessionStorage.setItem('englabs_splash_played', 'true');
-      }, 3000);
+        sessionStorage.setItem('auralock_splash_played', 'true');
+      }, 2800);
       return () => clearTimeout(timer);
     }
   }, []);
@@ -48,350 +57,612 @@ export default function Home() {
     fetch('/api/products')
       .then(res => res.json())
       .then(data => setProducts(data));
-      
-    fetch('/api/settings')
-      .then(res => res.json())
-      .then(data => setSettings(data))
-      .catch(console.error);
   }, []);
 
+  if (!mounted) return <div className="min-h-screen bg-black" />;
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { staggerChildren: 0.1 } }
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: { y: 0, opacity: 1, transition: { duration: 0.6, ease: "easeOut" as const } }
+  };
+
   return (
-    <>
+    <div className="min-h-screen bg-[#020202] text-white selection:bg-orange-500/30 overflow-x-hidden">
+      
+      {/* Cinematic Splash Screen */}
       <AnimatePresence>
         {showSplash && (
           <motion.div 
-            initial={{ opacity: 1 }}
-            exit={{ opacity: 0, scale: 1.05 }}
-            transition={{ duration: 0.8, ease: "easeInOut" }}
-            className="fixed inset-0 z-[99999] bg-[#020202] flex flex-col items-center justify-center text-white"
+            exit={{ opacity: 0, scale: 1.1 }}
+            className="fixed inset-0 z-[1000] bg-black flex flex-col items-center justify-center p-6"
           >
             <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1.2, ease: "easeOut" }}
-              className="flex flex-col items-center"
+              initial={{ opacity: 0, filter: "blur(10px)" }}
+              animate={{ opacity: 1, filter: "blur(0px)" }}
+              transition={{ duration: 1.5 }}
+              className="text-center"
             >
-              <div className="text-4xl md:text-6xl font-black tracking-tight mb-6 flex items-center gap-3">
-                 <span className="text-blue-500">Englabs</span>
-                 <span className="text-white">Products</span>
+              <div className="relative mb-4">
+                <Lock className="w-16 h-16 text-orange-600 animate-pulse mx-auto" strokeWidth={1.5} />
+                <div className="absolute inset-0 bg-orange-600/30 blur-2xl rounded-full" />
               </div>
-              <motion.div 
-                 initial={{ width: 0 }}
-                 animate={{ width: "100%" }}
-                 transition={{ delay: 0.3, duration: 1.8, ease: "easeInOut" }}
-                 className="h-[2px] bg-gradient-to-r from-transparent via-blue-500 to-transparent w-full shadow-[0_0_20px_rgba(59,130,246,0.8)] mb-6"
-              />
-              <motion.p
-                 initial={{ opacity: 0, y: 10 }}
-                 animate={{ opacity: 1, y: 0 }}
-                 transition={{ delay: 0.8, duration: 1 }}
-                 className="text-gray-400 font-medium tracking-[0.3em] uppercase text-xs sm:text-sm"
-               >
-                 Initializing Secure Environment...
-              </motion.p>
+              <h1 className="text-4xl md:text-5xl font-black tracking-tighter uppercase italic">
+                Aura<span className="text-orange-600">Lock</span>
+              </h1>
+              <div className="w-32 h-[1px] bg-gradient-to-r from-transparent via-orange-600 to-transparent mx-auto mt-4" />
+              <p className="mt-6 text-[10px] tracking-[0.4em] text-gray-500 uppercase font-medium">System Initialization In Progress</p>
             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      <div className={`min-h-screen bg-[#050505] text-white font-sans selection:bg-blue-600 selection:text-white transition-opacity duration-1000 flex flex-col ${showSplash ? 'opacity-0 h-screen overflow-hidden' : 'opacity-100'}`}>
-      
-      {/* 1. Header Navigation */}
-      <nav className="w-full p-6 lg:px-12 flex flex-col md:flex-row justify-between items-center border-b border-gray-800 bg-black/80 backdrop-blur-xl sticky top-0 z-50">
-        <div className="text-xl font-bold tracking-tight mb-4 md:mb-0 cursor-pointer" onClick={() => setActiveTab('home')}>
-          <span className="text-blue-500">Englabs</span> Products
+      {/* Modern Navigation */}
+      <nav className="fixed top-0 left-0 right-0 z-[500] px-6 py-6 md:px-12 flex justify-between items-center bg-black/40 backdrop-blur-2xl border-b border-white/5">
+        <div className="flex items-center gap-2 cursor-pointer" onClick={() => setActiveTab('home')}>
+          <div className="w-8 h-8 rounded-lg bg-orange-600 flex items-center justify-center shadow-[0_0_15px_rgba(234,88,12,0.5)]">
+            <Lock className="w-5 h-5 text-white" />
+          </div>
+          <span className="text-xl font-black tracking-tighter uppercase italic">Aura<span className="text-orange-600">Lock</span></span>
         </div>
         
-        <div className="flex flex-wrap justify-center gap-6 text-sm font-medium text-gray-400">
-          <button onClick={() => setActiveTab('home')} className={`hover:text-white transition ${activeTab === 'home' ? 'text-blue-500 font-bold' : ''}`}>Home</button>
-          <button onClick={() => setActiveTab('products')} className={`hover:text-white transition ${activeTab === 'products' ? 'text-blue-500 font-bold' : ''}`}>Products</button>
-          <button onClick={() => setActiveTab('about')} className={`hover:text-white transition ${activeTab === 'about' ? 'text-blue-500 font-bold' : ''}`}>About</button>
-          <Link href="/track" className="hover:text-white transition">Track Order</Link>
-          <button onClick={() => setActiveTab('contact')} className={`hover:text-white transition ${activeTab === 'contact' ? 'text-blue-500 font-bold' : ''}`}>Contact</button>
+        <div className="hidden md:flex items-center gap-10 text-[11px] font-bold uppercase tracking-widest text-gray-400">
+          <button onClick={() => setActiveTab('home')} className={`hover:text-white transition ${activeTab === 'home' ? 'text-orange-500' : ''}`}>Ecosystem</button>
+          <button onClick={() => setActiveTab('products')} className={`hover:text-white transition ${activeTab === 'products' ? 'text-orange-500' : ''}`}>Hardware</button>
+          <Link href="/track" className="hover:text-white transition">Tracking</Link>
+          <button onClick={() => setActiveTab('contact')} className="hover:text-white transition">Intelligence</button>
         </div>
+
+        <button className="px-5 py-2.5 bg-orange-600/10 border border-orange-600/20 rounded-full text-[10px] font-black uppercase tracking-widest text-orange-500 hover:bg-orange-600 hover:text-white transition-all duration-300">
+          Partner Portal
+        </button>
       </nav>
 
-      {/* Conditionally Rendered Main Content Area */}
-      <main className="flex-1 flex flex-col bg-black">
+      {/* Main Content */}
+      <main className="pt-32 pb-24">
+        
+        {activeTab === 'home' && (
+          <motion.div 
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="max-w-7xl mx-auto px-6"
+          >
+            {/* Split Screen Video Hero (Riotters style) */}
+            <div className="relative min-h-[90vh] flex flex-col lg:flex-row overflow-hidden rounded-[3rem] border border-white/5 mb-32 shadow-[0_30px_100px_rgba(0,0,0,1)] bg-[#020202] group">
+               
+               {/* Left Content (50%) */}
+               <div className="w-full lg:w-1/2 p-10 lg:p-20 z-10 flex flex-col justify-center relative bg-gradient-to-br from-[#050505] to-[#111111]">
+                  {/* Subtle architectural grid */}
+                  <div className="absolute inset-0 pointer-events-none opacity-10" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
 
-        {/* HOME & PRODUCTS TAB: Products Grid is now the foundational Hero */}
-        {(activeTab === 'home' || activeTab === 'products') && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="flex flex-col w-full flex-1 pb-10">
-            <section className="pt-8 pb-24 bg-black flex-1 w-full max-w-7xl mx-auto px-6">
-              <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
-                <div>
-                  <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Technology</h2>
-                  <p className="text-gray-400 max-w-2xl">Discover the engineering marvels that protect your most valuable assets.</p>
-                </div>
-                <div className="relative w-full md:w-80">
-                   <Search className="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
-                   <input 
-                     type="text" 
-                     placeholder="Search products..." 
-                     value={searchQuery}
-                     onChange={(e) => setSearchQuery(e.target.value)}
-                     className="w-full bg-gray-900 border border-gray-800 text-white pl-10 pr-4 py-3 rounded-xl focus:border-blue-500 focus:outline-none transition"
-                   />
-                </div>
-              </div>
+                  <motion.div 
+                    initial={{ opacity: 0, x: -50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
+                    className="relative z-10"
+                  >
+                    <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-orange-600/10 border border-orange-600/20 text-orange-500 text-[10px] font-black tracking-widest uppercase mb-8">
+                      <span className="relative flex h-2 w-2">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-2 w-2 bg-orange-600"></span>
+                      </span>
+                      Liveness Verification Active
+                    </div>
+                    
+                    <h1 className="text-5xl lg:text-7xl xl:text-8xl font-black tracking-tighter leading-[0.9] text-white mb-8 pr-4">
+                      Redefining <br/>
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-orange-600 to-red-600 italic px-2 -ml-2">Access Protocols.</span>
+                    </h1>
+                    
+                    <p className="text-lg text-gray-400 font-medium max-w-md mb-12 leading-relaxed">
+                      The intersection of high-security hardware and intelligent neural interfaces. Define your sanctuary through unique interactions.
+                    </p>
+                    
+                    <div className="flex flex-col sm:flex-row gap-4">
+                      <button onClick={() => setActiveTab('products')} className="px-10 py-5 bg-white text-black font-black uppercase italic tracking-tighter text-xl rounded-2xl hover:bg-orange-600 hover:text-white transition-all duration-500 shadow-[0_20px_40px_rgba(255,255,255,0.1)] hover:shadow-[0_20px_40px_rgba(234,88,12,0.4)]">
+                        Get Started
+                      </button>
+                      <button className="flex items-center justify-center gap-3 px-8 py-5 bg-transparent border border-white/20 text-white font-black uppercase italic tracking-tighter text-xl rounded-2xl hover:bg-white/5 transition-all duration-500">
+                        <Video className="w-6 h-6" /> Watch Film
+                      </button>
+                    </div>
+                  </motion.div>
+               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {filteredProducts.length === 0 ? (
-                   <div className="col-span-full text-center py-20 text-gray-500 border border-gray-800 rounded-2xl bg-gray-900/30">
-                     No products found matching your search.
+               {/* Right Video Showcase (50%) - Shutterstock Clip 3906850375 */}
+               <motion.div 
+                 initial={{ opacity: 0, scale: 0.95 }}
+                 animate={{ opacity: 1, scale: 1 }}
+                 transition={{ duration: 1.5, ease: "easeOut", delay: 0.5 }}
+                 className="w-full lg:w-1/2 h-[60vh] lg:h-auto relative bg-[#0a0a0a] overflow-hidden"
+               >
+                 <video 
+                   autoPlay 
+                   loop 
+                   muted 
+                   playsInline 
+                   className="absolute inset-0 w-full h-full object-cover opacity-90 mix-blend-screen scale-[1.02] hover:scale-100 transition-transform duration-[10s] ease-out"
+                 >
+                   <source src="https://www.shutterstock.com/shutterstock/videos/3906850375/preview/stock-footage-futuristic-cybersecurity-technology-animation-digital-shield-lock.webm" type="video/webm" />
+                   <source src="https://www.shutterstock.com/shutterstock/videos/3906850375/preview/stock-footage-futuristic-cybersecurity-technology-animation-digital-shield-lock.mp4" type="video/mp4" />
+                 </video>
+
+                 {/* Dramatic Edge Overlays to seamlessly blend the video into the layout */}
+                 <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-transparent pointer-events-none lg:w-48 z-10" />
+                 <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black pointer-events-none opacity-70 z-10" />
+                 {/* Color Correcting Tint */}
+                 <div className="absolute inset-0 bg-[#0dcaf0]/5 mix-blend-overlay pointer-events-none z-10" />
+
+                 {/* Subtle HUD Overlay element to match the tech theme */}
+                 <div className="absolute bottom-8 right-8 z-20 flex items-center gap-3 bg-black/60 backdrop-blur-md px-4 py-2 border border-[#0dcaf0]/30 rounded-full shadow-[0_0_20px_rgba(13,202,240,0.2)]">
+                    <span className="w-2 h-2 rounded-full bg-[#0dcaf0] animate-pulse" />
+                    <span className="text-[#0dcaf0] text-[10px] font-black uppercase tracking-widest">Active Shield</span>
+                 </div>
+               </motion.div>
+            </div>
+
+            {/* Feature Highlights */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-32">
+               {[
+                 { icon: ShieldCheck, title: "Neural Defense", desc: "Military-grade encryption with liveness verification protocols." },
+                 { icon: Cpu, title: "Edge Processing", desc: "Local AI recognition ensures operation even during network outages." },
+                 { icon: Smartphone, title: "Cloud Telemetry", desc: "Real-time access logs and hardware health monitoring." }
+               ].map((feat, i) => (
+                 <motion.div 
+                   key={i}
+                   variants={itemVariants}
+                   whileHover={{ y: -5 }}
+                   className="p-8 bg-[#0a0a0a] border border-white/5 rounded-[2rem] hover:border-orange-600/50 transition duration-500"
+                 >
+                   <div className="w-14 h-14 rounded-2xl bg-orange-600/10 flex items-center justify-center text-orange-600 mb-6">
+                     <feat.icon className="w-7 h-7" />
                    </div>
-                ) : (
-                   filteredProducts.map((product) => (
-                     <motion.div whileHover={{ y: -5 }} key={product.id} onClick={() => setSelectedProduct(product)} className="bg-gray-900 border border-gray-800 rounded-2xl overflow-hidden flex flex-col group hover:border-blue-500/50 transition cursor-pointer">
-                       <div className="w-full h-64 bg-black relative flex items-center justify-center p-4">
-                         {product.image || product.images?.[0] ? (
-                           <img src={product.image || product.images[0]} alt={product.name} className="w-full h-full object-contain group-hover:scale-105 transition duration-500" />
-                         ) : (
-                           <div className="text-gray-600 font-medium">No Image</div>
-                         )}
+                   <h3 className="text-xl font-black italic uppercase italic tracking-tighter mb-4">{feat.title}</h3>
+                   <p className="text-sm text-gray-500 leading-relaxed font-medium">{feat.desc}</p>
+                 </motion.div>
+               ))}
+            </div>
+
+            {/* Digital Experience Showcase */}
+            <motion.div variants={itemVariants} className="mb-32">
+               <div className="text-center mb-16">
+                 <motion.div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-600/10 border border-orange-600/20 text-orange-500 text-[10px] font-black tracking-widest uppercase mb-6">
+                   Digital Interface
+                 </motion.div>
+                 <h2 className="text-4xl md:text-6xl font-black tracking-tighter uppercase italic leading-none mb-6">
+                   Complete <span className="text-orange-600">Control.</span>
+                 </h2>
+                 <p className="text-gray-400 font-medium max-w-2xl mx-auto">
+                   Manage your entire architectural ecosystem from the palm of your hand. The AuraLock mobile application offers uncompromising utility paired with luxurious aesthetics.
+                 </p>
+               </div>
+
+               <div className="grid grid-cols-1 xl:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                  
+                  {/* App Screen 1: Splash */}
+                  <motion.div whileHover={{ y: -10 }} className="relative bg-gradient-to-br from-[#f0f9ff] via-[#ffffff] to-[#e0f2fe] rounded-[2.5rem] p-6 h-[600px] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] border-4 border-gray-800">
+                    <div className="absolute top-6 right-6 flex gap-2">
+                      <span className="w-3 h-3 rounded-full bg-orange-400"></span>
+                      <span className="w-3 h-3 rounded-full bg-green-500"></span>
+                    </div>
+                    <h3 className="text-4xl font-black text-black leading-tight mt-10 mb-10 tracking-tighter">
+                      Smart <br/> Door Lock <br/> System
+                    </h3>
+                    
+                    <div className="relative w-full h-80 bg-gradient-to-b from-gray-100 to-gray-300 rounded-3xl overflow-hidden flex items-center justify-center border border-gray-200">
+                       {/* Hardware graphic placeholder */}
+                       <div className="flex gap-4">
+                          <div className="w-16 h-48 bg-black rounded-xl border border-gray-700 relative shadow-2xl flex flex-col items-center mt-10">
+                            <div className="w-full h-1/2 border-b border-gray-800 flex items-center justify-center opacity-50" />
+                          </div>
+                          <div className="w-20 h-56 bg-[#1a1a1a] rounded-xl border border-gray-700 relative shadow-2xl flex flex-col items-center">
+                             <div className="w-full h-1/3 border-b border-gray-800 flex items-center justify-center">
+                                <div className="w-6 h-6 rounded-full border border-gray-700 bg-gray-900" />
+                             </div>
+                             <div className="w-full h-2/3 flex items-center justify-center">
+                                <Lock className="w-6 h-6 text-gray-500" />
+                             </div>
+                          </div>
                        </div>
-                       <div className="p-6 flex flex-col flex-1">
-                         <h3 className="text-2xl font-bold mb-2">{product.name}</h3>
-                         <p className="text-sm text-gray-400 mb-6 flex-1 line-clamp-2">{product.features?.[0] || 'Next-generation smart security hardware.'}</p>
-                         <div className="flex justify-between items-center mt-auto">
-                           <span className="text-2xl font-bold text-blue-400">₹{Number(product.price).toLocaleString('en-IN')}</span>
-                           <div className="flex gap-2">
-                             <button className="bg-white text-black hover:bg-gray-200 px-4 py-2.5 rounded-lg font-bold text-sm transition shadow-[0_4px_14px_0_rgba(255,255,255,0.1)]">
-                               Details
-                             </button>
-                             <Link href={`/product/${product.id}`} onClick={(e) => e.stopPropagation()} className="bg-blue-600 hover:bg-blue-500 text-white px-5 py-2.5 rounded-lg font-bold text-sm transition shadow-[0_4px_14px_0_rgba(59,130,246,0.3)]">
-                               Buy Now
-                             </Link>
+
+                       {/* Tooltips */}
+                       <div className="absolute right-2 top-1/3 bg-[#0d3b66]/90 text-white text-[9px] font-bold px-3 py-2 rounded-xl flex items-center gap-2 shadow-lg backdrop-blur-md">
+                          <Volume2 className="w-3 h-3" /> Sound Detected
+                       </div>
+                       <div className="absolute left-2 bottom-10 bg-[#0d3b66]/90 text-white text-[9px] font-bold px-3 py-2 rounded-xl flex items-center gap-2 shadow-lg backdrop-blur-md">
+                          <Scan className="w-3 h-3" /> Human Motion
+                       </div>
+                    </div>
+
+                    {/* Slider Button */}
+                    <div className="absolute bottom-6 left-6 right-6 h-16 bg-gray-200/50 backdrop-blur-xl border border-white/50 rounded-full flex items-center p-1 shadow-lg">
+                       <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center shadow-md">
+                          <ChevronRight className="w-6 h-6 text-black" />
+                       </div>
+                       <span className="flex-1 text-center font-bold text-gray-800 text-xs">Get Started <span className="opacity-50">&gt;&gt;&gt;</span></span>
+                    </div>
+                  </motion.div>
+
+                  {/* App Screen 2: Dashboard Dark Mode */}
+                  <motion.div whileHover={{ y: -10 }} className="relative bg-[#111315] rounded-[3rem] p-6 h-[600px] shadow-[0_20px_50px_rgba(0,0,0,0.8)] border-8 border-gray-700 flex flex-col">
+                     {/* Notch / Dynamic Island placeholder */}
+                     <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-5 bg-black rounded-b-xl shadow-inner z-20" />
+                     
+                     <div className="flex justify-between items-center mb-6 mt-3">
+                       <div className="w-10 h-10 bg-[#1c2125] rounded-full flex items-center justify-center shadow-inner border border-white/5">
+                         <Grip className="w-4 h-4 text-gray-300" />
+                       </div>
+                       <div className="px-4 py-2 bg-white rounded-full text-black text-[10px] font-bold flex items-center gap-2 shadow-sm">
+                         Ground <ChevronDown className="w-3 h-3" />
+                       </div>
+                     </div>
+
+                     <div className="flex gap-2 mb-2">
+                       <div className="px-3 py-1.5 bg-[#1c2125] text-gray-300 text-[9px] font-bold rounded-full border border-white/5 flex items-center gap-2">
+                         <Check className="w-3 h-3 text-cyan-400" /> Wi-Fi Connected
+                       </div>
+                     </div>
+                     <div className="flex gap-2 mb-6">
+                       <div className="px-3 py-1.5 bg-[#1c2125] text-gray-300 text-[9px] font-bold rounded-full border border-white/5 flex items-center gap-2 max-w-fit">
+                         <Battery className="w-3 h-3 text-cyan-400" /> 80%
+                       </div>
+                     </div>
+
+                     <div className="flex justify-between items-start mb-6">
+                        <div className="mt-2">
+                          <h3 className="text-3xl font-black text-white leading-none mb-2 tracking-tighter">Main <br/>Door Lock</h3>
+                          <p className="text-[9px] font-bold text-gray-500 uppercase tracking-widest mt-2">185 G Gate</p>
+                          
+                          <div className="flex gap-3 mt-6">
+                             <div className="w-10 h-10 rounded-full bg-[#1c2125] flex items-center justify-center text-gray-300 shadow-inner border border-white/5">
+                                <Video className="w-4 h-4" />
+                             </div>
+                             <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-black shadow-sm">
+                                <Mic className="w-4 h-4" />
+                             </div>
+                          </div>
+                        </div>
+
+                        {/* Side Lock Graphic */}
+                        <div className="w-16 h-48 bg-[#1a1a1a] rounded-xl border border-gray-700 shadow-2xl flex flex-col items-center py-2 relative overflow-hidden -mt-16">
+                          <div className="absolute inset-y-0 right-0 w-1/3 bg-white/5 border-l border-white/10" />
+                          <div className="w-12 h-10 border border-gray-800 rounded bg-gray-900 mb-1 z-10" />
+                          <div className="w-12 h-24 border border-gray-800 rounded bg-gray-900 flex flex-col items-center justify-center p-1 gap-2 z-10">
+                            <div className="grid grid-cols-3 gap-1">
+                              {[...Array(9)].map((_, i) => <div key={i} className="w-1.5 h-1.5 bg-gray-600 rounded-full" />)}
+                            </div>
+                            <div className="w-3.5 h-3.5 border-2 border-cyan-500 shadow-[0_0_10px_rgba(6,182,212,0.5)] rounded-full mt-2" />
+                          </div>
+                        </div>
+                     </div>
+
+                     {/* Unlock Slider */}
+                     <div className="h-14 bg-[#1c2125] border border-white/5 rounded-full flex items-center justify-between p-1.5 shadow-inner mb-6 relative">
+                        <div className="w-11 h-11 bg-[#0dcaf0] rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(13,202,240,0.5)] z-10 text-black">
+                           <Unlock className="w-4 h-4" />
+                        </div>
+                        <div className="absolute left-1/2 -translate-x-1/2 flex items-center text-gray-600 font-black tracking-[0.2em] text-[10px]">
+                           &gt;&gt;&gt;
+                        </div>
+                        <div className="w-11 h-11 bg-transparent rounded-full flex items-center justify-center z-10 text-gray-500">
+                           <Lock className="w-4 h-4" />
+                        </div>
+                     </div>
+
+                     <div className="grid grid-cols-2 gap-4 mb-4">
+                        <div className="bg-[#1c2125] border border-white/5 rounded-[1.5rem] p-4 flex flex-col justify-between h-24 shadow-inner">
+                           <Key className="w-5 h-5 text-gray-300" />
+                           <span className="text-[10px] font-bold text-gray-400 mt-2">Send Key</span>
+                        </div>
+                        <div className="bg-[#1c2125] border border-white/5 rounded-[1.5rem] p-4 flex flex-col justify-between h-24 shadow-inner">
+                           <Grid3X3 className="w-5 h-5 text-gray-300" />
+                           <span className="text-[10px] font-bold text-gray-400 mt-2">Send Code</span>
+                        </div>
+                     </div>
+
+                     {/* Bottom Nav */}
+                     <div className="absolute bottom-6 left-6 right-6 h-14 bg-[#1a1f24] border border-white/5 rounded-full flex items-center justify-around px-4 shadow-[0_-5px_20px_rgba(0,0,0,0.5)]">
+                        <div className="w-9 h-9 bg-[#0dcaf0] rounded-full flex items-center justify-center text-black shadow-[0_0_10px_rgba(13,202,240,0.4)]">
+                          <HomeIcon className="w-4 h-4" />
+                        </div>
+                        <Navigation className="w-5 h-5 text-gray-500" />
+                        <Bell className="w-5 h-5 text-gray-500" />
+                        <Settings className="w-5 h-5 text-gray-500" />
+                     </div>
+                  </motion.div>
+
+                  {/* App Screen 3: Floor Plan */}
+                  <motion.div whileHover={{ y: -10 }} className="relative bg-gray-900 rounded-[2.5rem] h-[600px] shadow-[0_20px_50px_rgba(0,0,0,0.5)] border-4 border-gray-800 overflow-hidden flex flex-col p-6">
+                     <div className="absolute inset-0 bg-[#0f172a] mix-blend-multiply opacity-50" />
+                     {/* CSS Floor Plan Pattern */}
+                     <div className="absolute inset-0" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px)', backgroundSize: '30px 30px' }}>
+                        {/* Mock Floor Plan Shapes */}
+                        <div className="absolute top-[20%] left-[10%] w-[40%] h-[30%] border-[3px] border-gray-700 bg-gray-800/40 backdrop-blur-sm rounded" />
+                        <div className="absolute top-[20%] right-[10%] w-[35%] h-[40%] border-[3px] border-gray-700 bg-gray-800/40 backdrop-blur-sm rounded" />
+                        <div className="absolute bottom-[25%] left-[20%] w-[60%] h-[30%] border-[3px] border-gray-700 bg-gray-800/50 backdrop-blur-sm rounded" />
+                        <div className="absolute bottom-[25%] left-[60%] w-10 h-10 border-2 border-orange-600 rounded-full opacity-50" />
+                     </div>
+
+                     <div className="relative z-10 flex justify-between items-center mb-6">
+                       <h3 className="text-3xl font-black text-white tracking-tighter">All Locks</h3>
+                       <div className="px-4 py-2.5 bg-white/20 backdrop-blur-md rounded-full border border-white/20 text-white text-xs font-bold flex items-center gap-2 shadow-sm">
+                         Ground <ChevronDown className="w-4 h-4" />
+                       </div>
+                     </div>
+
+                     {/* Floating Locks */}
+                     <div className="relative z-10 flex-1">
+                        <div className="absolute top-10 left-10 w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-xl">
+                           <Lock className="w-6 h-6 text-gray-800" />
+                        </div>
+                        <div className="absolute bottom-20 right-10 w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-xl">
+                           <Lock className="w-6 h-6 text-gray-800" />
+                        </div>
+
+                        {/* Active Lock Info */}
+                        <div className="absolute top-1/4 right-4 bg-white/10 backdrop-blur-xl border border-white/20 p-2.5 rounded-2xl flex items-center gap-3 shadow-xl">
+                           <div className="w-8 h-12 bg-black rounded-lg border border-gray-700" />
+                           <div>
+                              <p className="text-[10px] font-bold text-white leading-tight">Bedroom<br/>Door Lock</p>
+                              <p className="text-[8px] text-gray-300 mt-1">Battery: 82%</p>
                            </div>
-                         </div>
-                       </div>
-                     </motion.div>
-                   ))
-                )}
-              </div>
-            </section>
+                        </div>
+
+                        {/* Vertical Slider Overlay */}
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-40 bg-gray-500/30 backdrop-blur-xl border border-white/20 rounded-[2rem] flex flex-col items-center justify-between p-2 shadow-2xl">
+                           <div className="w-12 h-12 bg-[#0ea5e9] rounded-full flex items-center justify-center shadow-md shadow-sky-500/50">
+                              <Unlock className="w-5 h-5 text-white" />
+                           </div>
+                           <div className="flex flex-col items-center text-white/50 -my-2 space-y-[-6px]">
+                              <ChevronDown className="w-5 h-5" />
+                              <ChevronDown className="w-5 h-5" />
+                           </div>
+                           <div className="w-12 h-12 bg-transparent rounded-full flex items-center justify-center">
+                              <Lock className="w-5 h-5 text-white/70" />
+                           </div>
+                        </div>
+                     </div>
+
+                     {/* Bottom Nav */}
+                     <div className="relative z-10 h-16 bg-gray-900/60 backdrop-blur-2xl border border-white/10 rounded-full flex items-center justify-around px-4 mt-auto">
+                        <HomeIcon className="w-6 h-6 text-gray-400" />
+                        <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-[#0ea5e9] shadow-lg">
+                          <Navigation className="w-6 h-6" />
+                        </div>
+                        <Bell className="w-6 h-6 text-gray-400" />
+                        <Settings className="w-6 h-6 text-gray-400" />
+                     </div>
+                  </motion.div>
+                  
+               </div>
+            </motion.div>
+
           </motion.div>
         )}
 
-        {/* ABOUT (Why Choose Us) TAB */}
-        {(activeTab === 'home' || activeTab === 'about') && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="flex flex-col pb-10 border-t border-gray-900 pt-24 mt-12">
-            <section className="bg-transparent w-full max-w-7xl mx-auto px-6 text-center">
-              <h2 className="text-3xl md:text-4xl font-bold mb-16">Why Choose Englabs?</h2>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 text-left">
-                <motion.div whileHover={{ y: -5 }} className="bg-black border border-gray-800 p-8 rounded-2xl">
-                   <div className="bg-blue-600/10 w-14 h-14 rounded-xl flex items-center justify-center mb-6">
-                     <BrainCircuit className="w-7 h-7 text-blue-500" />
-                   </div>
-                   <h3 className="text-xl font-bold mb-3">AI-Powered Security</h3>
-                   <p className="text-gray-400 leading-relaxed text-sm">Our deeply integrated Gemini neural networks verify true human liveness, making photograph and 3D mask spoofing mathematically impossible.</p>
-                </motion.div>
-
-                <motion.div whileHover={{ y: -5 }} className="bg-black border border-gray-800 p-8 rounded-2xl">
-                   <div className="bg-blue-600/10 w-14 h-14 rounded-xl flex items-center justify-center mb-6">
-                     <SmartphoneNfc className="w-7 h-7 text-blue-500" />
-                   </div>
-                   <h3 className="text-xl font-bold mb-3">Instant Access & Monitoring</h3>
-                   <p className="text-gray-400 leading-relaxed text-sm">Control your physical spaces globally. Generate OTPs, monitor battery levels, and receive realtime access telemetry straight from our secure cloud.</p>
-                </motion.div>
-
-                <motion.div whileHover={{ y: -5 }} className="bg-black border border-gray-800 p-8 rounded-2xl">
-                   <div className="bg-blue-600/10 w-14 h-14 rounded-xl flex items-center justify-center mb-6">
-                     <ThumbsUp className="w-7 h-7 text-blue-500" />
-                   </div>
-                   <h3 className="text-xl font-bold mb-3">Trusted by Thousands</h3>
-                   <p className="text-gray-400 leading-relaxed text-sm">From luxury residential homes to robust enterprise startup hubs throughout India, Englabs represents absolute reliability.</p>
-                </motion.div>
-
-                <motion.div whileHover={{ y: -5 }} className="bg-black border border-gray-800 p-8 rounded-2xl">
-                   <div className="bg-blue-600/10 w-14 h-14 rounded-xl flex items-center justify-center mb-6">
-                     <Wrench className="w-7 h-7 text-blue-500" />
-                   </div>
-                   <h3 className="text-xl font-bold mb-3">Easy Installation & Support</h3>
-                   <p className="text-gray-400 leading-relaxed text-sm">Designed for immediate retrofit. Our hardware drops cleanly into existing door frames, backed by responsive nationwide mechanical support.</p>
-                </motion.div>
+        {/* Product Catalog Tab */}
+        {activeTab === 'products' && (
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+              <div>
+                <h2 className="text-5xl font-black tracking-tighter uppercase italic italic leading-none mb-6">Hardware <span className="text-orange-600">Inventory</span></h2>
+                <p className="text-gray-400 font-medium">Select your grade of security deployment.</p>
               </div>
-
-              {/* FAQ Section */}
-              <div className="mt-32 border-t border-gray-900 pt-20 max-w-4xl mx-auto text-left">
-                <h2 className="text-3xl font-bold mb-10 text-center">Frequently Asked Questions</h2>
-                <div className="space-y-6">
-                  <div className="bg-black border border-gray-800 p-6 rounded-2xl cursor-pointer hover:border-blue-500/50 transition">
-                     <h4 className="text-lg font-bold mb-2">How long does the battery last?</h4>
-                     <p className="text-gray-400 text-sm leading-relaxed">Englabs hardware operates on ultra-efficient power protocols. A standard set of AA batteries provides up to 12 months of constant usage. You will receive mobile app alerts when battery life drops below 20%.</p>
-                  </div>
-                  <div className="bg-black border border-gray-800 p-6 rounded-2xl cursor-pointer hover:border-blue-500/50 transition">
-                     <h4 className="text-lg font-bold mb-2">Can it be installed on existing doors?</h4>
-                     <p className="text-gray-400 text-sm leading-relaxed">Yes. Our locks are meticulously engineered to retrofit seamlessly into 95% of standard Indian door frames without requiring any major carpentry or permanent structural modifications.</p>
-                  </div>
-                  <div className="bg-black border border-gray-800 p-6 rounded-2xl cursor-pointer hover:border-blue-500/50 transition">
-                     <h4 className="text-lg font-bold mb-2">What happens during a power or WiFi outage?</h4>
-                     <p className="text-gray-400 text-sm leading-relaxed">Your secure environment remains completely operational. The lock operates entirely offline via AES-encrypted Bluetooth tokens and physical mechanical backup keys. WiFi is only required for remote IoT provisioning.</p>
-                  </div>
-                </div>
+              <div className="relative w-full md:w-96">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+                <input 
+                  type="text" 
+                  placeholder="SEARCH SECURITY SKUs..."
+                  value={searchQuery}
+                  onChange={e => setSearchQuery(e.target.value)}
+                  className="w-full bg-[#0a0a0a] border border-white/10 rounded-2xl pl-12 pr-4 py-4 text-xs font-bold uppercase tracking-widest focus:outline-none focus:border-orange-600 transition"
+                />
               </div>
-            </section>
-          </motion.div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+              {products.filter(p => p.name.toLowerCase().includes(searchQuery.toLowerCase())).map((product, idx) => (
+                <motion.div 
+                  key={product.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: idx * 0.1 }}
+                  onClick={() => setSelectedProduct(product)}
+                  className="group relative bg-[#0a0a0a] border border-white/5 p-8 rounded-[2.5rem] hover:border-orange-600/50 transition-all duration-500 cursor-pointer overflow-hidden shadow-2xl"
+                >
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-orange-600/5 blur-[40px] rounded-full group-hover:bg-orange-600/10 transition" />
+                  
+                  <div className="h-64 mb-8 flex items-center justify-center">
+                    {product.image || product.images?.[0] ? (
+                      <img src={product.image || product.images[0]} alt={product.name} className="max-h-full object-contain group-hover:scale-110 transition duration-700 drop-shadow-[0_20px_40px_rgba(234,88,12,0.2)]" />
+                    ) : (
+                      <Lock className="w-20 h-20 text-gray-800" />
+                    )}
+                  </div>
+                  
+                  <div className="relative">
+                    <div className="flex justify-between items-start mb-4">
+                       <div>
+                         <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1">Aura SKU: {product.id.slice(-4).toUpperCase()}</p>
+                         <h3 className="text-2xl font-black italic uppercase tracking-tighter">{product.name}</h3>
+                       </div>
+                    </div>
+                    
+                    <div className="flex items-center gap-4 mb-8">
+                       <span className="text-3xl font-black text-orange-500">₹{Number(product.price).toLocaleString('en-IN')}</span>
+                    </div>
+
+                    <button className="w-full py-4 bg-white text-black font-black uppercase italic tracking-tighter rounded-xl group-hover:bg-orange-600 group-hover:text-white transition duration-500">
+                      View Specifications
+                    </button>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        )}
+        {activeTab === 'contact' && (
+          <div className="max-w-4xl mx-auto px-6 py-12">
+            <motion.div 
+               initial={{ opacity: 0, y: 40 }}
+               animate={{ opacity: 1, y: 0 }}
+               className="bg-[#0a0a0a] border border-white/10 rounded-[3.5rem] p-12 text-center relative overflow-hidden"
+            >
+               <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-orange-600/10 blur-[100px] rounded-full" />
+               
+               <div className="relative z-10">
+                 <div className="w-20 h-20 rounded-3xl bg-orange-600/20 border border-orange-600/30 flex items-center justify-center text-orange-600 mx-auto mb-10">
+                   <Settings className="w-10 h-10 animate-spin-slow" />
+                 </div>
+                 
+                 <h2 className="text-5xl font-black tracking-tighter uppercase italic italic leading-none mb-8">Intelligence <span className="text-orange-600">Support</span></h2>
+                 
+                 <p className="text-gray-400 font-medium leading-relaxed max-w-xl mx-auto mb-16">
+                   Establish a secure connection with our engineering team for deployment queries, bulk provisioning, or technical architectural support.
+                 </p>
+
+                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left mb-16">
+                    <div className="p-8 bg-white/5 border border-white/5 rounded-3xl hover:border-orange-600/50 transition duration-500">
+                       <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2">Technical Gateway</p>
+                       <p className="text-2xl font-black italic uppercase italic">support@auralock.io</p>
+                    </div>
+                    <div className="p-8 bg-white/5 border border-white/5 rounded-3xl hover:border-orange-600/50 transition duration-500">
+                       <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2">Secure Line</p>
+                       <p className="text-2xl font-black italic uppercase italic">+91 94000 00000</p>
+                    </div>
+                 </div>
+
+                 <button className="px-12 py-5 bg-white text-black font-black uppercase italic tracking-tighter text-2xl rounded-2xl hover:bg-orange-600 hover:text-white transition-all duration-500">
+                   Initialize Handshake
+                 </button>
+               </div>
+            </motion.div>
+          </div>
         )}
 
       </main>
 
-      {/* CONTACT FORM TAB */}
-      {activeTab === 'contact' && (
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="flex flex-col pb-24 pt-24 mt-4 flex-1 items-center justify-center">
-          <section className="bg-transparent w-full max-w-3xl mx-auto px-6">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">Get in Touch</h2>
-            <p className="text-gray-400 text-center mb-6 leading-relaxed">Have technical questions or need enterprise bulk pricing? Contact our engineering team directly.</p>
-            
-            <div className="flex flex-wrap justify-center gap-6 md:gap-12 mb-10 text-gray-300 font-medium">
-               <span className="flex items-center gap-2"><Phone className="w-5 h-5 text-blue-500"/> {settings.phone}</span>
-               <span className="flex items-center gap-2"><Mail className="w-5 h-5 text-blue-500"/> {settings.email}</span>
-            </div>
-            
-            <form className="bg-gray-900 border border-gray-800 p-8 rounded-3xl space-y-6 shadow-2xl" onSubmit={(e) => { e.preventDefault(); alert('Message successfully transmitted to the Englabs secure engineering team over TLS!'); }}>
-               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                 <div>
-                   <label className="text-sm font-medium text-gray-400 ml-1">Name</label>
-                   <input required type="text" placeholder="Your Full Name" className="w-full bg-black border border-gray-800 p-4 rounded-xl mt-1 focus:border-blue-500 focus:outline-none transition text-white" />
-                 </div>
-                 <div>
-                   <label className="text-sm font-medium text-gray-400 ml-1">Email</label>
-                   <input required type="email" placeholder="Your Email Gateway" className="w-full bg-black border border-gray-800 p-4 rounded-xl mt-1 focus:border-blue-500 focus:outline-none transition text-white" />
-                 </div>
-               </div>
-               <div>
-                 <label className="text-sm font-medium text-gray-400 ml-1">Secure Message</label>
-                 <textarea required rows={5} placeholder="How can our hardware solve your needs?" className="w-full bg-black border border-gray-800 p-4 rounded-xl mt-1 focus:border-blue-500 focus:outline-none transition text-white"></textarea>
-               </div>
-               <button type="submit" className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 rounded-xl transition shadow-[0_0_20px_rgba(59,130,246,0.3)] hover:shadow-[0_0_30px_rgba(59,130,246,0.5)]">
-                 Transmit Secure Message
-               </button>
-            </form>
-          </section>
-        </motion.div>
-      )}
-
-      {/* 5. Footer (Only if not purely inspecting Products) */}
-      {(activeTab === 'home' || activeTab === 'contact') && (
-        <footer className="border-t border-gray-900 bg-black pt-20 pb-10 mt-auto">
-           <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
-              <div className="col-span-1 md:col-span-2">
-                 <div className="text-2xl font-bold tracking-tight mb-4">
-                   <span className="text-blue-500">Englabs</span> Products
-                 </div>
-                 <p className="text-gray-400 max-w-sm mb-6 leading-relaxed">
-                   Engineering the future of access control and smart living. We merge premium hardware materials with bleeding-edge artificial intelligence.
-                 </p>
-                 <div className="flex gap-4">
-                   <a href="#" className="font-bold text-gray-500 hover:text-blue-500 transition w-10 h-10 rounded-full bg-gray-900 border border-gray-800 flex items-center justify-center text-sm">X</a>
-                   <a href="#" className="font-bold text-gray-500 hover:text-blue-500 transition w-10 h-10 rounded-full bg-gray-900 border border-gray-800 flex items-center justify-center text-sm">IG</a>
-                   <a href="#" className="font-bold text-gray-500 hover:text-blue-500 transition w-10 h-10 rounded-full bg-gray-900 border border-gray-800 flex items-center justify-center text-sm">FB</a>
-                   <a href="#" className="font-bold text-gray-500 hover:text-blue-500 transition w-10 h-10 rounded-full bg-gray-900 border border-gray-800 flex items-center justify-center text-sm">IN</a>
-                 </div>
-              </div>
-              <div>
-                 <h4 className="text-lg font-bold mb-4">Quick Links</h4>
-                 <ul className="space-y-3 text-gray-400">
-                   <li><button onClick={() => setActiveTab('products')} className="hover:text-blue-400 transition">Our Products</button></li>
-                   <li><Link href="/track" className="hover:text-blue-400 transition">Track Your Order</Link></li>
-                   <li><Link href="/admin" className="hover:text-blue-400 transition">Partner Portal</Link></li>
-                 </ul>
-              </div>
-              <div>
-                 <h4 className="text-lg font-bold mb-4">Contact Us</h4>
-                 <ul className="space-y-4 text-gray-400">
-                   <li className="flex items-center gap-3"><MapPin className="w-5 h-5 text-gray-600" /> Technology Park, India</li>
-                   <li className="flex items-center gap-3"><Phone className="w-5 h-5 text-gray-600" /> {settings.phone}</li>
-                   <li className="flex items-center gap-3"><Mail className="w-5 h-5 text-gray-600" /> {settings.email}</li>
-                 </ul>
-              </div>
-           </div>
-           <div className="max-w-7xl mx-auto px-6 pt-8 border-t border-gray-900 text-center text-gray-600 text-sm">
-              &copy; {new Date().getFullYear()} Englabs India Pvt Ltd. All rights reserved. 
-           </div>
-        </footer>
-      )}
-
-      {/* Product Details Modal */}
+      {/* Product Detail Overlay */}
       <AnimatePresence>
         {selectedProduct && (
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100000] bg-black/80 backdrop-blur-md flex items-center justify-center p-4 sm:p-6"
+            className="fixed inset-0 z-[1000] bg-black/90 backdrop-blur-xl flex items-center justify-center p-6"
             onClick={() => setSelectedProduct(null)}
           >
-             <motion.div 
-               initial={{ scale: 0.95, opacity: 0, y: 20 }}
-               animate={{ scale: 1, opacity: 1, y: 0 }}
-               exit={{ scale: 0.95, opacity: 0, y: 20 }}
-               onClick={(e) => e.stopPropagation()}
-               className="bg-[#0a0a0a] border border-gray-800 w-full max-w-5xl rounded-3xl overflow-hidden flex flex-col md:flex-row max-h-[90vh] shadow-2xl relative"
-             >
-                <button onClick={() => setSelectedProduct(null)} className="absolute top-4 right-4 z-[100] bg-black/80 hover:bg-black p-2 rounded-full border border-gray-800 text-gray-400 hover:text-white transition">
-                   <X className="w-5 h-5" />
-                </button>
+            <motion.div 
+              initial={{ scale: 0.9, opacity: 0, y: 50 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0, y: 50 }}
+              onClick={e => e.stopPropagation()}
+              className="bg-[#0a0a0a] border border-white/10 w-full max-w-5xl h-[90vh] md:h-auto rounded-[3.5rem] overflow-hidden flex flex-col md:flex-row shadow-2xl relative"
+            >
+              <button 
+                onClick={() => setSelectedProduct(null)}
+                className="absolute top-8 right-8 z-50 w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white transition"
+              >
+                <X className="w-6 h-6" />
+              </button>
 
-                {/* Left: Image Gallery */}
-                <div className="w-full md:w-1/2 bg-black flex flex-col items-center justify-start p-8 border-b md:border-b-0 md:border-r border-gray-800 relative overflow-y-auto overflow-x-hidden custom-scrollbar">
-                   {selectedProduct.images?.length > 0 || selectedProduct.image ? (
-                     <div className="flex flex-col gap-6 w-full mt-8">
-                       <img src={selectedProduct.images?.[0] || selectedProduct.image} alt="Main" className="w-full h-80 object-contain drop-shadow-2xl" />
-                       {selectedProduct.images?.length > 1 && (
-                          <div className="grid grid-cols-2 gap-4 w-full">
-                            {selectedProduct.images.slice(1).map((img: string, i: number) => (
-                              <img key={i} src={img} alt={`Gallery ${i}`} className="w-full h-32 object-cover rounded-xl border border-gray-800 bg-gray-900" />
-                            ))}
-                          </div>
-                       )}
-                     </div>
-                   ) : (
-                      <div className="text-gray-600 mt-20">No Image Available</div>
-                   )}
+              {/* Gallery Space */}
+              <div className="w-full md:w-1/2 p-12 bg-black flex items-center justify-center border-b md:border-b-0 md:border-r border-white/5">
+                <img 
+                  src={selectedProduct.image || selectedProduct.images?.[0]} 
+                  alt={selectedProduct.name} 
+                  className="max-h-[50vh] object-contain drop-shadow-[0_20px_50px_rgba(234,88,12,0.3)]" 
+                />
+              </div>
+
+              {/* Details Space */}
+              <div className="w-full md:w-1/2 p-12 flex flex-col">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-600/10 border border-orange-600/20 text-orange-500 text-[9px] font-black tracking-widest uppercase mb-6 w-fit">
+                  Precision Engineering
                 </div>
-
-                {/* Right: Details & Checkout */}
-                <div className="w-full md:w-1/2 p-8 md:p-12 flex flex-col overflow-y-auto custom-scrollbar">
-                   <div className="uppercase tracking-widest text-blue-500 text-xs font-bold mb-4">Englabs Hardware</div>
-                   <h2 className="text-4xl font-bold mb-4">{selectedProduct.name}</h2>
-                   <p className="text-gray-400 leading-relaxed mb-8">
-                     {selectedProduct.description || "The ultimate architectural smart lock. Engineered with multi-vector AI recognition to secure what matters most."}
+                <h2 className="text-5xl font-black tracking-tighter uppercase italic leading-none mb-8">
+                  {selectedProduct.name}
+                </h2>
+                
+                <div className="flex-1 space-y-6 overflow-y-auto pr-4 mb-8 custom-scrollbar">
+                   <p className="text-gray-400 font-medium leading-relaxed">
+                     Hardware designed for high-security environments. Features autonomous AI verification, AES-encrypted communication paths, and architectural-grade aesthetics.
                    </p>
-
-                   <div className="space-y-4 mb-10 flex-1">
-                     <h4 className="font-bold text-lg mb-2 border-b border-gray-800 pb-2">Technical Features</h4>
-                     {selectedProduct.features && selectedProduct.features.length > 0 ? (
-                       <ul className="space-y-3">
-                         {selectedProduct.features.map((feature: string, idx: number) => (
-                           <li key={idx} className="flex gap-3 text-gray-300 items-start">
-                             <ArrowRight className="w-5 h-5 text-blue-500 flex-shrink-0 mt-0.5" />
-                             <span>{feature.trim()}</span>
-                           </li>
-                         ))}
-                       </ul>
-                     ) : (
-                       <p className="text-gray-500">No specific technical features listed.</p>
-                     )}
-                   </div>
-
-                   <div className="border-t border-gray-800 pt-6 mt-auto">
-                     <div className="text-sm text-gray-400 font-medium mb-1">Direct from Manufacturer</div>
-                     <div className="text-4xl font-bold text-white mb-6">₹{Number(selectedProduct.price).toLocaleString('en-IN')}</div>
-                     <div className="flex gap-4">
-                       <Link href={`/checkout?productId=${selectedProduct.id}&name=${encodeURIComponent(selectedProduct.name)}&price=${selectedProduct.price}`} className="flex-1 bg-blue-600 hover:bg-blue-500 text-white text-center py-4 rounded-xl font-bold text-lg transition shadow-[0_0_20px_rgba(59,130,246,0.4)]">
-                         Proceed to Checkout
-                       </Link>
-                     </div>
+                   <div className="space-y-3">
+                      {selectedProduct.features?.map((f: string, i: number) => (
+                        <div key={i} className="flex items-center gap-3 text-sm font-bold text-gray-300">
+                          <Check className="w-4 h-4 text-orange-600" />
+                          {f}
+                        </div>
+                      ))}
                    </div>
                 </div>
-             </motion.div>
+
+                <div className="pt-8 border-t border-white/5">
+                   <div className="flex justify-between items-center mb-10">
+                      <div>
+                        <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Fixed MSRP</p>
+                        <p className="text-4xl font-black text-white">₹{Number(selectedProduct.price).toLocaleString('en-IN')}</p>
+                      </div>
+                   </div>
+                   <Link 
+                     href={`/checkout?productId=${selectedProduct.id}&name=${encodeURIComponent(selectedProduct.name)}&price=${selectedProduct.price}`}
+                     className="w-full py-5 bg-orange-600 text-white font-black uppercase italic tracking-tighter text-xl rounded-2xl flex items-center justify-center gap-3 hover:bg-orange-500 transition shadow-[0_10px_30px_rgba(234,88,12,0.3)]"
+                   >
+                     Order Unit Now <ArrowRight className="w-6 h-6" />
+                   </Link>
+                </div>
+              </div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
 
+      <footer className="py-20 border-t border-white/5 bg-[#020202]">
+        <div className="max-w-7xl mx-auto px-6 text-center">
+          <div className="text-3xl font-black tracking-tighter uppercase italic mb-8">Aura<span className="text-orange-600">Lock</span></div>
+          <p className="text-gray-600 text-[10px] font-bold uppercase tracking-[0.5em] mb-12">Building the future of architectural security</p>
+          <div className="flex justify-center gap-8 text-xs font-bold uppercase tracking-widest text-gray-400">
+             <Link href="/admin" className="hover:text-orange-600 transition">Control Center</Link>
+             <Link href="/track" className="hover:text-orange-600 transition">Telemetry</Link>
+             <button onClick={() => setActiveTab('contact')} className="hover:text-orange-600 transition">Direct Line</button>
+          </div>
+          <div className="mt-20 text-[10px] font-bold text-gray-800 uppercase tracking-widest">
+            &copy; 2026 AuraLock Security Systems. All Rights Protocolized.
+          </div>
+        </div>
+      </footer>
+
+      <style jsx global>{`
+        .custom-scrollbar::-webkit-scrollbar {
+          width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+          background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+          background: rgba(255, 255, 255, 0.1);
+          border-radius: 10px;
+        }
+        @keyframes fade-in {
+          from { opacity: 0; transform: translateY(10px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-in {
+          animation: fade-in 0.8s ease-out forwards;
+        }
+      `}</style>
     </div>
-    </>
   );
 }
+
+const Check = ({ className }: { className?: string }) => (
+  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+  </svg>
+);

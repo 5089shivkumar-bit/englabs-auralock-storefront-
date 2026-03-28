@@ -84,7 +84,7 @@ export default function AdminPanel() {
     const matchesStatus = orderStatusFilter === "All" || order.dispatchStatus === orderStatusFilter;
     
     return matchesSearch && matchesStatus;
-  });
+  }).sort((a: any, b: any) => new Date(b.date || 0).getTime() - new Date(a.date || 0).getTime());
 
   if (!isAuthenticated) return (
     <div className="min-h-screen bg-black flex items-center justify-center text-white">
@@ -192,6 +192,7 @@ export default function AdminPanel() {
                    <option value="Processing">Processing</option>
                    <option value="Shipped">Shipped</option>
                    <option value="Delivered">Delivered</option>
+                   <option value="Cancelled">Cancelled</option>
                  </select>
               </div>
             </div>
@@ -201,7 +202,12 @@ export default function AdminPanel() {
                 <div key={order.id} className="p-6 bg-black border border-gray-800 rounded-xl hover:border-gray-700 transition">
                   <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                     <div>
-                      <h3 className="font-bold text-xl">{order.id} <span className="text-sm font-normal text-gray-500 ml-2">({order.date.substring(0, 10)})</span></h3>
+                      <h3 className="font-bold text-xl flex items-center gap-3">
+                        {order.id} 
+                        <span className="text-xs font-medium text-gray-400 bg-gray-900/80 border border-gray-700 px-3 py-1 rounded-full whitespace-nowrap">
+                          {order.date ? new Date(order.date).toLocaleString('en-IN', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : 'Historical Access'}
+                        </span>
+                      </h3>
                       <p className="text-blue-400 font-medium mt-1">{order.tier} - ₹{order.price?.toLocaleString('en-IN')}</p>
                       <div className="mt-2 text-sm text-gray-400 grid grid-cols-2 gap-x-8">
                          <p>Name: <span className="text-white">{order.name}</span></p>
@@ -228,6 +234,7 @@ export default function AdminPanel() {
                         <option value="Processing">Dispatch: Processing</option>
                         <option value="Shipped">Dispatch: Shipped</option>
                         <option value="Delivered">Dispatch: Delivered</option>
+                        <option value="Cancelled">Dispatch: Cancelled</option>
                       </select>
                     </div>
                   </div>

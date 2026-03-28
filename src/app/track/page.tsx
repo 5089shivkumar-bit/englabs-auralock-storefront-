@@ -1,41 +1,85 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, Search, Package, MapPin, Phone, User, Mail, CreditCard } from "lucide-react";
+import { ArrowLeft, Search, Package, MapPin, Phone, User, Mail, CreditCard, X } from "lucide-react";
 
-export default function TrackOrderPage() {
-  const [query, setQuery] = useState("");
+function TrackOrderContent() {
+  const searchParams = useSearchParams();
+  const initialOrderId = searchParams.get("orderId") || "";
+  
+  const [orderIdQuery, setOrderIdQuery] = useState(initialOrderId);
+  const [phoneQuery, setPhoneQuery] = useState("");
   const [order, setOrder] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
 
-  const handleTrack = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!query.trim()) return;
+  const performFetch = async (id: string, phone: string, isAutoFetch = false) => {
+    if (!id.trim() && !isAutoFetch) return;
+    if (!phone.trim() && !isAutoFetch) return;
     
     setLoading(true);
     setErrorMsg("");
+    setSuccessMsg("");
     setOrder(null);
 
     try {
       const res = await fetch("/api/orders");
       const data = await res.json();
       
-      // Look deeply for matching robust ID or Phone
-      const foundOrder = data.find((o: any) => 
-         o.id === query.trim().toUpperCase() || 
-         o.phone === query.trim() || 
-         (o.orderId && o.orderId === query.trim())
-      );
+      const foundOrder = data.find((o: any) => {
+         const matchId = o.id === id.trim().toUpperCase() || (o.orderId && o.orderId === id.trim());
+         const rawPhone = o.phone || o.customerPhone || "";
+         const dbPhone = rawPhone.replace(/[^\d]/g, '');
+         const queryPhone = phone.trim().replace(/[^\d]/g, '');
+         const matchPhone = dbPhone.includes(queryPhone) && queryPhone.length >= 10;
+         
+         return matchId && (matchPhone || isAutoFetch);
+      });
 
       if (foundOrder) {
         setOrder(foundOrder);
       } else {
-        setErrorMsg(`We couldn't find any order associated with "${query}". Please check your Order ID string or registered Phone Number and try again.`);
+        setErrorMsg(`Order not found. We couldn't securely verify any active order matching ID "${id}". Ensure your parameters are strictly correct.`);
       }
     } catch (err) {
       console.error(err);
       setErrorMsg("Failed to connect to tracking servers. Please try again later.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (initialOrderId) {
+       performFetch(initialOrderId, "", true);
+    }
+  }, [initialOrderId]);
+
+  const handleTrack = async (e: React.FormEvent) => {
+    e.preventDefault();
+    performFetch(orderIdQuery, phoneQuery, false);
+  };
+
+  const cancelOrder = async (orderId: string) => {
+    if (!confirm("Are you sure you want to completely cancel this order? This action cannot be undone.")) return;
+    
+    try {
+      setLoading(true);
+      const res = await fetch('/api/orders', {
+         method: 'PUT',
+         headers: { 'Content-Type': 'application/json' },
+         body: JSON.stringify({ id: orderId, dispatchStatus: 'Cancelled' })
+      });
+      if (res.ok) {
+         setOrder({ ...order, dispatchStatus: 'Cancelled' });
+         setSuccessMsg("Your order has been successfully cancelled and completely voided from our dispatch queue.");
+      } else {
+         setErrorMsg("Failed to cancel order. Please contact support.");
+      }
+    } catch (err) {
+      setErrorMsg("Failed to connect to servers while cancelling. Please try again later.");
     } finally {
       setLoading(false);
     }
@@ -58,33 +102,56 @@ export default function TrackOrderPage() {
         
         <h1 className="text-4xl font-bold tracking-tight mb-4 text-center">Track Your Hardware</h1>
         <p className="text-gray-400 mb-10 text-center max-w-xl">
-          Enter your 10-digit registered phone number or the secure Order ID listed on your receipt to view real-time production and dispatch status.
+          To protect data security, please supply both your securely generated Order ID and corresponding registered Mobile Number below.
         </p>
 
-        {/* Action Form Element */}
-        <form onSubmit={handleTrack} className="w-full max-w-2xl relative mb-12">
-           <Search className="absolute left-6 top-1/2 -translate-y-1/2 w-6 h-6 text-gray-500" />
-           <input 
-             type="text" 
-             value={query}
-             onChange={(e) => setQuery(e.target.value)}
-             placeholder="e.g. ORD-1718293029 or 9876543210" 
-             className="w-full bg-gray-900 border border-gray-800 rounded-full py-5 pl-16 pr-44 text-lg text-white focus:border-blue-500 focus:outline-none transition shadow-[0_0_30px_rgba(0,0,0,0.5)]" 
-             required
-           />
+        {/* Dual Verification Tracking Form */}
+        <form onSubmit={handleTrack} className="w-full max-w-2xl mb-12 space-y-4">
+           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+             <div className="relative">
+               <Package className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
+               <input 
+                 type="text" 
+                 value={orderIdQuery}
+                 onChange={(e) => setOrderIdQuery(e.target.value.toUpperCase())}
+                 placeholder="Order ID (e.g. ORD-2026...)" 
+                 className="w-full bg-gray-900 border border-gray-800 rounded-2xl py-4 pl-14 pr-4 text-white focus:border-blue-500 focus:outline-none transition shadow-[0_0_20px_rgba(0,0,0,0.3)]" 
+                 required
+               />
+             </div>
+             <div className="relative">
+               <Phone className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
+               <input 
+                 type="tel" 
+                 value={phoneQuery}
+                 onChange={(e) => setPhoneQuery(e.target.value)}
+                 placeholder="Registered Phone / WhatsApp" 
+                 className="w-full bg-gray-900 border border-gray-800 rounded-2xl py-4 pl-14 pr-4 text-white focus:border-blue-500 focus:outline-none transition shadow-[0_0_20px_rgba(0,0,0,0.3)]" 
+                 required
+               />
+             </div>
+           </div>
+           
            <button 
              type="submit" 
              disabled={loading}
-             className="absolute right-2 top-2 bottom-2 bg-blue-600 hover:bg-blue-500 text-white px-8 rounded-full font-bold transition flex items-center justify-center gap-2"
+             className="w-full bg-blue-600 hover:bg-blue-500 text-white py-4 rounded-2xl font-bold transition flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(37,99,235,0.3)] disabled:opacity-50"
            >
-             {loading ? <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" /> : "Track"}
+             {loading ? <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" /> : "Track Securely"}
            </button>
         </form>
 
         {/* Global Error Banner */}
         {errorMsg && (
-          <div className="w-full max-w-2xl bg-red-500/10 border border-red-500/20 text-red-400 p-6 rounded-2xl text-center leading-relaxed font-medium">
+          <div className="w-full max-w-2xl bg-red-500/10 border border-red-500/20 text-red-400 p-6 rounded-2xl text-center leading-relaxed font-medium mb-6">
             {errorMsg}
+          </div>
+        )}
+
+        {/* Global Success Banner */}
+        {successMsg && (
+          <div className="w-full max-w-2xl bg-green-500/10 border border-green-500/20 text-green-400 p-6 rounded-2xl text-center leading-relaxed font-bold mb-6">
+            {successMsg}
           </div>
         )}
 
@@ -103,6 +170,7 @@ export default function TrackOrderPage() {
                     <CreditCard className="w-4 h-4" /> {order.paymentStatus || 'Pending'}
                   </div>
                   <div className={`px-4 py-2 rounded-xl text-sm font-bold flex items-center gap-2 border ${
+                     order.dispatchStatus === 'Cancelled' ? 'bg-red-500/20 text-red-500 border-red-500/30' :
                      order.dispatchStatus === 'Delivered' ? 'bg-green-500/20 text-green-400 border-green-500/30' :
                      order.dispatchStatus === 'Shipped' ? 'bg-blue-500/20 text-blue-400 border-blue-500/30' :
                      order.dispatchStatus === 'Processing' ? 'bg-purple-500/20 text-purple-400 border-purple-500/30' :
@@ -110,6 +178,16 @@ export default function TrackOrderPage() {
                   }`}>
                     <Package className="w-4 h-4" /> {order.dispatchStatus || 'Pending'}
                   </div>
+                  
+                  {(order.dispatchStatus === 'Pending' || order.dispatchStatus === 'Processing' || !order.dispatchStatus) && (
+                     <button 
+                       onClick={() => cancelOrder(order.id)}
+                       disabled={loading}
+                       className="px-4 py-2 bg-red-900/40 hover:bg-red-900/80 text-red-500 hover:text-red-400 font-bold rounded-xl transition text-sm flex items-center gap-2 disabled:opacity-50 border border-red-500/30"
+                     >
+                        <X className="w-4 h-4" /> Cancel Order
+                     </button>
+                  )}
                </div>
              </div>
 
@@ -152,5 +230,13 @@ export default function TrackOrderPage() {
 
       </main>
     </div>
+  );
+}
+
+export default function TrackOrderPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-black text-white flex justify-center items-center">Loading Secure Tracker...</div>}>
+       <TrackOrderContent />
+    </Suspense>
   );
 }

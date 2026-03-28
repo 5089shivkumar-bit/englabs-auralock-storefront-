@@ -41,7 +41,15 @@ function CheckoutContent() {
     setProcessing(true);
 
     try {
-      // Call backend to generate Razorpay order ID
+      const rzpKey = process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || "";
+      
+      if (!rzpKey || !rzpKey.startsWith("rzp_")) {
+         alert("SYSTEM PAUSE: Razorpay LIVE API Keys were not detected. Please inject your Razorpay test or live tokens inside a .env.local file to permanently open the GPay / CC modal natively!");
+         setProcessing(false);
+         return;
+      }
+
+      // Call backend to generate generic Razorpay order ID
       const res = await fetch("/api/razorpay", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -56,36 +64,6 @@ function CheckoutContent() {
         return;
       }
 
-      const rzpKey = process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || "";
-      if (!rzpKey || !rzpKey.startsWith("rzp_")) {
-         console.warn("Bypassing Razorpay window and simulating success for local checkout flow...");
-         setTimeout(async () => {
-            try {
-              await fetch("/api/orders", {
-                 method: "POST",
-                 headers: { "Content-Type": "application/json" },
-                 body: JSON.stringify({
-                    orderId: orderData.id,
-                    name: formData.fullName,
-                    email: formData.email,
-                    phone: formData.phone,
-                    address: `${formData.address}, ${formData.city}, ${formData.state} - ${formData.pincode}`,
-                    productName: productName,
-                    tier: productName,
-                    price: productPrice,
-                    paymentStatus: "Completed",
-                    paymentId: `pay_mock_txn_${Date.now()}`
-                 })
-              });
-              window.location.href = `/success?order_id=${orderData.id}&email=${encodeURIComponent(formData.email)}`;
-            } catch(err) {
-              setProcessing(false);
-              alert("Mock saving failed.");
-            }
-         }, 1500);
-         return;
-      }
-
       const options = {
         key: rzpKey, 
         amount: productPrice * 100, 
@@ -96,7 +74,7 @@ function CheckoutContent() {
         handler: async function (response: any) {
           // Payment Success Callback - Save Order
           try {
-            await fetch("/api/orders", {
+            const saveRes = await fetch("/api/orders", {
                method: "POST",
                headers: { "Content-Type": "application/json" },
                body: JSON.stringify({
@@ -112,7 +90,8 @@ function CheckoutContent() {
                   paymentId: response.razorpay_payment_id
                })
             });
-            window.location.href = `/success?order_id=${orderData.id}&email=${encodeURIComponent(formData.email)}`;
+            const saveResJson = await saveRes.json();
+            window.location.href = `/success?order_id=${saveResJson.order.id}&email=${encodeURIComponent(formData.email)}`;
           } catch(err) {
             console.error(err);
             alert("Payment successful but order saving failed. Please contact support.");
