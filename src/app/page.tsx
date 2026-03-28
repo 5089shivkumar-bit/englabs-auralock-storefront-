@@ -16,6 +16,7 @@ import {
   Smartphone,
   Cpu,
   ChevronRight,
+  ChevronLeft,
   Grip,
   ChevronDown,
   Video,
@@ -29,7 +30,8 @@ import {
   Volume2,
   Scan,
   Dumbbell,
-  Building2
+  Building2,
+  Users
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -40,6 +42,7 @@ export default function Home() {
   const [selectedProduct, setSelectedProduct] = useState<any | null>(null);
   const [mounted, setMounted] = useState(false);
   const [activeTab, setActiveTab] = useState("home");
+  const [currentGalleryIndex, setCurrentGalleryIndex] = useState(0);
 
   useEffect(() => {
     setMounted(true);
@@ -194,9 +197,6 @@ export default function Home() {
                       <button onClick={() => setActiveTab('products')} className="px-10 py-5 bg-white text-black font-black uppercase italic tracking-tighter text-xl rounded-2xl hover:bg-orange-600 hover:text-white transition-all duration-500 shadow-[0_20px_40px_rgba(255,255,255,0.1)] hover:shadow-[0_20px_40px_rgba(234,88,12,0.4)] hover:scale-[1.02]">
                         Get Started
                       </button>
-                      <button className="flex items-center justify-center gap-3 px-8 py-5 bg-black/40 backdrop-blur-md border border-white/20 text-white font-black uppercase italic tracking-tighter text-xl rounded-2xl hover:bg-white/10 transition-all duration-500 hover:scale-[1.02]">
-                        <Video className="w-6 h-6" /> Watch Film
-                      </button>
                     </div>
                   </motion.div>
                </div>
@@ -205,27 +205,56 @@ export default function Home() {
             {/* Feature Highlights */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
                {[
-                 { icon: ScanFace, title: "Smart Face Recognition", desc: "Secure, contactless entry powered by AI." },
-                 { icon: Cpu, title: "Always Active", desc: "Works even without internet connection." },
-                 { icon: Smartphone, title: "Real-Time Monitoring", desc: "Track access and activity instantly." }
+                 { 
+                   icon: ScanFace, 
+                   title: "Smart Face Recognition", 
+                   desc: "Secure, contactless entry powered by AI.", 
+                   image: "/feature-faceauth.png" 
+                 },
+                 { 
+                   icon: Cpu, 
+                   title: "Always Active", 
+                   desc: "Works even without internet connection.", 
+                   image: "/feature-alwaysactive.png" 
+                 },
+                 { 
+                   icon: Smartphone, 
+                   title: "Real-Time Monitoring", 
+                   desc: "Track access and activity instantly.", 
+                   image: "/feature-monitoring.png" 
+                 }
                ].map((feat, i) => (
                  <motion.div 
                    key={i}
                    variants={itemVariants}
-                   whileHover={{ y: -5 }}
-                   className="p-8 bg-[#0a0a0a] border border-white/5 rounded-[2rem] hover:border-orange-600/50 transition duration-500"
+                   whileHover={{ y: -8 }}
+                   className="group relative p-8 bg-[#0a0a0a] border border-white/5 rounded-[2rem] hover:border-orange-600/50 transition duration-500 overflow-hidden shadow-xl"
                  >
-                   <div className="w-14 h-14 rounded-2xl bg-orange-600/10 flex items-center justify-center text-orange-600 mb-6">
-                     <feat.icon className="w-7 h-7" />
+                   {/* Background Image */}
+                   <div className="absolute inset-0 z-0">
+                     <img 
+                       src={feat.image}
+                       alt={feat.title}
+                       className="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700 ease-in-out"
+                     />
+                     <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/50 to-transparent z-10" />
+                     <div className="absolute inset-0 bg-orange-900/10 mix-blend-overlay z-10" />
                    </div>
-                   <h3 className="text-xl font-black italic uppercase italic tracking-tighter mb-4">{feat.title}</h3>
-                   <p className="text-sm text-gray-500 leading-relaxed font-medium">{feat.desc}</p>
+
+                   {/* Content overlay */}
+                   <div className="relative z-20">
+                     <div className="w-14 h-14 rounded-2xl bg-orange-600/20 backdrop-blur-md flex items-center justify-center text-orange-500 mb-6 border border-orange-600/30 shadow-[0_0_20px_rgba(234,88,12,0.15)] group-hover:shadow-[0_0_30px_rgba(234,88,12,0.4)] transition-shadow duration-500">
+                       <feat.icon className="w-7 h-7" />
+                     </div>
+                     <h3 className="text-xl font-black uppercase italic tracking-tighter mb-4 text-white drop-shadow-lg">{feat.title}</h3>
+                     <p className="text-sm text-gray-300 leading-relaxed font-medium drop-shadow-md">{feat.desc}</p>
+                   </div>
                  </motion.div>
                ))}
             </div>
 
             {/* Target Use Cases Section */}
-            <motion.div variants={itemVariants} className="mb-32 mt-12 text-center">
+            <motion.div variants={itemVariants} className="mb-12 mt-12 text-center">
                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-600/10 border border-cyan-600/20 text-cyan-500 text-[10px] font-black tracking-widest uppercase mb-6">
                  Who is this for?
                </div>
@@ -235,22 +264,33 @@ export default function Home() {
                
                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto px-4">
                  {[
-                   { icon: Dumbbell, title: "Gyms", desc: "24/7 autonomous access without staff members.", color: "text-red-500", bg: "bg-red-500/10", border: "border-red-500/30", glow: "group-hover:shadow-[0_0_40px_rgba(239,68,68,0.2)]" },
-                   { icon: HomeIcon, title: "Airbnbs", desc: "Seamless remote self check-in for guests.", color: "text-amber-500", bg: "bg-amber-500/10", border: "border-amber-500/30", glow: "group-hover:shadow-[0_0_40px_rgba(245,158,11,0.2)]" },
-                   { icon: Building2, title: "Offices", desc: "Enterprise-grade secure entry tracking.", color: "text-blue-500", bg: "bg-blue-500/10", border: "border-blue-500/30", glow: "group-hover:shadow-[0_0_40px_rgba(59,130,246,0.2)]" }
-                 ].map((useCase, i) => (
+                   { icon: Dumbbell, title: "Gyms", desc: "24/7 autonomous access without staff members.", color: "text-red-500", bg: "bg-red-500/10", border: "border-red-500/30", glow: "group-hover:shadow-[0_0_40px_rgba(239,68,68,0.2)]", image: "/usecase-gym.png" },
+                   { icon: HomeIcon, title: "Airbnbs", desc: "Seamless remote self check-in for guests.", color: "text-amber-500", bg: "bg-amber-500/10", border: "border-amber-500/30", glow: "group-hover:shadow-[0_0_40px_rgba(245,158,11,0.2)]", image: "/usecase-airbnb.png" },
+                   { icon: Building2, title: "Offices", desc: "Enterprise-grade secure entry tracking.", color: "text-blue-500", bg: "bg-blue-500/10", border: "border-blue-500/30", glow: "group-hover:shadow-[0_0_40px_rgba(59,130,246,0.2)]", image: "/usecase-office.png" }
+                 ].map((useCase: any, i) => (
                    <motion.div 
                      key={i}
                      whileHover={{ y: -8 }}
-                     className={`group relative overflow-hidden bg-gradient-to-br from-[#0a0a0a] to-[#020202] p-8 rounded-[2rem] border border-white/5 transition-all duration-300 hover:border-white/20 ${useCase.glow}`}
+                     className={`group relative overflow-hidden bg-gradient-to-br from-[#0a0a0a] to-[#020202] p-8 rounded-[2rem] border border-white/5 transition-all duration-300 hover:border-white/20 shadow-xl ${useCase.glow}`}
                    >
-                      <div className={`absolute top-0 right-0 w-32 h-32 ${useCase.bg} blur-[40px] rounded-full group-hover:opacity-100 transition-opacity opacity-20`} />
+                      <div className={`absolute top-0 right-0 w-32 h-32 ${useCase.bg} blur-[40px] rounded-full group-hover:opacity-100 transition-opacity opacity-20 z-0`} />
                       
-                      <div className={`w-14 h-14 rounded-2xl ${useCase.bg} flex items-center justify-center ${useCase.color} mb-6 border ${useCase.border}`}>
+                      {useCase.image && (
+                         <div className="absolute inset-0 z-0 overflow-hidden">
+                           <img 
+                             src={useCase.image}
+                             alt={useCase.title}
+                             className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700 ease-in-out mix-blend-screen"
+                           />
+                           <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a]/90 via-[#0a0a0a]/60 to-transparent z-10" />
+                         </div>
+                      )}
+
+                      <div className={`w-14 h-14 rounded-2xl ${useCase.bg} flex items-center justify-center ${useCase.color} mb-6 border ${useCase.border} relative z-10 shadow-lg`}>
                         <useCase.icon className="w-7 h-7" />
                       </div>
-                      <h3 className="text-2xl font-black italic uppercase tracking-tighter mb-2 z-10 relative">{useCase.title}</h3>
-                      <p className="text-sm text-gray-500 font-medium z-10 relative">{useCase.desc}</p>
+                      <h3 className="text-2xl font-black italic uppercase tracking-tighter mb-2 z-10 relative text-white drop-shadow-lg">{useCase.title}</h3>
+                      <p className="text-sm text-gray-300 font-medium z-10 relative drop-shadow-md">{useCase.desc}</p>
                    </motion.div>
                  ))}
                </div>
@@ -471,6 +511,47 @@ export default function Home() {
                </div>
             </motion.div>
 
+            {/* TRUST INDICATORS */}
+            <motion.div 
+               initial={{ opacity: 0, y: 20 }}
+               whileInView={{ opacity: 1, y: 0 }}
+               viewport={{ once: true }}
+               className="relative overflow-hidden py-24 mt-12 w-full"
+               style={{
+                  backgroundImage: "url('/trust-bg2.png')",
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+               }}
+            >
+               {/* Subtle edge-only cinematic backdrops to reveal the bright building */}
+               <div className="absolute inset-0 bg-[#020202]/10 z-0"></div>
+               <div className="absolute inset-y-0 w-1/4 left-0 bg-gradient-to-r from-[#020202]/80 to-transparent z-0"></div>
+               <div className="absolute inset-y-0 w-1/4 right-0 bg-gradient-to-l from-[#020202]/80 to-transparent z-0"></div>
+               <div className="absolute top-0 inset-x-0 h-24 bg-gradient-to-b from-[#0a0a0a]/90 to-transparent z-0"></div>
+               <div className="absolute bottom-0 inset-x-0 h-24 bg-gradient-to-t from-[#020202]/90 to-transparent z-0"></div>
+
+               <div className="max-w-7xl mx-auto px-6 relative z-10 grid grid-cols-1 md:grid-cols-3 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-white/10">
+                  <div className="px-8 py-4 flex flex-col items-center justify-center group">
+                     <h4 className="text-xl font-black text-white uppercase tracking-widest mb-3 shadow-black drop-shadow-lg">Made in India</h4>
+                     <p className="text-xs text-gray-400 font-medium leading-relaxed max-w-xs mx-auto">Engineered and manufactured domestically for uncompromised quality and scale.</p>
+                  </div>
+                  <div className="px-8 py-4 flex flex-col items-center justify-center group">
+                     <div className="w-16 h-16 bg-orange-600/10 backdrop-blur-xl rounded-full flex items-center justify-center mb-6 border border-orange-600/30 group-hover:-translate-y-2 transition-transform duration-500 shadow-[0_0_30px_rgba(234,88,12,0.2)]">
+                        <ShieldCheck className="w-8 h-8 text-orange-500" />
+                     </div>
+                     <h4 className="text-xl font-black text-white uppercase tracking-widest mb-3 shadow-black drop-shadow-lg">Secure Biometrics</h4>
+                     <p className="text-xs text-gray-400 font-medium leading-relaxed max-w-xs mx-auto">AES-256 encrypted facial recognition and structural fingerprint data arrays.</p>
+                  </div>
+                  <div className="px-8 py-4 flex flex-col items-center justify-center group">
+                     <div className="w-16 h-16 bg-sky-500/10 backdrop-blur-xl rounded-full flex items-center justify-center mb-6 border border-sky-500/30 group-hover:-translate-y-2 transition-transform duration-500 shadow-[0_0_30px_rgba(14,165,233,0.2)]">
+                        <Users className="w-8 h-8 text-sky-500" />
+                     </div>
+                     <h4 className="text-xl font-black text-white uppercase tracking-widest mb-3 shadow-black drop-shadow-lg">10,000+ Deployments</h4>
+                     <p className="text-xs text-gray-400 font-medium leading-relaxed max-w-xs mx-auto">Trusted by elite enterprises, boutique gyms, and architectural homeowners.</p>
+                  </div>
+               </div>
+            </motion.div>
+
           </motion.div>
         )}
 
@@ -501,7 +582,7 @@ export default function Home() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: idx * 0.1 }}
-                  onClick={() => setSelectedProduct(product)}
+                  onClick={() => { setSelectedProduct(product); setCurrentGalleryIndex(0); }}
                   className="group relative bg-[#0a0a0a] border border-white/5 p-8 rounded-[2.5rem] hover:border-orange-600/50 transition-all duration-500 cursor-pointer overflow-hidden shadow-2xl"
                 >
                   <div className="absolute top-0 right-0 w-32 h-32 bg-orange-600/5 blur-[40px] rounded-full group-hover:bg-orange-600/10 transition" />
@@ -601,12 +682,70 @@ export default function Home() {
               </button>
 
               {/* Gallery Space */}
-              <div className="w-full md:w-1/2 p-12 bg-black flex items-center justify-center border-b md:border-b-0 md:border-r border-white/5">
-                <img 
-                  src={selectedProduct.image || selectedProduct.images?.[0]} 
-                  alt={selectedProduct.name} 
-                  className="max-h-[50vh] object-contain drop-shadow-[0_20px_50px_rgba(234,88,12,0.3)]" 
-                />
+              <div className="w-full md:w-1/2 p-12 bg-black flex items-center justify-center border-b md:border-b-0 md:border-r border-white/5 relative group">
+                {(() => {
+                   const mediaLinks = [];
+                   if (selectedProduct.video) mediaLinks.push({ type: 'video', url: selectedProduct.video });
+                   if (selectedProduct.images && selectedProduct.images.length > 0) {
+                     mediaLinks.push(...selectedProduct.images.map((img: string) => ({ type: 'image', url: img })));
+                   } else if (selectedProduct.image) {
+                     mediaLinks.push({ type: 'image', url: selectedProduct.image });
+                   }
+
+                   if (mediaLinks.length === 0) {
+                     return <Lock className="w-32 h-32 text-gray-800" />;
+                   }
+
+                   const currentMedia = mediaLinks[currentGalleryIndex] || mediaLinks[0];
+
+                   return (
+                     <>
+                       {currentMedia.type === 'video' ? (
+                         <video 
+                           src={currentMedia.url} 
+                           autoPlay 
+                           loop 
+                           muted 
+                           playsInline 
+                           className="max-w-full max-h-[50vh] object-contain drop-shadow-[0_20px_50px_rgba(234,88,12,0.3)] rounded-2xl"
+                         />
+                       ) : (
+                         <img 
+                           src={currentMedia.url} 
+                           alt={selectedProduct.name} 
+                           className="max-h-[50vh] object-contain drop-shadow-[0_20px_50px_rgba(234,88,12,0.3)] transition-all duration-500" 
+                         />
+                       )}
+
+                       {mediaLinks.length > 1 && (
+                         <>
+                           <button 
+                             onClick={(e) => { e.stopPropagation(); setCurrentGalleryIndex((prev) => (prev - 1 + mediaLinks.length) % mediaLinks.length); }}
+                             className="absolute left-6 w-12 h-12 bg-white/5 border border-white/10 backdrop-blur-md rounded-full flex items-center justify-center text-white hover:bg-orange-600 hover:scale-110 transition-all duration-300 opacity-0 group-hover:opacity-100 z-50"
+                           >
+                             <ChevronLeft className="w-6 h-6 ml-[-2px]" />
+                           </button>
+                           <button 
+                             onClick={(e) => { e.stopPropagation(); setCurrentGalleryIndex((prev) => (prev + 1) % mediaLinks.length); }}
+                             className="absolute right-6 w-12 h-12 bg-white/5 border border-white/10 backdrop-blur-md rounded-full flex items-center justify-center text-white hover:bg-orange-600 hover:scale-110 transition-all duration-300 opacity-0 group-hover:opacity-100 z-50"
+                           >
+                             <ChevronRight className="w-6 h-6 mr-[-2px]" />
+                           </button>
+                           
+                           <div className="absolute bottom-8 flex gap-3 z-50 bg-black/40 px-4 py-2 rounded-full backdrop-blur-sm border border-white/10">
+                             {mediaLinks.map((_, idx) => (
+                               <button 
+                                 key={idx}
+                                 onClick={(e) => { e.stopPropagation(); setCurrentGalleryIndex(idx); }}
+                                 className={`h-2 rounded-full transition-all duration-500 ${currentGalleryIndex === idx ? 'bg-orange-500 w-8' : 'bg-white/30 hover:bg-white/60 w-2'}`}
+                               />
+                             ))}
+                           </div>
+                         </>
+                       )}
+                     </>
+                   );
+                })()}
               </div>
 
               {/* Details Space */}
