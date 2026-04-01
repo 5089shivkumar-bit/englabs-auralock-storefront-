@@ -1,41 +1,49 @@
 import { NextResponse } from 'next/server';
-import { getDB, saveDB } from '@/lib/db';
+import { supabase } from '@/lib/supabase';
+import { ProductSchema } from '@/lib/validation';
+import { z } from 'zod';
 
 export async function GET() {
-  const db = getDB();
-  return NextResponse.json(db.products);
+  const { data, error } = await supabase.from('products').select('*');
+  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  return NextResponse.json(data);
 }
 
 export async function POST(request: Request) {
-  const newProduct = await request.json();
-  const db = getDB();
-  const productWithId = { id: Date.now().toString(), ...newProduct };
-  db.products.push(productWithId);
-  saveDB(db);
-  return NextResponse.json({ success: true, product: productWithId });
+  try {
+    const body = await request.json();
+    const validatedProduct = ProductSchema.parse(body);
+    const productWithId = { id: Date.now().toString(), ...validatedProduct };
+    const { data, error } = await supabase.from('products').insert([productWithId]).select();
+    if (error) return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+    return NextResponse.json({ success: true, product: data?.[0] || productWithId });
+  } catch (error) {
+    if (error instanceof z.ZodError) return NextResponse.json({ success: false, errors: error.issues }, { status: 400 });
+    return NextResponse.json({ success: false, error: "Internal Server Error" }, { status: 500 });
+  }
 }
 
 export async function PUT(request: Request) {
-  const updatedProduct = await request.json();
-  const db = getDB();
-  const index = db.products.findIndex((p: any) => p.id === updatedProduct.id);
-  if (index > -1) {
-    db.products[index] = { ...db.products[index], ...updatedProduct };
-    saveDB(db);
-    return NextResponse.json({ success: true, product: db.products[index] });
+  try {
+    const body = await request.json();
+    const { id, ...updates } = body;
+    if (!id) return NextResponse.json({ success: false, error: "ID required" }, { status: 400 });
+    
+    const { data, error } = await supabase.from('products').update(updates).eq('id', id).select();
+    if (error) return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+    if (!data || data.length === 0) return NextResponse.json({ success: false, error: 'Product not found' }, { status: 404 });
+    return NextResponse.json({ success: true, product: data[0] });
+  } catch (error) {
+    return NextResponse.json({ success: false, error: "Invalid payload" }, { status: 400 });
   }
-  return NextResponse.json({ success: false, error: 'Product not found' }, { status: 404 });
 }
 
 export async function DELETE(request: Request) {
   const { searchParams } = new URL(request.url);
   const id = searchParams.get('id');
-  const db = getDB();
-  const initialLength = db.products.length;
-  db.products = db.products.filter((p: any) => p.id !== id);
-  if (db.products.length < initialLength) {
-    saveDB(db);
-    return NextResponse.json({ success: true });
-  }
-  return NextResponse.json({ success: false, error: 'Product not found' }, { status: 404 });
+  if (!id) return NextResponse.json({ success: false, error: 'ID is required' }, { status: 400 });
+  
+  const { error } = await supabase.from('products').delete().eq('id', id);
+  if (error) return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+  return NextResponse.json({ success: true });
 }

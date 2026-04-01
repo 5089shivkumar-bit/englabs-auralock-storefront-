@@ -1,24 +1,29 @@
 import { NextResponse } from 'next/server';
-import { getDB, saveDB } from '@/lib/db';
+import { supabase } from '@/lib/supabase';
 import nodemailer from 'nodemailer';
 import twilio from 'twilio';
+import { OrderSchema } from '@/lib/validation';
+import { z } from 'zod';
 
 export async function GET() {
-  const db = getDB();
-  return NextResponse.json(db.orders);
+  const { data, error } = await supabase.from('orders').select('*');
+  if (error) return NextResponse.json([], { status: 500 });
+  return NextResponse.json(data);
 }
 
 export async function POST(request: Request) {
-  const orderDetails = await request.json();
-  const db = getDB();
+  try {
+    const body = await request.json();
+    const orderDetails = OrderSchema.parse(body);
   
   const year = new Date().getFullYear();
   const prefix = `ORD-${year}-`;
+  
+  const { data: existingOrders } = await supabase.from('orders').select('id').like('id', `${prefix}%`);
   let nextSeq = 1;
-  const existingOrders = db.orders.filter((o: any) => o.id?.startsWith(prefix));
-  if (existingOrders.length > 0) {
+  if (existingOrders && existingOrders.length > 0) {
      const maxSeq = Math.max(...existingOrders.map((o: any) => parseInt(o.id.replace(prefix, ''), 10) || 0));
-     nextSeq = maxSeq + 1;
+     if (!isNaN(maxSeq)) nextSeq = maxSeq + 1;
   }
   
   const generatedId = `${prefix}${nextSeq.toString().padStart(4, '0')}`;
@@ -32,8 +37,7 @@ export async function POST(request: Request) {
     date: new Date().toISOString()
   };
   
-  db.orders.unshift(newOrder); // Add to top
-  saveDB(db);
+  await supabase.from('orders').insert([newOrder]);
   
   // Asynchronous WhatsApp Dispatch
   try {
@@ -149,16 +153,25 @@ export async function POST(request: Request) {
   }
 
   return NextResponse.json({ success: true, order: newOrder });
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return NextResponse.json({ success: false, errors: error.issues }, { status: 400 });
+    }
+    console.error("Order API Error:", error);
+    return NextResponse.json({ success: false, error: "Internal Server Error" }, { status: 500 });
+  }
 }
 
 export async function PUT(request: Request) {
+  try {
     const { id, dispatchStatus } = await request.json();
-    const db = getDB();
-    const orderIndex = db.orders.findIndex((o: any) => o.id === id);
-    if (orderIndex > -1) {
-        db.orders[orderIndex].dispatchStatus = dispatchStatus;
-        saveDB(db);
-        return NextResponse.json({ success: true, order: db.orders[orderIndex] });
-    }
-    return NextResponse.json({ success: false, error: 'Order not found' }, { status: 404 });
+    if (!id) return NextResponse.json({ success: false, error: "ID required" }, { status: 400 });
+
+    const { data, error } = await supabase.from('orders').update({ dispatchStatus }).eq('id', id).select();
+    if (error) return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+    if (!data || data.length === 0) return NextResponse.json({ success: false, error: 'Order not found' }, { status: 404 });
+    return NextResponse.json({ success: true, order: data[0] });
+  } catch (error) {
+    return NextResponse.json({ success: false, error: "Invalid request payload" }, { status: 400 });
+  }
 }
