@@ -51,7 +51,7 @@ export default function ChatBot() {
         whileHover={{ scale: 1.1, rotate: 5 }}
         whileTap={{ scale: 0.9 }}
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-8 right-8 z-[1000] w-16 h-16 bg-orange-600 rounded-2xl flex items-center justify-center text-white shadow-[0_10px_30px_rgba(234,88,12,0.4)] border border-orange-500/50"
+        className="fixed bottom-8 right-8 z-[1000] w-16 h-16 bg-purple-600 rounded-2xl flex items-center justify-center text-white shadow-[0_10px_30px_rgba(234,88,12,0.4)] border border-purple-500/50"
       >
         {isOpen ? <X className="w-8 h-8" /> : <Sparkles className="w-8 h-8" />}
       </motion.button>
@@ -66,7 +66,7 @@ export default function ChatBot() {
             className="fixed bottom-28 right-8 z-[1000] w-[90vw] md:w-[400px] h-[600px] bg-[#0a0a0a] border border-white/10 rounded-[2.5rem] shadow-[0_30px_100px_rgba(0,0,0,0.8)] overflow-hidden flex flex-col backdrop-blur-2xl"
           >
             {/* Header */}
-            <div className="p-6 bg-gradient-to-r from-orange-600 to-orange-700 flex items-center justify-between">
+            <div className="p-6 bg-gradient-to-r from-purple-600 to-orange-700 flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center border border-white/30">
                   <Bot className="w-6 h-6 text-white" />
@@ -100,7 +100,7 @@ export default function ChatBot() {
                   <div className={`max-w-[80%] p-4 rounded-2xl text-sm font-medium leading-relaxed ${
                     m.role === 'assistant' 
                       ? 'bg-white/5 text-gray-200 border border-white/5 rounded-tl-none' 
-                      : 'bg-orange-600 text-white rounded-tr-none shadow-lg shadow-orange-600/20'
+                      : 'bg-purple-600 text-white rounded-tr-none shadow-lg shadow-purple-600/20'
                   }`}>
                     {m.content}
                   </div>
@@ -109,7 +109,7 @@ export default function ChatBot() {
               {isTyping && (
                 <div className="flex justify-start">
                   <div className="bg-white/5 p-4 rounded-2xl rounded-tl-none border border-white/5">
-                    <Loader2 className="w-4 h-4 text-orange-600 animate-spin" />
+                    <Loader2 className="w-4 h-4 text-purple-600 animate-spin" />
                   </div>
                 </div>
               )}
@@ -124,11 +124,11 @@ export default function ChatBot() {
                   onChange={e => setInput(e.target.value)}
                   onKeyPress={e => e.key === 'Enter' && handleSend()}
                   placeholder="Ask Aura anything..."
-                  className="w-full bg-[#111] border border-white/10 rounded-xl pl-5 pr-14 py-4 text-xs font-bold text-white focus:outline-none focus:border-orange-600 focus:shadow-[0_0_20px_rgba(234,88,12,0.1)] transition-all"
+                  className="w-full bg-[#111] border border-white/10 rounded-xl pl-5 pr-14 py-4 text-xs font-bold text-white focus:outline-none focus:border-purple-600 focus:shadow-[0_0_20px_rgba(234,88,12,0.1)] transition-all"
                 />
                 <button 
                   onClick={handleSend}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-orange-600 rounded-lg flex items-center justify-center text-white hover:bg-orange-500 transition"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-purple-600 rounded-lg flex items-center justify-center text-white hover:bg-purple-500 transition"
                 >
                   <Send className="w-5 h-5" />
                 </button>

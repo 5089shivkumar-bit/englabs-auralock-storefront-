@@ -75,7 +75,7 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
   };
 
   return (
-    <div className="min-h-screen bg-[#020202] text-white selection:bg-orange-500/30 overflow-x-hidden">
+    <div className="min-h-screen bg-[#020202] text-white selection:bg-purple-500/30 overflow-x-hidden">
       
       {/* Cinematic Splash Screen */}
       <AnimatePresence>
@@ -91,14 +91,14 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
               className="text-center"
             >
               <div className="relative mb-4">
-                <Lock className="w-16 h-16 text-orange-600 animate-pulse mx-auto" strokeWidth={1.5} />
-                <div className="absolute inset-0 bg-orange-600/30 blur-2xl rounded-full" />
+                <Lock className="w-16 h-16 text-purple-600 animate-pulse mx-auto" strokeWidth={1.5} />
+                <div className="absolute inset-0 bg-purple-600/30 blur-2xl rounded-full" />
               </div>
-              <h1 className="text-4xl md:text-5xl font-black tracking-tighter uppercase italic">
-                Aura<span className="text-orange-600">Lock</span>
+              <h1 className="text-4xl md:text-5xl font-black tracking-widest uppercase font-mono">
+                Aura<span className="text-purple-600">Lock</span>
               </h1>
-              <div className="w-32 h-[1px] bg-gradient-to-r from-transparent via-orange-600 to-transparent mx-auto mt-4" />
-              <p className="mt-6 text-[10px] tracking-[0.4em] text-gray-500 uppercase font-medium">System Initialization In Progress</p>
+              <div className="w-32 h-[1px] bg-gradient-to-r from-transparent via-purple-600 to-transparent mx-auto mt-4" />
+              <p className="mt-6 text-[10px] tracking-[0.4em] text-purple-500 uppercase font-mono font-medium animate-pulse">Initializing Secure Protocol... Access Granted.</p>
             </motion.div>
           </motion.div>
         )}
@@ -107,21 +107,27 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
       {/* Modern Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-[500] px-6 py-6 md:px-12 flex justify-between items-center bg-black/40 backdrop-blur-2xl border-b border-white/5">
         <div className="flex items-center gap-2 cursor-pointer" onClick={() => setActiveTab('home')}>
-          <div className="w-8 h-8 rounded-lg bg-orange-600 flex items-center justify-center shadow-[0_0_15px_rgba(234,88,12,0.5)]">
+          <div className="w-8 h-8 rounded-lg bg-purple-600 flex items-center justify-center shadow-[0_0_15px_rgba(147,51,234,0.5)]">
             <Lock className="w-5 h-5 text-white" />
           </div>
-          <span className="text-xl font-black tracking-tighter uppercase italic">Aura<span className="text-orange-600">Lock</span></span>
+          <div className="flex flex-col leading-none">
+            <span className="text-xl font-black tracking-widest uppercase font-mono">Auralock</span>
+            <span className="text-[7px] font-bold tracking-[0.2em] text-gray-500 uppercase ml-0.5">by Code4uTech</span>
+          </div>
         </div>
         
         <div className="hidden md:flex items-center gap-10 text-[11px] font-bold uppercase tracking-widest text-gray-400">
-          <button onClick={() => setActiveTab('home')} className={`hover:text-white transition ${activeTab === 'home' ? 'text-orange-500' : ''}`}>Ecosystem</button>
-          <button onClick={() => setActiveTab('products')} className={`hover:text-white transition ${activeTab === 'products' ? 'text-orange-500' : ''}`}>Product</button>
-          <Link href="/track" className="hover:text-white transition">Tracking</Link>
-          <button onClick={() => setActiveTab('contact')} className="hover:text-white transition">Intelligence</button>
+          <button onClick={() => setActiveTab('home')} className={`hover:text-white transition ${activeTab === 'home' ? 'text-purple-500' : ''}`}>Home</button>
+          <button onClick={() => setActiveTab('products')} className={`hover:text-white transition ${activeTab === 'products' ? 'text-purple-500' : ''}`}>X1 Series</button>
+          <Link href="/developers" className="hover:text-white transition">Developers</Link>
+          <Link href="/legal" className="hover:text-white transition">Legal</Link>
         </div>
 
-        <button className="px-5 py-2.5 bg-orange-600/10 border border-orange-600/20 rounded-full text-[10px] font-black uppercase tracking-widest text-orange-500 hover:bg-orange-600 hover:text-white transition-all duration-300">
-          Partner Portal
+        <button className="px-6 py-2.5 bg-gradient-to-r from-purple-600 to-cyan-400 rounded-lg text-[10px] font-black uppercase tracking-widest text-white shadow-[0_0_15px_rgba(147,51,234,0.3)] hover:shadow-[0_0_25px_rgba(147,51,234,0.6)] transition-all duration-300 flex items-center gap-2">
+          <div className="w-4 h-4 rounded-full bg-white/20 flex items-center justify-center text-white">
+             <Volume2 className="w-2.5 h-2.5" />
+          </div>
+          Sales
         </button>
       </nav>
 
@@ -135,68 +141,65 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
             animate="visible"
             className="max-w-7xl mx-auto px-6"
           >
-            {/* Full Width Video Hero */}
-            <div className="relative min-h-[90vh] flex flex-col justify-center overflow-hidden rounded-[3rem] border border-white/5 mb-12 shadow-[0_30px_100px_rgba(0,0,0,1)] bg-black group p-10 lg:p-20">
+            {/* Elite Hero Redesign */}
+            <div className="relative min-h-[85vh] flex flex-col items-center justify-center overflow-hidden mb-12 shadow-[inset_0_100px_150px_-20px_rgba(147,51,234,0.15)]">
                
-               {/* Background Video */}
-               <div className="absolute inset-0 z-0 bg-[#020617] overflow-hidden">
-                 <video 
-                   autoPlay 
-                   loop 
-                   muted 
-                   playsInline 
-                   className="absolute inset-0 w-full h-full object-cover opacity-100 mix-blend-lighten scale-[1.02] hover:scale-100 transition-transform duration-[10s] ease-out filter contrast-125 saturate-150"
-                 >
-                   <source src="https://www.shutterstock.com/shutterstock/videos/3906850375/preview/stock-footage-futuristic-cybersecurity-technology-animation-digital-shield-lock.webm" type="video/webm" />
-                   <source src="https://www.shutterstock.com/shutterstock/videos/3906850375/preview/stock-footage-futuristic-cybersecurity-technology-animation-digital-shield-lock.mp4" type="video/mp4" />
-                 </video>
-                 
-                 {/* Premium Lighting Overlays & Glow Effects */}
-                 <div className="absolute inset-0 bg-gradient-to-r from-[#020617]/95 via-[#020617]/60 to-transparent z-10" />
-                 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#020617]/20 to-[#020617] opacity-90 z-10" />
-                 
-                 {/* Enhancing the Cyan and Orange Vibe */}
-                 <div className="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-cyan-500/20 blur-[130px] shadow-[0_0_100px_rgba(6,182,212,0.5)] pointer-events-none rounded-full mix-blend-screen z-10" />
-                 <div className="absolute bottom-[-20%] left-[-10%] w-[500px] h-[500px] bg-orange-600/15 blur-[150px] pointer-events-none rounded-full mix-blend-screen z-10" />
-                 
-                 {/* HD Overlay Indicator */}
-                 <div className="absolute bottom-10 right-10 z-20 hidden md:flex items-center gap-3 bg-black/60 backdrop-blur-lg px-5 py-2.5 border border-[#0dcaf0]/30 rounded-full shadow-[0_0_30px_rgba(13,202,240,0.15)] transition-all hover:bg-black/80">
-                    <span className="w-2.5 h-2.5 rounded-full bg-[#0dcaf0] animate-pulse" />
-                    <span className="text-[#0dcaf0] text-[10px] font-black uppercase tracking-[0.2em]">Active Shield</span>
-                 </div>
-               </div>
+               {/* Background Ambient Glows */}
+               <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] bg-blue-600/10 blur-[120px] rounded-full pointer-events-none z-0" />
 
-               {/* Overlay Text Content */}
-               <div className="relative z-10 w-full max-w-3xl lg:mt-[-5%]">
-                  <motion.div 
-                    initial={{ opacity: 0, x: -50 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
-                  >
-                    <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-orange-600/10 border border-orange-600/20 text-orange-500 text-[10px] font-black tracking-[0.2em] uppercase mb-8 backdrop-blur-sm shadow-[0_0_20px_rgba(234,88,12,0.1)]">
-                      <span className="relative flex h-2 w-2">
-                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
-                        <span className="relative inline-flex rounded-full h-2 w-2 bg-orange-600"></span>
-                      </span>
-                      Liveness Verification Active
+               {/* Top Badge Overlay */}
+               <motion.div 
+                 initial={{ opacity: 0, y: -20 }}
+                 animate={{ opacity: 1, y: 0 }}
+                 transition={{ duration: 1, delay: 0.5 }}
+                 className="z-10 mb-8"
+               >
+                 <div className="px-6 py-1.5 rounded-full bg-black/40 backdrop-blur-md border border-white/10 text-[9px] font-bold text-gray-400 tracking-[0.3em] uppercase flex items-center gap-3 shadow-2xl">
+                    <span className="w-1.5 h-1.5 rounded-full bg-purple-500 animate-pulse" />
+                    Code4uTech IoT Project • R&D Division
+                 </div>
+               </motion.div>
+
+               {/* The AuraBox - Main Hero Element */}
+               <div className="relative z-10 w-full max-w-2xl px-6">
+                 <motion.div 
+                   initial={{ opacity: 0, scale: 0.95 }}
+                   animate={{ opacity: 1, scale: 1 }}
+                   transition={{ duration: 1.2, ease: "easeOut" }}
+                   className="relative rounded-[2.5rem] p-[1px] text-center overflow-hidden group shadow-2xl"
+                 >
+                    {/* Animated Gradient Border Layer */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-purple-500 via-green-400 to-cyan-500 opacity-40 group-hover:opacity-80 transition-opacity duration-1000 animate-pulse" />
+                    <div className="relative bg-black/80 backdrop-blur-3xl rounded-[2.5rem] p-16 md:p-24 z-20">
+                    
+                    <div className="relative z-20">
+                      <h1 className="text-5xl md:text-8xl font-black tracking-widest uppercase font-mono text-white mb-6 drop-shadow-2xl">
+                        AuraLock S1
+                      </h1>
+                      
+                      <div className="flex flex-col gap-1">
+                        <p className="text-lg md:text-xl text-gray-400 font-bold tracking-tight uppercase">
+                          Smart Access Series
+                        </p>
+                        <p className="text-[10px] md:text-xs text-indigo-400 font-black tracking-[0.4em] uppercase opacity-70">
+                          by Code4uTech
+                        </p>
+                      </div>
                     </div>
-                    
-                    <h1 className="text-5xl md:text-7xl lg:text-[5.5rem] font-black tracking-tighter leading-[1.0] text-white mb-8 pr-4 drop-shadow-2xl">
-                      No Keys.<br/>
-                      No Guards.<br/>
-                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-orange-600 to-red-600 italic">No Hassle.</span>
-                    </h1>
-                    
-                    <p className="text-lg md:text-xl text-gray-300 font-medium max-w-md mb-12 leading-relaxed drop-shadow-lg">
-                      AuraLock turns any space into a fully automated secure zone.
+                  </div>
+                 </motion.div>
+                 
+                 {/* Terminal-Style Access Granted Line */}
+                 <motion.div 
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 2, delay: 1.5 }}
+                    className="mt-16 text-center"
+                 >
+                    <p className="font-mono text-[10px] md:text-xs tracking-[0.2em] text-[#9333ea] opacity-80 flex items-center justify-center gap-2">
+                       Initializing Secure Protocol... <span className="text-[#c084fc] font-bold animate-pulse">Access Granted.</span>
                     </p>
-                    
-                    <div className="flex flex-col sm:flex-row gap-5">
-                      <button onClick={() => setActiveTab('products')} className="px-10 py-5 bg-white text-black font-black uppercase italic tracking-tighter text-xl rounded-2xl hover:bg-orange-600 hover:text-white transition-all duration-500 shadow-[0_20px_40px_rgba(255,255,255,0.1)] hover:shadow-[0_20px_40px_rgba(234,88,12,0.4)] hover:scale-[1.02]">
-                        Get Started
-                      </button>
-                    </div>
-                  </motion.div>
+                 </motion.div>
                </div>
             </div>
 
@@ -226,7 +229,7 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                    key={i}
                    variants={itemVariants}
                    whileHover={{ y: -8 }}
-                   className="group relative p-8 bg-[#0a0a0a] border border-white/5 rounded-[2rem] hover:border-orange-600/50 transition duration-500 overflow-hidden shadow-xl"
+                   className="group relative p-8 bg-[#0a0a0a] border border-white/5 rounded-[2rem] hover:border-purple-600/50 transition duration-500 overflow-hidden shadow-xl"
                  >
                    {/* Background Image */}
                    <div className="absolute inset-0 z-0">
@@ -236,15 +239,15 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                        className="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700 ease-in-out"
                      />
                      <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/50 to-transparent z-10" />
-                     <div className="absolute inset-0 bg-orange-900/10 mix-blend-overlay z-10" />
+                     <div className="absolute inset-0 bg-purple-900/10 mix-blend-overlay z-10" />
                    </div>
 
                    {/* Content overlay */}
                    <div className="relative z-20">
-                     <div className="w-14 h-14 rounded-2xl bg-orange-600/20 backdrop-blur-md flex items-center justify-center text-orange-500 mb-6 border border-orange-600/30 shadow-[0_0_20px_rgba(234,88,12,0.15)] group-hover:shadow-[0_0_30px_rgba(234,88,12,0.4)] transition-shadow duration-500">
+                     <div className="w-14 h-14 rounded-2xl bg-purple-600/20 backdrop-blur-md flex items-center justify-center text-purple-500 mb-6 border border-purple-600/30 shadow-[0_0_20px_rgba(147,51,234,0.15)] group-hover:shadow-[0_0_30px_rgba(147,51,234,0.4)] transition-shadow duration-500">
                        <feat.icon className="w-7 h-7" />
                      </div>
-                     <h3 className="text-xl font-black uppercase italic tracking-tighter mb-4 text-white drop-shadow-lg">{feat.title}</h3>
+                     <h3 className="text-xl font-black uppercase font-mono tracking-widest mb-4 text-white drop-shadow-lg">{feat.title}</h3>
                      <p className="text-sm text-gray-300 leading-relaxed font-medium drop-shadow-md">{feat.desc}</p>
                    </div>
                  </motion.div>
@@ -256,7 +259,7 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-600/10 border border-cyan-600/20 text-cyan-500 text-[10px] font-black tracking-widest uppercase mb-6">
                  Who is this for?
                </div>
-               <h2 className="text-4xl md:text-5xl font-black tracking-tighter uppercase italic leading-[1.1] mb-12">
+               <h2 className="text-4xl md:text-5xl font-black tracking-widest uppercase font-mono leading-[1.1] mb-12">
                  Transform Any <span className="text-cyan-500">Space.</span>
                </h2>
                
@@ -297,12 +300,12 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
             {/* Digital Experience Showcase */}
             <motion.div variants={itemVariants} className="mb-10">
                <div className="text-center mb-16">
-                 <motion.div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-600/10 border border-orange-600/20 text-orange-500 text-[10px] font-black tracking-widest uppercase mb-6">
+                 <motion.div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-600/10 border border-purple-600/20 text-purple-500 text-[10px] font-black tracking-widest uppercase mb-6">
                    Digital Interface
                  </motion.div>
-                 <h2 className="text-4xl md:text-6xl font-black tracking-tighter uppercase italic leading-[1.1] mb-6">
+                 <h2 className="text-4xl md:text-6xl font-black tracking-widest uppercase font-mono leading-[1.1] mb-6">
                    Control Every Entry.<br/>
-                   <span className="text-orange-600">In Real Time.</span>
+                   <span className="text-purple-600">In Real Time.</span>
                  </h2>
                  <p className="text-gray-400 font-medium max-w-2xl mx-auto">
                    Monitor access, manage users, and track activity — all from your phone.
@@ -314,7 +317,7 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                   {/* App Screen 1: Splash */}
                   <motion.div whileHover={{ y: -10 }} className="relative bg-gradient-to-br from-[#f0f9ff] via-[#ffffff] to-[#e0f2fe] rounded-[2.5rem] p-6 h-[600px] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] border-4 border-gray-800">
                     <div className="absolute top-6 right-6 flex gap-2">
-                       <span className="w-3 h-3 rounded-full bg-orange-400"></span>
+                       <span className="w-3 h-3 rounded-full bg-purple-400"></span>
                        <span className="w-3 h-3 rounded-full bg-green-500"></span>
                     </div>
                     <h3 className="text-4xl font-black text-black leading-tight mt-10 mb-10 tracking-tighter">
@@ -443,7 +446,7 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                         <div className="absolute top-[20%] left-[10%] w-[40%] h-[30%] border-[3px] border-gray-700 bg-gray-800/40 backdrop-blur-sm rounded" />
                         <div className="absolute top-[20%] right-[10%] w-[35%] h-[40%] border-[3px] border-gray-700 bg-gray-800/40 backdrop-blur-sm rounded" />
                         <div className="absolute bottom-[25%] left-[20%] w-[60%] h-[30%] border-[3px] border-gray-700 bg-gray-800/50 backdrop-blur-sm rounded" />
-                        <div className="absolute bottom-[25%] left-[60%] w-10 h-10 border-2 border-orange-600 rounded-full opacity-50" />
+                        <div className="absolute bottom-[25%] left-[60%] w-10 h-10 border-2 border-purple-600 rounded-full opacity-50" />
                      </div>
 
                      <div className="relative z-10 flex justify-between items-center mb-6">
@@ -515,8 +518,8 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                      <p className="text-xs text-gray-400 font-medium leading-relaxed max-w-xs mx-auto">Engineered and manufactured domestically for uncompromised quality and scale.</p>
                   </div>
                   <div className="px-8 py-4 flex flex-col items-center justify-center group">
-                     <div className="w-16 h-16 bg-orange-600/10 backdrop-blur-xl rounded-full flex items-center justify-center mb-6 border border-orange-600/30 group-hover:-translate-y-2 transition-transform duration-500 shadow-[0_0_30px_rgba(234,88,12,0.2)]">
-                        <ShieldCheck className="w-8 h-8 text-orange-500" />
+                     <div className="w-16 h-16 bg-purple-600/10 backdrop-blur-xl rounded-full flex items-center justify-center mb-6 border border-purple-600/30 group-hover:-translate-y-2 transition-transform duration-500 shadow-[0_0_30px_rgba(147,51,234,0.2)]">
+                        <ShieldCheck className="w-8 h-8 text-purple-500" />
                      </div>
                      <h4 className="text-xl font-black text-white uppercase tracking-widest mb-3 shadow-black drop-shadow-lg">Secure Biometrics</h4>
                      <p className="text-xs text-gray-400 font-medium leading-relaxed max-w-xs mx-auto">AES-256 encrypted facial recognition and structural fingerprint data arrays.</p>
@@ -539,7 +542,7 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
           <div className="max-w-7xl mx-auto px-6">
             <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
               <div>
-                <h2 className="text-5xl font-black tracking-tighter uppercase italic leading-none mb-6">Hardware <span className="text-orange-600">Inventory</span></h2>
+                <h2 className="text-5xl font-black tracking-widest uppercase font-mono leading-none mb-6">Hardware <span className="text-purple-600">Inventory</span></h2>
                 <p className="text-gray-400 font-medium">Select your grade of security deployment.</p>
               </div>
               <div className="relative w-full md:w-96">
@@ -549,7 +552,7 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                   placeholder="SEARCH SECURITY SKUs..."
                   value={searchQuery}
                   onChange={e => setSearchQuery(e.target.value)}
-                  className="w-full bg-[#0a0a0a] border border-white/10 rounded-2xl pl-12 pr-4 py-4 text-xs font-bold uppercase tracking-widest focus:outline-none focus:border-orange-600 transition"
+                  className="w-full bg-[#0a0a0a] border border-white/10 rounded-2xl pl-12 pr-4 py-4 text-xs font-bold uppercase tracking-widest focus:outline-none focus:border-purple-600 transition"
                 />
               </div>
             </div>
@@ -562,13 +565,13 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: idx * 0.1 }}
                   onClick={() => { setSelectedProduct(product); setCurrentGalleryIndex(0); }}
-                  className="group relative bg-[#0a0a0a] border border-white/5 p-8 rounded-[2.5rem] hover:border-orange-600/50 transition-all duration-500 cursor-pointer overflow-hidden shadow-2xl"
+                  className="group relative bg-[#0a0a0a] border border-white/5 p-8 rounded-[2.5rem] hover:border-purple-600/50 transition-all duration-500 cursor-pointer overflow-hidden shadow-2xl"
                 >
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-orange-600/5 blur-[40px] rounded-full group-hover:bg-orange-600/10 transition" />
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-purple-600/5 blur-[40px] rounded-full group-hover:bg-purple-600/10 transition" />
                   
                   <div className="h-64 mb-8 flex items-center justify-center">
                     {product.image || product.images?.[0] ? (
-                      <img src={product.image || product.images[0]} alt={product.name} className="max-h-full object-contain group-hover:scale-110 transition duration-700 drop-shadow-[0_20px_40px_rgba(234,88,12,0.2)]" />
+                      <img src={product.image || product.images[0]} alt={product.name} className="max-h-full object-contain group-hover:scale-110 transition duration-700 drop-shadow-[0_20px_40px_rgba(147,51,234,0.2)]" />
                     ) : (
                       <Lock className="w-20 h-20 text-gray-800" />
                     )}
@@ -583,10 +586,10 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                     </div>
                     
                     <div className="flex items-center gap-4 mb-8">
-                       <span className="text-3xl font-black text-orange-500">₹{Number(product.price).toLocaleString('en-IN')}</span>
+                       <span className="text-3xl font-black text-purple-500">₹{Number(product.price).toLocaleString('en-IN')}</span>
                     </div>
 
-                    <button className="w-full py-4 bg-white text-black font-black uppercase italic tracking-tighter rounded-xl group-hover:bg-orange-600 group-hover:text-white transition duration-500">
+                    <button className="w-full py-4 bg-white text-black font-black uppercase font-mono tracking-widest rounded-xl group-hover:bg-purple-600 group-hover:text-white transition duration-500">
                       View Specifications
                     </button>
                   </div>
@@ -602,31 +605,31 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                animate={{ opacity: 1, y: 0 }}
                className="bg-[#0a0a0a] border border-white/10 rounded-[3.5rem] p-12 text-center relative overflow-hidden"
             >
-               <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-orange-600/10 blur-[100px] rounded-full" />
+               <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-purple-600/10 blur-[100px] rounded-full" />
                
                <div className="relative z-10">
-                 <div className="w-20 h-20 rounded-3xl bg-orange-600/20 border border-orange-600/30 flex items-center justify-center text-orange-600 mx-auto mb-10">
+                 <div className="w-20 h-20 rounded-3xl bg-purple-600/20 border border-purple-600/30 flex items-center justify-center text-purple-600 mx-auto mb-10">
                    <Settings className="w-10 h-10 animate-spin-slow" />
                  </div>
                  
-                 <h2 className="text-5xl font-black tracking-tighter uppercase italic leading-none mb-8">Intelligence <span className="text-orange-600">Support</span></h2>
+                 <h2 className="text-5xl font-black tracking-widest uppercase font-mono leading-none mb-8">Intelligence <span className="text-purple-600">Support</span></h2>
                  
                  <p className="text-gray-400 font-medium leading-relaxed max-w-xl mx-auto mb-16">
                    Establish a secure connection with our engineering team for deployment queries, bulk provisioning, or technical architectural support.
                  </p>
 
                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left mb-16">
-                    <div className="p-8 bg-white/5 border border-white/5 rounded-3xl hover:border-orange-600/50 transition duration-500">
+                    <div className="p-8 bg-white/5 border border-white/5 rounded-3xl hover:border-purple-600/50 transition duration-500">
                        <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2">Technical Gateway</p>
                        <p className="text-2xl font-black italic uppercase">support@auralock.io</p>
                     </div>
-                    <div className="p-8 bg-white/5 border border-white/5 rounded-3xl hover:border-orange-600/50 transition duration-500">
+                    <div className="p-8 bg-white/5 border border-white/5 rounded-3xl hover:border-purple-600/50 transition duration-500">
                        <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2">Secure Line</p>
                        <p className="text-2xl font-black italic uppercase">+91 94000 00000</p>
                     </div>
                  </div>
 
-                 <button className="px-12 py-5 bg-white text-black font-black uppercase italic tracking-tighter text-2xl rounded-2xl hover:bg-orange-600 hover:text-white transition-all duration-500">
+                 <button className="px-12 py-5 bg-white text-black font-black uppercase font-mono tracking-widest text-2xl rounded-2xl hover:bg-purple-600 hover:text-white transition-all duration-500">
                    Initialize Handshake
                  </button>
                </div>
@@ -677,17 +680,17 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                    return (
                      <>
                        {current.type === 'video' ? (
-                         <video src={current.url} autoPlay loop muted playsInline className="max-w-full max-h-[50vh] object-contain drop-shadow-[0_20px_50px_rgba(234,88,12,0.3)] rounded-2xl" />
+                         <video src={current.url} autoPlay loop muted playsInline className="max-w-full max-h-[50vh] object-contain drop-shadow-[0_20px_50px_rgba(147,51,234,0.3)] rounded-2xl" />
                        ) : (
-                         <img src={current.url} alt={selectedProduct.name} className="max-h-[50vh] object-contain drop-shadow-[0_20px_50px_rgba(234,88,12,0.3)]" />
+                         <img src={current.url} alt={selectedProduct.name} className="max-h-[50vh] object-contain drop-shadow-[0_20px_50px_rgba(147,51,234,0.3)]" />
                        )}
 
                        {mediaLinks.length > 1 && (
                          <>
-                           <button onClick={(e) => { e.stopPropagation(); setCurrentGalleryIndex((prev) => (prev - 1 + mediaLinks.length) % mediaLinks.length); }} className="absolute left-6 w-12 h-12 bg-white/5 border border-white/10 rounded-full flex items-center justify-center text-white hover:bg-orange-600 transition-all opacity-0 group-hover:opacity-100 z-50">
+                           <button onClick={(e) => { e.stopPropagation(); setCurrentGalleryIndex((prev) => (prev - 1 + mediaLinks.length) % mediaLinks.length); }} className="absolute left-6 w-12 h-12 bg-white/5 border border-white/10 rounded-full flex items-center justify-center text-white hover:bg-purple-600 transition-all opacity-0 group-hover:opacity-100 z-50">
                              <ChevronLeft className="w-6 h-6" />
                            </button>
-                           <button onClick={(e) => { e.stopPropagation(); setCurrentGalleryIndex((prev) => (prev + 1) % mediaLinks.length); }} className="absolute right-6 w-12 h-12 bg-white/5 border border-white/10 rounded-full flex items-center justify-center text-white hover:bg-orange-600 transition-all opacity-0 group-hover:opacity-100 z-50">
+                           <button onClick={(e) => { e.stopPropagation(); setCurrentGalleryIndex((prev) => (prev + 1) % mediaLinks.length); }} className="absolute right-6 w-12 h-12 bg-white/5 border border-white/10 rounded-full flex items-center justify-center text-white hover:bg-purple-600 transition-all opacity-0 group-hover:opacity-100 z-50">
                              <ChevronRight className="w-6 h-6" />
                            </button>
                          </>
@@ -698,16 +701,16 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
               </div>
 
               <div className="w-full md:w-1/2 p-12 flex flex-col">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-600/10 border border-orange-600/20 text-orange-500 text-[9px] font-black tracking-widest uppercase mb-6 w-fit">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-600/10 border border-purple-600/20 text-purple-500 text-[9px] font-black tracking-widest uppercase mb-6 w-fit">
                    Precision Engineering
                 </div>
-                <h2 className="text-5xl font-black tracking-tighter uppercase italic leading-none mb-8">{selectedProduct.name}</h2>
+                <h2 className="text-5xl font-black tracking-widest uppercase font-mono leading-none mb-8">{selectedProduct.name}</h2>
                 <div className="flex-1 space-y-6 overflow-y-auto pr-4 mb-8 custom-scrollbar">
                    <p className="text-gray-400 font-medium leading-relaxed">Hardware designed for high-security environments. Features autonomous AI verification, AES-encrypted communication paths.</p>
                    <div className="space-y-3">
                       {selectedProduct.features?.map((f: string, i: number) => (
                         <div key={i} className="flex items-center gap-3 text-sm font-bold text-gray-300">
-                           <Check className="w-4 h-4 text-orange-600" /> {f}
+                           <Check className="w-4 h-4 text-purple-600" /> {f}
                         </div>
                       ))}
                    </div>
@@ -719,7 +722,7 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                         <p className="text-4xl font-black text-white">₹{Number(selectedProduct.price).toLocaleString('en-IN')}</p>
                       </div>
                    </div>
-                   <Link href={`/checkout?productId=${selectedProduct.id}&name=${encodeURIComponent(selectedProduct.name)}&price=${selectedProduct.price}`} className="w-full py-5 bg-orange-600 text-white font-black uppercase italic tracking-tighter text-xl rounded-2xl flex items-center justify-center gap-3 hover:bg-orange-500 transition shadow-[0_10px_30px_rgba(234,88,12,0.3)]">
+                   <Link href={`/checkout?productId=${selectedProduct.id}&name=${encodeURIComponent(selectedProduct.name)}&price=${selectedProduct.price}`} className="w-full py-5 bg-purple-600 text-white font-black uppercase font-mono tracking-widest text-xl rounded-2xl flex items-center justify-center gap-3 hover:bg-purple-500 transition shadow-[0_10px_30px_rgba(147,51,234,0.3)]">
                       Order Unit Now <ArrowRight className="w-6 h-6" />
                    </Link>
                 </div>
@@ -731,12 +734,12 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
 
       <footer className="py-12 border-t border-white/5 bg-[#020202]">
         <div className="max-w-7xl mx-auto px-6 text-center">
-          <div className="text-3xl font-black tracking-tighter uppercase italic mb-8">Aura<span className="text-orange-600">Lock</span></div>
+          <div className="text-3xl font-black tracking-widest uppercase font-mono mb-8">Aura<span className="text-purple-600">Lock</span></div>
           <p className="text-gray-600 text-[10px] font-bold uppercase tracking-[0.5em] mb-12">Building the future of architectural security</p>
           <div className="flex justify-center gap-8 text-xs font-bold uppercase tracking-widest text-gray-400">
-             <Link href="/admin" className="hover:text-orange-600 transition">Control Center</Link>
-             <Link href="/track" className="hover:text-orange-600 transition">Telemetry</Link>
-             <button onClick={() => setActiveTab('contact')} className="hover:text-orange-600 transition">Direct Line</button>
+             <Link href="/admin" className="hover:text-purple-600 transition">Control Center</Link>
+             <Link href="/track" className="hover:text-purple-600 transition">Telemetry</Link>
+             <button onClick={() => setActiveTab('contact')} className="hover:text-purple-600 transition">Direct Line</button>
           </div>
           <div className="mt-20 text-[10px] font-bold text-gray-800 uppercase tracking-widest">&copy; 2026 AuraLock Security Systems. All Rights Protocolized.</div>
         </div>
@@ -746,6 +749,37 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
         .custom-scrollbar::-webkit-scrollbar { width: 4px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 10px; }
+        
+        .aura-glow {
+          background: conic-gradient(from 0deg at 50% 50%, #8b5cf6, #ec4899, #06b6d4, #10b981, #8b5cf6);
+          filter: blur(40px);
+          animation: rotate-aura 6s linear infinite;
+        }
+
+        @keyframes rotate-aura {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+
+        .aura-box::before {
+          content: '';
+          position: absolute;
+          inset: -3px;
+          padding: 3px;
+          border-radius: 2.5rem;
+          background: linear-gradient(to right, #8b5cf6, #ec4899, #06b6d4, #10b981);
+          -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          -webkit-mask-composite: xor;
+          mask-composite: exclude;
+          opacity: 0.3;
+          transition: opacity 0.5s;
+        }
+
+        .aura-box:hover::before {
+          opacity: 0.8;
+        }
+
         @keyframes fade-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .animate-in { animation: fade-in 0.8s ease-out forwards; }
       `}</style>
