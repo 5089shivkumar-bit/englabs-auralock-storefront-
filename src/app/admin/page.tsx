@@ -258,7 +258,10 @@ export default function AdminPanel() {
                        </div>
                        <div>
                           <h3 className="text-2xl font-black italic uppercase italic tracking-tighter mb-1">{product.name}</h3>
-                          <p className="text-orange-500 font-black italic mb-2 tracking-tighter">₹{Number(product.price).toLocaleString('en-IN')}</p>
+                          <p className="text-orange-500 font-black italic mb-2 tracking-tighter">
+                            ₹{Number(product.price).toLocaleString('en-IN')} 
+                            <span className="text-gray-500 text-[10px] ml-3 opacity-50 tracking-widest uppercase italic">// STOCK_UNITS: {product.quantity || 0}</span>
+                          </p>
                           <div className="flex gap-2 flex-wrap">
                              {product.features?.slice(0, 3).map((f: any, i: any) => (
                                <span key={i} className="text-[8px] font-black uppercase tracking-widest text-gray-600 border border-white/5 px-2 py-1 rounded-full">{f}</span>
@@ -289,6 +292,10 @@ export default function AdminPanel() {
                     <div className="space-y-2">
                        <label className="text-[10px] font-black text-gray-600 uppercase tracking-widest">Base MSP (INR)</label>
                        <input type="number" value={editingProduct.price} onChange={e => setEditingProduct({...editingProduct, price: Number(e.target.value)})} className="w-full bg-black border border-white/5 p-4 rounded-xl text-sm font-bold focus:border-orange-600 focus:outline-none" />
+                    </div>
+                    <div className="space-y-2">
+                       <label className="text-[10px] font-black text-gray-600 uppercase tracking-widest">Stock Quantity</label>
+                       <input type="number" value={editingProduct.quantity || 0} onChange={e => setEditingProduct({...editingProduct, quantity: Number(e.target.value)})} className="w-full bg-black border border-white/5 p-4 rounded-xl text-sm font-bold focus:border-orange-600 focus:outline-none" />
                     </div>
                     <div className="space-y-2">
                        <label className="text-[10px] font-black text-gray-600 uppercase tracking-widest">Features Array</label>

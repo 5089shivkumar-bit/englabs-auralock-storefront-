@@ -133,7 +133,7 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
         
         <div className="hidden md:flex items-center gap-10 text-[11px] font-bold uppercase tracking-widest text-gray-400">
           <button onClick={() => setActiveTab('home')} className={`hover:text-white transition ${activeTab === 'home' ? 'text-purple-500' : ''}`}>Home</button>
-          <button onClick={() => setActiveTab('products')} className={`hover:text-white transition ${activeTab === 'products' ? 'text-purple-500' : ''}`}>X1 Series</button>
+          <button onClick={() => setActiveTab('products')} className={`hover:text-white transition ${activeTab === 'products' ? 'text-purple-500' : ''}`}>Products</button>
           <Link href="/developers" className="hover:text-white transition">Developers</Link>
           <Link href="/legal" className="hover:text-white transition">Legal</Link>
         </div>
