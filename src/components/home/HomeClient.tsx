@@ -24,6 +24,11 @@ import {
   Unlock,
   ChevronsRight,
   Key,
+  Zap,
+  Cloud,
+  Wrench,
+  Target,
+  WifiOff,
   Grid3X3,
   Home as HomeIcon,
   Navigation,
@@ -31,7 +36,17 @@ import {
   Scan,
   Dumbbell,
   Building2,
-  Users
+  Users,
+  Calendar,
+  BarChart3,
+  MessageCircle,
+  Plus,
+  RefreshCcw,
+  Save,
+  Clock,
+  FileText,
+  CheckCircle2,
+  TrendingUp
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -112,7 +127,7 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
           </div>
           <div className="flex flex-col leading-none">
             <span className="text-xl font-black tracking-widest uppercase font-mono">Auralock</span>
-            <span className="text-[7px] font-bold tracking-[0.2em] text-gray-500 uppercase ml-0.5">by Code4uTech</span>
+            <span className="text-[10px] font-black tracking-[0.4em] text-purple-500 uppercase ml-0.5">by Englabs</span>
           </div>
         </div>
         
@@ -123,11 +138,14 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
           <Link href="/legal" className="hover:text-white transition">Legal</Link>
         </div>
 
-        <button className="px-6 py-2.5 bg-gradient-to-r from-purple-600 to-cyan-400 rounded-lg text-[10px] font-black uppercase tracking-widest text-white shadow-[0_0_15px_rgba(147,51,234,0.3)] hover:shadow-[0_0_25px_rgba(147,51,234,0.6)] transition-all duration-300 flex items-center gap-2">
-          <div className="w-4 h-4 rounded-full bg-white/20 flex items-center justify-center text-white">
-             <Volume2 className="w-2.5 h-2.5" />
+        <button 
+          onClick={() => window.open('https://wa.me/918595737067?text=Hi, I am interested in Auralock products.', '_blank')}
+          className="px-8 py-3 bg-gradient-to-r from-purple-600 to-cyan-500 rounded-full text-[11px] font-black uppercase tracking-widest text-white shadow-[0_0_30px_rgba(147,51,234,0.4)] hover:shadow-[0_0_50px_rgba(147,51,234,0.7)] transition-all duration-300 flex items-center gap-3 border border-white/20 group"
+        >
+          <div className="w-5 h-5 rounded-full bg-white/30 flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform">
+             <MessageCircle className="w-3 h-3" />
           </div>
-          Sales
+          SALES
         </button>
       </nav>
 
@@ -156,33 +174,41 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                >
                  <div className="px-6 py-1.5 rounded-full bg-black/40 backdrop-blur-md border border-white/10 text-[9px] font-bold text-gray-400 tracking-[0.3em] uppercase flex items-center gap-3 shadow-2xl">
                     <span className="w-1.5 h-1.5 rounded-full bg-purple-500 animate-pulse" />
-                    Code4uTech IoT Project • R&D Division
+                    Englabs IoT Project • R&D Division
                  </div>
                </motion.div>
 
                {/* The AuraBox - Main Hero Element */}
-               <div className="relative z-10 w-full max-w-2xl px-6">
+               <div className="relative z-10 w-full max-w-xl px-6">
                  <motion.div 
                    initial={{ opacity: 0, scale: 0.95 }}
                    animate={{ opacity: 1, scale: 1 }}
                    transition={{ duration: 1.2, ease: "easeOut" }}
-                   className="relative rounded-[2.5rem] p-[1px] text-center overflow-hidden group shadow-2xl"
+                   className="relative rounded-[3.5rem] text-center aura-box-animated shadow-[0_0_80px_rgba(147,51,234,0.3)] group transition-all duration-700"
                  >
-                    {/* Animated Gradient Border Layer */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-purple-500 via-green-400 to-cyan-500 opacity-40 group-hover:opacity-80 transition-opacity duration-1000 animate-pulse" />
-                    <div className="relative bg-black/80 backdrop-blur-3xl rounded-[2.5rem] p-16 md:p-24 z-20">
+                    <div className="relative bg-black/80 backdrop-blur-3xl rounded-[3.5rem] p-16 md:p-24 z-20">
                     
                     <div className="relative z-20">
-                      <h1 className="text-5xl md:text-8xl font-black tracking-widest uppercase font-mono text-white mb-6 drop-shadow-2xl">
-                        AuraLock S1
+                      <h1 className="text-5xl md:text-[90px] font-black tracking-tighter uppercase font-mono mb-8 leading-none">
+                         <span className="relative inline-block">
+                            <span className="absolute -inset-1 blur-3xl bg-purple-600/20 opacity-50 z-0" />
+                            <span className="relative z-10 bg-gradient-to-br from-white via-white/80 to-purple-400 bg-clip-text text-transparent drop-shadow-2xl">
+                               AuraLock
+                            </span>
+                         </span>
+                         <br/>
+                         <span className="text-3xl md:text-6xl bg-gradient-to-r from-purple-500 via-cyan-400 to-purple-600 bg-clip-text text-transparent animate-shimmer italic tracking-widest">
+                            S1
+                         </span>
                       </h1>
                       
-                      <div className="flex flex-col gap-1">
-                        <p className="text-lg md:text-xl text-gray-400 font-bold tracking-tight uppercase">
+                      <div className="flex flex-col gap-2 relative">
+                        <div className="h-[1px] w-12 bg-gradient-to-r from-purple-500 to-transparent mx-auto mb-4" />
+                        <p className="text-xs md:text-sm text-gray-300 font-black tracking-[0.6em] uppercase flex items-center justify-center gap-3">
                           Smart Access Series
                         </p>
-                        <p className="text-[10px] md:text-xs text-indigo-400 font-black tracking-[0.4em] uppercase opacity-70">
-                          by Code4uTech
+                        <p className="text-[9px] md:text-[10px] text-purple-500 font-extrabold tracking-[0.4em] uppercase opacity-90 mt-1">
+                          BY ENGLABS
                         </p>
                       </div>
                     </div>
@@ -229,7 +255,7 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                    key={i}
                    variants={itemVariants}
                    whileHover={{ y: -8 }}
-                   className="group relative p-8 bg-[#0a0a0a] border border-white/5 rounded-[2rem] hover:border-purple-600/50 transition duration-500 overflow-hidden shadow-xl"
+                   className="group relative p-8 bg-[#0a0a0a] border border-white/5 rounded-[2rem] transition duration-500 overflow-hidden shadow-xl aura-box"
                  >
                    {/* Background Image */}
                    <div className="absolute inset-0 z-0">
@@ -272,7 +298,7 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                    <motion.div 
                      key={i}
                      whileHover={{ y: -8 }}
-                     className={`group relative overflow-hidden bg-gradient-to-br from-[#0a0a0a] to-[#020202] p-8 rounded-[2rem] border border-white/5 transition-all duration-300 hover:border-white/20 shadow-xl ${useCase.glow}`}
+                     className={`group relative overflow-hidden bg-gradient-to-br from-[#0a0a0a] to-[#020202] p-8 rounded-[2rem] border border-white/5 transition-all duration-300 hover:border-white/20 shadow-xl aura-box ${useCase.glow}`}
                    >
                       <div className={`absolute top-0 right-0 w-32 h-32 ${useCase.bg} blur-[40px] rounded-full group-hover:opacity-100 transition-opacity opacity-20 z-0`} />
                       
@@ -297,241 +323,674 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                </div>
             </motion.div>
 
-            {/* Digital Experience Showcase */}
-            <motion.div variants={itemVariants} className="mb-10">
+             {/* Why Choose AuraLock Section */}
+             <motion.div variants={itemVariants} className="mb-24 mt-24">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center max-w-6xl mx-auto px-6">
+                   <div>
+                      <motion.div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-600/10 border border-purple-600/20 text-purple-500 text-[10px] font-black tracking-widest uppercase mb-8">
+                        Key Benefits
+                      </motion.div>
+                      <h2 className="text-5xl md:text-7xl font-black tracking-widest uppercase font-mono leading-[1] mb-8">
+                        Why Choose<br/>
+                        <span className="text-purple-600">AURALOCK</span>
+                      </h2>
+                      <p className="text-gray-400 font-medium text-lg leading-relaxed mb-12">
+                         Designed for modern businesses that need reliable, fast, and secure biometric door lock systems with cloud management.
+                      </p>
+
+                      <div className="flex gap-4">
+                         <div className="bg-[#0a0a0a] border border-white/5 p-6 rounded-3xl text-center flex-1 shadow-xl">
+                            <p className="text-3xl font-black text-white italic">500+</p>
+                            <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-1">Users</p>
+                         </div>
+                         <div className="bg-[#0a0a0a] border border-white/5 p-6 rounded-3xl text-center flex-1 shadow-xl">
+                            <p className="text-3xl font-black text-purple-500 italic">&lt;1ms</p>
+                            <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-1">Lookup</p>
+                         </div>
+                         <div className="bg-[#0a0a0a] border border-white/5 p-6 rounded-3xl text-center flex-1 shadow-xl">
+                            <p className="text-3xl font-black text-white italic">24/7</p>
+                            <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-1">Cloud</p>
+                         </div>
+                      </div>
+                   </div>
+
+                   <div className="space-y-6">
+                      {[
+                        { icon: Zap, title: "Instant Access", desc: "<500ms response. From scan to unlock in under half a second." },
+                        { icon: Cloud, title: "Cloud Management", desc: "Real-time monitoring, reports, and remote user management from anywhere." },
+                        { icon: Wrench, title: "Custom Built", desc: "Tailored to your specific needs. On-demand features and integrations." }
+                      ].map((pkg, i) => (
+                        <motion.div 
+                          key={i}
+                          whileHover={{ x: 10 }}
+                          className="bg-[#0a0a0a] border border-white/5 p-8 rounded-[2.5rem] flex items-center gap-8 hover:border-purple-600/30 transition-all duration-300 shadow-2xl"
+                        >
+                           <div className="w-14 h-14 rounded-2xl bg-purple-600/10 border border-purple-600/20 flex items-center justify-center text-purple-500 flex-shrink-0">
+                              <pkg.icon className="w-7 h-7" />
+                           </div>
+                           <div>
+                              <h3 className="text-xl font-black uppercase tracking-tight mb-2 text-white">{pkg.title}</h3>
+                              <p className="text-sm text-gray-500 font-medium leading-relaxed">{pkg.desc}</p>
+                           </div>
+                        </motion.div>
+                      ))}
+                   </div>
+                </div>
+             </motion.div>
+
+             {/* Partition Divider Line */}
+             <div className="w-full max-w-7xl mx-auto px-6 mb-8">
+                <div className="w-full h-[2px] bg-gradient-to-r from-transparent via-purple-600 via-cyan-400 via-pink-500 to-transparent opacity-100 shadow-[0_0_40px_rgba(147,51,234,0.6)]" />
+             </div>
+
+             {/* Powerful Text Section - Cinematic Brand Statement */}
+             <motion.div 
+               variants={itemVariants} 
+               className="mb-24 py-12 relative overflow-hidden"
+             >
+                {/* Background Text Elements */}
+                <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex flex-col items-center justify-center opacity-[0.03] select-none pointer-events-none -space-y-24">
+                   <p className="text-[200px] font-black uppercase tracking-[0.2em] font-mono whitespace-nowrap">AURALOCK</p>
+                   <p className="text-[200px] font-black uppercase tracking-[0.2em] font-mono whitespace-nowrap">ENGLABS</p>
+                </div>
+                
+                <div className="max-w-6xl mx-auto px-6 relative z-10 text-center">
+                   <h2 className="text-6xl md:text-[100px] font-black tracking-tighter uppercase leading-[0.9] italic text-white mb-16">
+                      The New Standard In<br/>
+                      <span className="text-purple-600">Architectural</span> Intelligence
+                   </h2>
+                   
+                   <div className="max-w-4xl mx-auto">
+                      <p className="text-xl md:text-3xl text-gray-400 font-bold leading-relaxed mb-8">
+                         AuraLock by Englabs isn't just a lock. It's a statement of absolute control and sophisticated engineering. 
+                         <span className="text-white"> Designed in India, built for the world's most high-security environments.</span>
+                      </p>
+                      
+                      <div className="h-0.5 w-32 bg-purple-600 mx-auto mt-12 mb-8" />
+                      
+                      <p className="text-[10px] font-bold text-purple-500 tracking-[0.5em] uppercase">
+                         Pioneering Biometric Innovation • Englabs IoT Systems
+                      </p>
+                   </div>
+                </div>
+             </motion.div>
+
+             {/* Partition Divider Line */}
+             <div className="w-full max-w-7xl mx-auto px-6 mb-12 mt-4">
+                <div className="w-full h-[2px] bg-gradient-to-r from-transparent via-purple-600 via-cyan-400 via-pink-600 to-transparent opacity-100 shadow-[0_0_40px_rgba(147,51,234,0.6)]" />
+             </div>
+
+            {/* How It Works Section */}
+            <motion.div variants={itemVariants} className="mb-24 mt-12">
                <div className="text-center mb-16">
                  <motion.div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-600/10 border border-purple-600/20 text-purple-500 text-[10px] font-black tracking-widest uppercase mb-6">
-                   Digital Interface
+                   How It Works
                  </motion.div>
                  <h2 className="text-4xl md:text-6xl font-black tracking-widest uppercase font-mono leading-[1.1] mb-6">
-                   Control Every Entry.<br/>
-                   <span className="text-purple-600">In Real Time.</span>
+                   Access <span className="text-purple-600">Flow</span>
                  </h2>
                  <p className="text-gray-400 font-medium max-w-2xl mx-auto">
-                   Monitor access, manage users, and track activity — all from your phone.
+                   From app launch to door unlock in seconds. Secure, autonomous, and lightning fast.
                  </p>
                </div>
 
-               <div className="grid grid-cols-1 xl:grid-cols-3 gap-8 max-w-6xl mx-auto">
-                  
-                  {/* App Screen 1: Splash */}
-                  <motion.div whileHover={{ y: -10 }} className="relative bg-gradient-to-br from-[#f0f9ff] via-[#ffffff] to-[#e0f2fe] rounded-[2.5rem] p-6 h-[600px] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] border-4 border-gray-800">
-                    <div className="absolute top-6 right-6 flex gap-2">
-                       <span className="w-3 h-3 rounded-full bg-purple-400"></span>
-                       <span className="w-3 h-3 rounded-full bg-green-500"></span>
-                    </div>
-                    <h3 className="text-4xl font-black text-black leading-tight mt-10 mb-10 tracking-tighter">
-                      Smart <br/> Door Lock <br/> System
-                    </h3>
-                    
-                    <div className="relative w-full h-80 bg-gradient-to-b from-gray-100 to-gray-300 rounded-3xl overflow-hidden flex items-center justify-center border border-gray-200">
-                       <div className="flex gap-4">
-                          <div className="w-16 h-48 bg-black rounded-xl border border-gray-700 relative shadow-2xl flex flex-col items-center mt-10">
-                             <div className="w-full h-1/2 border-b border-gray-800 flex items-center justify-center opacity-50" />
-                          </div>
-                          <div className="w-20 h-56 bg-[#1a1a1a] rounded-xl border border-gray-700 relative shadow-2xl flex flex-col items-center">
-                             <div className="w-full h-1/3 border-b border-gray-800 flex items-center justify-center">
-                                <div className="w-6 h-6 rounded-full border border-gray-700 bg-gray-900" />
-                             </div>
-                             <div className="w-full h-2/3 flex items-center justify-center">
-                                <Lock className="w-6 h-6 text-gray-500" />
-                             </div>
-                          </div>
+               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+                  {[
+                    { icon: Smartphone, title: "1. Open App", desc: "Open the app on your phone" },
+                    { icon: ScanFace, title: "2. Biometrics", desc: "Scan your face or finger" },
+                    { icon: ShieldCheck, title: "3. Cloud Verify", desc: "Cloud verify" },
+                    { icon: Unlock, title: "4. Access", desc: "Further access will be granted" }
+                  ].map((step, i) => (
+                    <motion.div 
+                      key={i}
+                      whileHover={{ y: -5 }}
+                      className="group relative bg-[#0a0a0a] border border-white/5 p-8 rounded-[2.5rem] flex flex-col items-center text-center transition-all duration-300 shadow-2xl aura-box"
+                    >
+                       <div className="w-16 h-16 rounded-2xl bg-purple-600/10 border border-purple-600/20 flex items-center justify-center text-purple-500 mb-6 group-hover:scale-110 transition-transform">
+                          <step.icon className="w-8 h-8" />
                        </div>
-
-                       <div className="absolute right-2 top-1/3 bg-[#0d3b66]/100 text-white text-[9px] font-bold px-3 py-2 rounded-xl flex items-center gap-2 shadow-lg backdrop-blur-md">
-                          <Volume2 className="w-3 h-3" /> Sound Detected
-                       </div>
-                       <div className="absolute left-2 bottom-10 bg-[#0d3b66]/100 text-white text-[9px] font-bold px-3 py-2 rounded-xl flex items-center gap-2 shadow-lg backdrop-blur-md">
-                          <Scan className="w-3 h-3" /> Human Motion
-                       </div>
-                    </div>
-
-                    <div className="absolute bottom-6 left-6 right-6 h-16 bg-gray-200/50 backdrop-blur-xl border border-white/50 rounded-full flex items-center p-1 shadow-lg">
-                       <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center shadow-md">
-                          <ChevronRight className="w-6 h-6 text-black" />
-                       </div>
-                       <span className="flex-1 text-center font-bold text-gray-800 text-xs">Get Started <span className="opacity-50">&gt;&gt;&gt;</span></span>
-                    </div>
-                  </motion.div>
-
-                  {/* App Screen 2: Dashboard */}
-                  <motion.div whileHover={{ y: -10 }} className="relative bg-[#111315] rounded-[3rem] p-6 h-[600px] shadow-[0_20px_50px_rgba(0,0,0,0.8)] border-8 border-gray-700 flex flex-col">
-                     <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-5 bg-black rounded-b-xl shadow-inner z-20" />
-                     
-                     <div className="flex justify-between items-center mb-6 mt-3">
-                       <div className="w-10 h-10 bg-[#1c2125] rounded-full flex items-center justify-center shadow-inner border border-white/5">
-                         <Grip className="w-4 h-4 text-gray-300" />
-                       </div>
-                       <div className="px-4 py-2 bg-white rounded-full text-black text-[10px] font-bold flex items-center gap-2 shadow-sm">
-                         Ground <ChevronDown className="w-3 h-3" />
-                       </div>
-                     </div>
-
-                     <div className="flex gap-2 mb-2">
-                       <div className="px-3 py-1.5 bg-[#1c2125] text-gray-300 text-[9px] font-bold rounded-full border border-white/5 flex items-center gap-2">
-                         <div className="w-2 h-2 rounded-full bg-cyan-400" /> Wi-Fi Connected
-                       </div>
-                     </div>
-                     <div className="flex gap-2 mb-6">
-                       <div className="px-3 py-1.5 bg-[#1c2125] text-gray-300 text-[9px] font-bold rounded-full border border-white/5 flex items-center gap-2 max-w-fit">
-                         <Battery className="w-3 h-3 text-cyan-400" /> 80%
-                       </div>
-                     </div>
-
-                     <div className="flex justify-between items-start mb-6">
-                        <div className="mt-2">
-                          <h3 className="text-3xl font-black text-white leading-none mb-2 tracking-tighter">Main <br/>Door Lock</h3>
-                          <p className="text-[9px] font-bold text-gray-500 uppercase tracking-widest mt-2">185 G Gate</p>
-                          
-                          <div className="flex gap-3 mt-6">
-                             <div className="w-10 h-10 rounded-full bg-[#1c2125] flex items-center justify-center text-gray-300 shadow-inner border border-white/5">
-                                <Video className="w-4 h-4" />
-                             </div>
-                             <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-black shadow-sm">
-                                <Mic className="w-4 h-4" />
-                             </div>
-                          </div>
-                        </div>
-
-                        <div className="w-16 h-48 bg-[#1a1a1a] rounded-xl border border-gray-700 shadow-2xl flex flex-col items-center py-2 relative overflow-hidden -mt-16">
-                          <div className="absolute inset-y-0 right-0 w-1/3 bg-white/5 border-l border-white/10" />
-                          <div className="w-12 h-10 border border-gray-800 rounded bg-gray-900 mb-1 z-10" />
-                          <div className="w-12 h-24 border border-gray-800 rounded bg-gray-900 flex flex-col items-center justify-center p-1 gap-2 z-10">
-                            <div className="grid grid-cols-3 gap-1">
-                               {[...Array(9)].map((_, i) => <div key={i} className="w-1.5 h-1.5 bg-gray-600 rounded-full" />)}
-                            </div>
-                            <div className="w-3.5 h-3.5 border-2 border-cyan-500 shadow-[0_0_10px_rgba(6,182,212,0.5)] rounded-full mt-2" />
-                          </div>
-                        </div>
-                     </div>
-
-                     <div className="h-14 bg-[#1c2125] border border-white/5 rounded-full flex items-center justify-between p-1.5 shadow-inner mb-6 relative">
-                        <div className="w-11 h-11 bg-[#0dcaf0] rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(13,202,240,0.5)] z-10 text-black">
-                           <Unlock className="w-4 h-4" />
-                        </div>
-                        <div className="absolute left-1/2 -translate-x-1/2 flex items-center text-gray-600 font-black tracking-[0.2em] text-[10px]">
-                           &gt;&gt;&gt;
-                        </div>
-                        <div className="w-11 h-11 bg-transparent rounded-full flex items-center justify-center z-10 text-gray-500">
-                           <Lock className="w-4 h-4" />
-                        </div>
-                     </div>
-
-                     <div className="grid grid-cols-2 gap-4 mb-4">
-                        <div className="bg-[#1c2125] border border-white/5 rounded-[1.5rem] p-4 flex flex-col justify-between h-24 shadow-inner">
-                           <Key className="w-5 h-5 text-gray-300" />
-                           <span className="text-[10px] font-bold text-gray-400 mt-2">Send Key</span>
-                        </div>
-                        <div className="bg-[#1c2125] border border-white/5 rounded-[1.5rem] p-4 flex flex-col justify-between h-24 shadow-inner">
-                           <Grid3X3 className="w-5 h-5 text-gray-300" />
-                           <span className="text-[10px] font-bold text-gray-400 mt-2">Send Code</span>
-                        </div>
-                     </div>
-
-                     <div className="absolute bottom-6 left-6 right-6 h-14 bg-[#1a1f24] border border-white/5 rounded-full flex items-center justify-around px-4 shadow-[0_-5px_20px_rgba(0,0,0,0.5)]">
-                        <div className="w-9 h-9 bg-[#0dcaf0] rounded-full flex items-center justify-center text-black shadow-[0_0_10px_rgba(13,202,240,0.4)]">
-                          <HomeIcon className="w-4 h-4" />
-                        </div>
-                        <Navigation className="w-5 h-5 text-gray-500" />
-                        <Bell className="w-5 h-5 text-gray-500" />
-                        <Settings className="w-5 h-5 text-gray-500" />
-                     </div>
-                  </motion.div>
-
-                  {/* App Screen 3: Floor Plan */}
-                  <motion.div whileHover={{ y: -10 }} className="relative bg-gray-900 rounded-[2.5rem] h-[600px] shadow-[0_20px_50px_rgba(0,0,0,0.5)] border-4 border-gray-800 overflow-hidden flex flex-col p-6">
-                     <div className="absolute inset-0 bg-[#0f172a] mix-blend-multiply opacity-50" />
-                     <div className="absolute inset-0" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px)', backgroundSize: '30px 30px' }}>
-                        <div className="absolute top-[20%] left-[10%] w-[40%] h-[30%] border-[3px] border-gray-700 bg-gray-800/40 backdrop-blur-sm rounded" />
-                        <div className="absolute top-[20%] right-[10%] w-[35%] h-[40%] border-[3px] border-gray-700 bg-gray-800/40 backdrop-blur-sm rounded" />
-                        <div className="absolute bottom-[25%] left-[20%] w-[60%] h-[30%] border-[3px] border-gray-700 bg-gray-800/50 backdrop-blur-sm rounded" />
-                        <div className="absolute bottom-[25%] left-[60%] w-10 h-10 border-2 border-purple-600 rounded-full opacity-50" />
-                     </div>
-
-                     <div className="relative z-10 flex justify-between items-center mb-6">
-                       <h3 className="text-3xl font-black text-white tracking-tighter">All Locks</h3>
-                       <div className="px-4 py-2.5 bg-white/20 backdrop-blur-md rounded-full border border-white/20 text-white text-xs font-bold flex items-center gap-2 shadow-sm">
-                         Ground <ChevronDown className="w-4 h-4" />
-                       </div>
-                     </div>
-
-                     <div className="relative z-10 flex-1">
-                        <div className="absolute top-10 left-10 w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-xl">
-                           <Lock className="w-6 h-6 text-gray-800" />
-                        </div>
-                        <div className="absolute bottom-20 right-10 w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-xl">
-                           <Lock className="w-6 h-6 text-gray-800" />
-                        </div>
-
-                        <div className="absolute top-1/4 right-4 bg-white/10 backdrop-blur-xl border border-white/20 p-2.5 rounded-2xl flex items-center gap-3 shadow-xl">
-                           <div className="w-8 h-12 bg-black rounded-lg border border-gray-700" />
-                           <div>
-                              <p className="text-[10px] font-bold text-white leading-tight">Bedroom<br/>Door Lock</p>
-                              <p className="text-[8px] text-gray-300 mt-1">Battery: 82%</p>
-                           </div>
-                        </div>
-
-                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-40 bg-gray-500/30 backdrop-blur-xl border border-white/20 rounded-[2rem] flex flex-col items-center justify-between p-2 shadow-2xl">
-                           <div className="w-12 h-12 bg-[#0ea5e9] rounded-full flex items-center justify-center shadow-md shadow-sky-500/50">
-                              <Unlock className="w-5 h-5 text-white" />
-                           </div>
-                           <div className="flex flex-col items-center text-white/50 -my-2 space-y-[-6px]">
-                               <ChevronDown className="w-5 h-5" />
-                               <ChevronDown className="w-5 h-5" />
-                           </div>
-                           <div className="w-12 h-12 bg-transparent rounded-full flex items-center justify-center">
-                               <Lock className="w-5 h-5 text-white/70" />
-                           </div>
-                        </div>
-                     </div>
-
-                     <div className="relative z-10 h-16 bg-gray-900/60 backdrop-blur-2xl border border-white/10 rounded-full flex items-center justify-around px-4 mt-auto">
-                        <HomeIcon className="w-6 h-6 text-gray-400" />
-                        <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-[#0ea5e9] shadow-lg">
-                          <Navigation className="w-6 h-6" />
-                        </div>
-                        <Bell className="w-6 h-6 text-gray-400" />
-                        <Settings className="w-6 h-6 text-gray-400" />
-                     </div>
-                  </motion.div>
-                  
+                       <h3 className="text-xl font-black uppercase tracking-widest mb-3">{step.title}</h3>
+                       <p className="text-xs text-gray-500 font-bold leading-relaxed">{step.desc}</p>
+                       
+                       {i < 3 && (
+                         <div className="hidden lg:block absolute -right-3 top-1/2 -translate-y-1/2 z-20">
+                            <ChevronsRight className="w-6 h-6 text-purple-600 opacity-20" />
+                         </div>
+                       )}
+                    </motion.div>
+                  ))}
                </div>
             </motion.div>
 
-            {/* TRUST INDICATORS */}
-            <motion.div 
-               initial={{ opacity: 0, y: 20 }}
-               whileInView={{ opacity: 1, y: 0 }}
-               viewport={{ once: true }}
-               className="relative overflow-hidden py-24 mt-12 w-full"
-            >
-               <div className="absolute inset-0 bg-[#020202]/10 z-0"></div>
-               <div className="absolute inset-y-0 w-1/4 left-0 bg-gradient-to-r from-[#020202]/80 to-transparent z-0"></div>
-               <div className="absolute inset-y-0 w-1/4 right-0 bg-gradient-to-l from-[#020202]/80 to-transparent z-0"></div>
-               <div className="absolute top-0 inset-x-0 h-24 bg-gradient-to-b from-[#0a0a0a]/90 to-transparent z-0"></div>
-               <div className="absolute bottom-0 inset-x-0 h-24 bg-gradient-to-t from-[#020202]/90 to-transparent z-0"></div>
-
-               <div className="max-w-7xl mx-auto px-6 relative z-10 grid grid-cols-1 md:grid-cols-3 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-white/10">
-                  <div className="px-8 py-4 flex flex-col items-center justify-center group">
-                     <h4 className="text-xl font-black text-white uppercase tracking-widest mb-3 shadow-black drop-shadow-lg">Made in India</h4>
-                     <p className="text-xs text-gray-400 font-medium leading-relaxed max-w-xs mx-auto">Engineered and manufactured domestically for uncompromised quality and scale.</p>
-                  </div>
-                  <div className="px-8 py-4 flex flex-col items-center justify-center group">
-                     <div className="w-16 h-16 bg-purple-600/10 backdrop-blur-xl rounded-full flex items-center justify-center mb-6 border border-purple-600/30 group-hover:-translate-y-2 transition-transform duration-500 shadow-[0_0_30px_rgba(147,51,234,0.2)]">
-                        <ShieldCheck className="w-8 h-8 text-purple-500" />
-                     </div>
-                     <h4 className="text-xl font-black text-white uppercase tracking-widest mb-3 shadow-black drop-shadow-lg">Secure Biometrics</h4>
-                     <p className="text-xs text-gray-400 font-medium leading-relaxed max-w-xs mx-auto">AES-256 encrypted facial recognition and structural fingerprint data arrays.</p>
-                  </div>
-                  <div className="px-8 py-4 flex flex-col items-center justify-center group">
-                     <div className="w-16 h-16 bg-sky-500/10 backdrop-blur-xl rounded-full flex items-center justify-center mb-6 border border-sky-500/30 group-hover:-translate-y-2 transition-transform duration-500 shadow-[0_0_30px_rgba(14,165,233,0.2)]">
-                        <Users className="w-8 h-8 text-sky-500" />
-                     </div>
-                     <h4 className="text-xl font-black text-white uppercase tracking-widest mb-3 shadow-black drop-shadow-lg">10,000+ Deployments</h4>
-                     <p className="text-xs text-gray-400 font-medium leading-relaxed max-w-xs mx-auto">Trusted by elite enterprises, boutique gyms, and architectural homeowners.</p>
-                  </div>
+            {/* The Challenge Section (Problem vs Solution) */}
+            <motion.div variants={itemVariants} className="mb-24 mt-12 overflow-hidden">
+               <div className="text-center mb-16">
+                 <motion.div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-600/10 border border-purple-600/20 text-purple-500 text-[10px] font-black tracking-widest uppercase mb-6">
+                   The Challenge
+                 </motion.div>
+                 <h2 className="text-4xl md:text-6xl font-black tracking-widest uppercase font-mono leading-[1.1] mb-6">
+                   Tired of Old-School<br/>
+                   <span className="text-purple-600">Access Control?</span>
+                 </h2>
+                 <p className="text-gray-400 font-medium max-w-2xl mx-auto">
+                   Manual keys get lost. Traditional tags are slow. Traditional systems can't scale. There had to be a better way.
+                 </p>
                </div>
+
+               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
+                  {/* The Problem Card */}
+                  <motion.div 
+                    whileHover={{ scale: 1.02 }}
+                    className="relative bg-[#0a0a0a] border border-red-900/20 p-10 rounded-[2.5rem] shadow-2xl transition-all duration-300 aura-box"
+                  >
+                     <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-600/10 border border-red-600/20 text-red-500 text-[9px] font-black tracking-widest uppercase mb-8">
+                       <X className="w-3 h-3" /> The Problem
+                     </div>
+                     <h3 className="text-3xl font-black uppercase tracking-tight mb-8">Outdated Systems<br/><span className="text-red-900/80">Hold You Back</span></h3>
+                     
+                     <div className="space-y-6">
+                        {[
+                          { title: "Slow Authentication", desc: "3+ seconds per scan. Members wait in line." },
+                          { title: "Limited Capacity", desc: "Only 50-100 users. Can't scale with your business." },
+                          { title: "No Cloud Management", desc: "Manual updates. No remote access. No analytics." },
+                          { title: "Expensive & Inflexible", desc: "Locked into vendor solutions. Can't customize." }
+                        ].map((item, i) => (
+                          <div key={i} className="flex gap-4 items-start">
+                             <div className="mt-1 text-red-600">
+                                <X className="w-5 h-5 opacity-40" />
+                             </div>
+                             <div>
+                                <h4 className="text-sm font-bold text-gray-200">{item.title}</h4>
+                                <p className="text-xs text-gray-500 font-medium mt-1">{item.desc}</p>
+                             </div>
+                          </div>
+                        ))}
+                     </div>
+                  </motion.div>
+
+                  {/* The Solution Card */}
+                  <motion.div 
+                    whileHover={{ scale: 1.02 }}
+                    className="relative bg-[#0a0a0a] border border-purple-600/30 p-10 rounded-[2.5rem] shadow-[0_0_50px_rgba(147,51,234,0.1)] transition-all duration-300 overflow-hidden aura-box"
+                  >
+                     <div className="absolute top-0 right-0 w-32 h-32 bg-purple-600/10 blur-[50px] rounded-full" />
+                     <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-600/10 border border-purple-600/20 text-purple-400 text-[9px] font-black tracking-widest uppercase mb-8">
+                       <ShieldCheck className="w-3 h-3" /> The Solution
+                     </div>
+                     <h3 className="text-3xl font-black uppercase tracking-tight mb-8 font-mono">AURALOCK<br/><span className="text-purple-600">Changes Everything</span></h3>
+                     
+                     <div className="space-y-6">
+                        {[
+                          { title: "Lightning Fast", desc: "300-500ms detection. Members never wait." },
+                          { title: "Scales to 500+ Users", desc: "Hash-map lookup. Grows with your business." },
+                          { title: "Full Cloud Control", desc: "Real-time monitoring. Remote management. Analytics." },
+                          { title: "Custom-Built for You", desc: "Designed in-house. Tailored features. Your way." }
+                        ].map((item, i) => (
+                          <div key={i} className="flex gap-4 items-start">
+                             <div className="mt-1 text-green-500">
+                                <Check className="w-5 h-5 shadow-[0_0_10px_rgba(34,197,94,0.5)]" />
+                             </div>
+                             <div>
+                                <h4 className="text-sm font-bold text-white">{item.title}</h4>
+                                <p className="text-xs text-gray-400 font-medium mt-1">{item.desc}</p>
+                             </div>
+                          </div>
+                        ))}
+                     </div>
+                  </motion.div>
+               </div>
+            </motion.div>
+            {/* Membership Access Management Section (Replaces Digital Experience Showcase) */}
+            <motion.div variants={itemVariants} className="mb-24 mt-12 overflow-hidden">
+               <div className="text-center mb-16">
+                 <motion.div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-600/10 border border-purple-600/20 text-purple-500 text-[10px] font-black tracking-widest uppercase mb-6">
+                   <Users className="w-3 h-3" /> Membership Access Management
+                 </motion.div>
+                 <h2 className="text-4xl md:text-6xl font-black tracking-widest uppercase font-mono leading-[1.1] mb-6">
+                   Complete Control Over<br/>
+                   <span className="text-purple-600">Member Access</span>
+                 </h2>
+                 <p className="text-gray-400 font-medium max-w-2xl mx-auto">
+                   Manage who can access your facility, when they can access it, and track every entry—all from one cloud dashboard.
+                 </p>
+               </div>
+
+               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto mb-8 px-4">
+                  {[
+                    { icon: Plus, title: "Add & Remove Members", desc: "Instantly grant or revoke access. Add new members via cloud dashboard. Changes sync in seconds." },
+                    { icon: Calendar, title: "Set Expiry Dates", desc: "Automatic access expiration. Memberships expire automatically. No physical keys or tags needed." },
+                    { icon: BarChart3, title: "Access Analytics", desc: "Track every entry. See who accessed when. Generate reports. Monitor facility usage patterns." }
+                  ].map((feat, i) => (
+                    <motion.div 
+                      key={i}
+                      whileHover={{ y: -5 }}
+                      className="bg-[#0a0a0a] border border-white/5 p-10 rounded-[2.5rem] transition-all duration-300 shadow-2xl aura-box"
+                    >
+                       <div className="w-14 h-14 rounded-2xl bg-purple-600/10 border border-purple-600/20 flex items-center justify-center text-purple-500 mb-8">
+                          <feat.icon className="w-7 h-7" />
+                       </div>
+                       <h3 className="text-2xl font-black uppercase tracking-tight mb-4 text-white">{feat.title}</h3>
+                       <p className="text-sm text-gray-500 font-medium leading-relaxed">{feat.desc}</p>
+                    </motion.div>
+                  ))}
+               </div>
+
+               {/* Real-Time Access Control Wide Card */}
+               <div className="max-w-6xl mx-auto px-4 mb-16">
+                  <motion.div 
+                    whileHover={{ scale: 1.01 }}
+                    className="relative bg-gradient-to-br from-[#0a0a0a] to-[#050505] border border-purple-600/20 p-10 rounded-[2.5rem] shadow-2xl overflow-hidden group"
+                  >
+                     <div className="absolute top-0 right-0 w-64 h-64 bg-purple-600/5 blur-[80px] rounded-full -mr-20 -mt-20 group-hover:bg-purple-600/10 transition-colors" />
+                     
+                     <div className="flex flex-col md:flex-row gap-8 items-start relative z-10">
+                        <div className="w-14 h-14 rounded-2xl bg-purple-600/20 border border-purple-600/30 flex items-center justify-center text-purple-400 flex-shrink-0">
+                           <Zap className="w-8 h-8" />
+                        </div>
+                        <div>
+                           <h3 className="text-2xl font-black uppercase mb-4 text-white font-mono tracking-wider">Real-Time Access Control</h3>
+                           <p className="text-sm md:text-base text-gray-400 font-medium leading-relaxed max-w-4xl">
+                              When a member's access expires, access is denied instantly—no waiting, no manual intervention. Add a new member? They get access within 8 seconds. Remove someone? Access is revoked immediately. All managed through your cloud dashboard, accessible from anywhere.
+                           </p>
+                        </div>
+                     </div>
+                  </motion.div>
+               </div>
+
+
+            </motion.div>
+
+            {/* Powerful Features - Built for Performance Section */}
+            <motion.div variants={itemVariants} className="mb-12 mt-12">
+               <div className="text-center mb-16 px-6">
+                 <motion.div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-600/10 border border-purple-600/20 text-purple-500 text-[10px] font-black tracking-widest uppercase mb-6">
+                   Powerful Features
+                 </motion.div>
+                 <h2 className="text-4xl md:text-7xl font-black tracking-widest uppercase font-mono leading-[1.1] mb-6">
+                   Built for <span className="text-purple-600">Performance</span>
+                 </h2>
+                 <p className="text-gray-400 font-medium max-w-2xl mx-auto">
+                   Every feature engineered for speed, reliability, and scale. See what makes AURALOCK different.
+                 </p>
+               </div>
+
+               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto px-6">
+                  {[
+                    { icon: Zap, title: "Sub-Second Response", desc: "Face/Finger detection in 300-500ms. Biometric lookup in <1ms. Unlock happens instantly." },
+                    { icon: TrendingUp, title: "500+ User Capacity", desc: "Enterprise-grade scalability. O(1) constant-time lookup. Syncs 500 profiles in just 8 seconds." },
+                    { icon: Cloud, title: "Cloud-Powered", desc: "Real-time sync. Remote management. Access logs. Health monitoring. All from the cloud." },
+                    { icon: Lock, title: "Offline Mode", desc: "100-profile flash cache. Works even when WiFi drops. Automatic sync when connection returns." },
+                    { icon: Wrench, title: "Custom Integration", desc: "Built in-house. Tailored to your needs. API access. Custom features on demand." },
+                    { icon: Grid3X3, title: "Smart Monitoring", desc: "Access logs. Health reports. Uptime tracking. Real-time alerts. All in one dashboard." }
+                  ].map((feat, i) => (
+                    <motion.div 
+                      key={i}
+                      whileHover={{ y: -8, border: "rgba(147, 51, 234, 0.4) 1px solid" }}
+                      className="group bg-[#0a0a0a] border border-white/5 p-10 rounded-[3rem] transition-all duration-300 shadow-xl aura-box"
+                    >
+                       <div className="w-14 h-14 rounded-2xl bg-[#1c1c1c] border border-white/5 flex items-center justify-center text-purple-500 mb-8 group-hover:scale-110 transition-transform shadow-inner">
+                          <feat.icon className="w-7 h-7" />
+                       </div>
+                       <h3 className="text-2xl font-black uppercase tracking-tight mb-4 text-white">{feat.title}</h3>
+                       <p className="text-sm text-gray-500 font-bold leading-relaxed mb-6">{feat.desc}</p>
+                       <button className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-purple-500 group/btn">
+                          Learn More <ChevronRight className="w-3 h-3 group-hover/btn:translate-x-1 transition-transform" />
+                       </button>
+                    </motion.div>
+                  ))}
+               </div>
+            </motion.div>
+
+            {/* Everything You Need Section */}
+            <motion.div variants={itemVariants} className="mb-24 py-12 bg-[#050505] border-y border-white/5">
+                <div className="max-w-7xl mx-auto px-6">
+                    <div className="text-center mb-16">
+                        <motion.div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-600/10 border border-purple-600/20 text-purple-500 text-[10px] font-black tracking-widest uppercase mb-6">
+                            <CheckCircle2 className="w-3 h-3" /> Complete Product Features
+                        </motion.div>
+                        <h2 className="text-4xl md:text-6xl font-black tracking-widest uppercase font-mono leading-[1.1] mb-6">
+                            Everything You Need to <span className="text-purple-600">Manage Access</span>
+                        </h2>
+                        <p className="text-gray-400 font-medium max-w-2xl mx-auto">
+                            Check out all the powerful features that make AURALOCK the perfect solution for your facility.
+                        </p>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+                        {[
+                            { icon: Lock, title: "Secure Biometric Encryption", desc: "Facial and fingerprint data uses AES-256 encrypted arrays. Unauthorized duplication is impossible. Your facility stays secure." },
+                            { icon: FileText, title: "Detailed Access Logs", desc: "Every biometric scan is logged with timestamp. Track member activity. Generate reports. Export data for analysis." },
+                            { icon: Clock, title: "Time-Based Access", desc: "Set access hours for different members. Day passes, night access, weekend-only—all configurable from cloud." },
+                            { icon: Bell, title: "Instant Alerts", desc: "Get notified of denied access attempts. Unknown face/finger detected? Instant alert. Expired membership? Automatic denial." },
+                            { icon: RefreshCcw, title: "Auto-Sync Technology", desc: "Changes sync automatically. Add member? Syncs profiles in 8 seconds. Revoke access? Instant update across all devices." },
+                            { icon: Save, title: "Data Backup & Recovery", desc: "All member data stored in cloud. Automatic backups. Easy recovery. Never lose access control data." }
+                        ].map((feat, i) => (
+                            <motion.div 
+                                key={i}
+                                className="flex gap-6 bg-[#0a0a0a] border border-white/5 p-8 rounded-[2rem] hover:border-white/10 transition-colors shadow-lg aura-box"
+                            >
+                                <div className="w-14 h-14 rounded-2xl bg-purple-600/10 border border-purple-600/20 flex items-center justify-center text-purple-500 flex-shrink-0">
+                                    <feat.icon className="w-6 h-6" />
+                                </div>
+                                <div>
+                                    <h4 className="text-xl font-black uppercase mb-2 text-white">{feat.title}</h4>
+                                    <p className="text-sm text-gray-400 font-medium leading-relaxed">{feat.desc}</p>
+                                </div>
+                            </motion.div>
+                        ))}
+                    </div>
+
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <div className="bg-gradient-to-br from-[#0a0a0a] to-[#020202] border border-purple-600/20 p-10 rounded-[2.5rem] shadow-2xl relative overflow-hidden group aura-box">
+                           <div className="absolute top-0 right-0 w-32 h-32 bg-purple-600/5 blur-3xl group-hover:bg-purple-600/10 transition-colors" />
+                           <div className="flex items-center gap-3 mb-6">
+                               <CheckCircle2 className="w-5 h-5 text-purple-500" />
+                               <span className="text-xs font-black uppercase tracking-[0.2em] text-gray-200">Membership-Only Access</span>
+                           </div>
+                           <p className="text-sm text-gray-400 leading-relaxed mb-8">
+                               AURALOCK ensures only active members can access your facility. Expired memberships are automatically denied. No manual checking needed. The system verifies membership status in real-time before granting access.
+                           </p>
+                           <ul className="space-y-3">
+                                {[
+                                    "Active members: Access granted instantly",
+                                    "Expired members: Access denied automatically",
+                                    "Unknown profiles: Alert sent, quick sync triggered"
+                                ].map((item, idX) => (
+                                    <li key={idX} className="flex items-center gap-3 text-xs font-bold text-gray-300">
+                                        <div className="w-1 h-1 rounded-full bg-purple-600" /> {item}
+                                    </li>
+                                ))}
+                           </ul>
+                        </div>
+
+                        <div className="bg-gradient-to-br from-[#0a0a0a] to-[#020202] border border-purple-600/20 p-10 rounded-[2.5rem] shadow-2xl relative overflow-hidden group aura-box">
+                           <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-600/5 blur-3xl group-hover:bg-cyan-600/10 transition-colors" />
+                           <div className="flex items-center gap-3 mb-6">
+                               <Zap className="w-5 h-5 text-cyan-400" />
+                               <span className="text-xs font-black uppercase tracking-[0.2em] text-gray-200">Real-Time Verification</span>
+                           </div>
+                           <p className="text-sm text-gray-400 leading-relaxed mb-8">
+                               Every recognition attempt is verified against the cloud database in real-time. Membership status, expiry dates, and access permissions are checked instantly before unlocking the door.
+                           </p>
+                           <ul className="space-y-3">
+                                {[
+                                    "Cloud verification in <500ms",
+                                    "Offline cache for WiFi drops",
+                                    "Automatic sync when connection returns"
+                                ].map((item, idX) => (
+                                    <li key={idX} className="flex items-center gap-3 text-xs font-bold text-gray-300">
+                                        <div className="w-1 h-1 rounded-full bg-cyan-500" /> {item}
+                                    </li>
+                                ))}
+                           </ul>
+                        </div>
+                    </div>
+                </div>
+            </motion.div>
+
+            {/* The Story Section */}
+            <motion.div variants={itemVariants} className="mb-24 mt-24 overflow-hidden px-6">
+                <div className="text-center mb-16">
+                  <motion.div className="inline-flex items-center gap-1 px-4 py-1.5 rounded-full bg-purple-600/10 border border-purple-600/20 text-purple-500 text-[10px] font-black tracking-widest uppercase mb-8">
+                    THE STORY
+                  </motion.div>
+                  <h2 className="text-4xl md:text-7xl font-black tracking-widest uppercase font-mono leading-[1] mb-8">
+                    Built from <span className="text-purple-600 italic">Scratch</span>
+                  </h2>
+                  <p className="text-gray-400 font-medium text-lg leading-relaxed max-w-3xl mx-auto mb-16">
+                    From concept to production. Every line of code, every component, every feature—designed and built by our R&D team.
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-6xl mx-auto">
+                   {[
+                     { date: "October 2025", title: "First Prototype", desc: "Initial R&D build. Basic biometric reading. Cloud integration. First successful door unlock test.", icon: Cpu },
+                     { date: "December 2025", title: "Recognition Engine", desc: "Optimized face and finger recognition. Achieved sub-second response time with high-precision arrays.", icon: ScanFace },
+                     { date: "February 2026", title: "Cloud Scale Sync", desc: "Integrated enterprise-grade cloud lookup. Real-time telemetry and management portal finalized.", icon: RefreshCcw },
+                     { date: "R&D Driven", title: "In-House Excellence", desc: "Every feature is tested, optimized, and built by our R&D team. No 3rd party black-boxes.", icon: Settings }
+                   ].map((item, i) => (
+                     <motion.div 
+                       key={i}
+                       className="relative bg-[#0a0a0a] border border-white/5 p-10 rounded-[3rem] flex flex-col gap-8 aura-box group"
+                     >
+                        <div className="flex justify-between items-start">
+                           <div className="w-16 h-16 rounded-3xl bg-purple-600/10 border border-purple-600/20 flex items-center justify-center text-purple-400 group-hover:scale-110 transition-transform shadow-[0_0_20px_rgba(147,51,234,0.1)]">
+                              <item.icon className="w-8 h-8" />
+                           </div>
+                           <span className="text-[10px] font-black uppercase tracking-[0.3em] text-purple-600 opacity-50 px-4 py-1.5 rounded-full border border-purple-600/20 bg-purple-600/5">{item.date}</span>
+                        </div>
+                        <div>
+                           <h3 className="text-3xl font-black uppercase tracking-tighter mb-4 text-white leading-none">{item.title}</h3>
+                           <p className="text-sm text-gray-500 font-bold leading-relaxed">{item.desc}</p>
+                        </div>
+                     </motion.div>
+                   ))}
+                </div>
+            </motion.div>
+
+            {/* Technical Excellence Section */}
+            <motion.div variants={itemVariants} className="mb-12 py-12 bg-[#050505] border-y border-white/5 relative overflow-hidden">
+                <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-purple-600/50 to-transparent" />
+                <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-purple-600/50 to-transparent" />
+                
+                <div className="max-w-7xl mx-auto px-6 relative z-10">
+                   <div className="text-center mb-20">
+                      <motion.div className="inline-flex items-center gap-1 px-4 py-1.5 rounded-full bg-purple-600/10 border border-purple-600/20 text-purple-500 text-[10px] font-black tracking-widest uppercase mb-8">
+                        TECHNICAL EXCELLENCE
+                      </motion.div>
+                      <h2 className="text-4xl md:text-7xl font-black tracking-widest uppercase font-mono leading-[1] mb-8">
+                        Engineered for <span className="text-purple-600">Scale</span>
+                      </h2>
+                      <p className="text-gray-400 font-medium text-lg leading-relaxed max-w-3xl mx-auto">
+                        Behind the scenes: the technology that makes AURALOCK fast, reliable, and scalable. Built on the power of DUAL-CORE MCU architecture.
+                      </p>
+                   </div>
+
+                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-24">
+                      {[
+                        { title: "ESP32", sub: "DUAL-CORE MCU", desc: "WiFi + Cloud Ready. 240MHz high-speed processing core.", icon: Cpu },
+                        { title: "600KG", sub: "MAGNETIC SECURE", desc: "High-intensity electromagnetic locking system. Grade-A security.", icon: Lock },
+                        { title: "O(1)", sub: "HASH MAP", desc: "Constant time lookup. Recognition in <1ms across 500+ users.", icon: Target },
+                        { title: "FLASH", sub: "OFFLINE CACHE", desc: "Local database sync. Works 24/7 even without internet.", icon: WifiOff }
+                      ].map((spec, i) => (
+                        <motion.div 
+                          key={i}
+                          className="relative bg-black/40 backdrop-blur-xl border border-white/5 p-8 rounded-[2.5rem] flex flex-col items-center text-center aura-box group"
+                        >
+                           <div className="w-12 h-12 rounded-2xl bg-purple-600/5 border border-purple-600/10 flex items-center justify-center text-purple-500/50 mb-6 group-hover:scale-110 transition-transform">
+                              <spec.icon className="w-6 h-6" />
+                           </div>
+                           <h3 className="text-4xl font-black italic text-white mb-2">{spec.title}</h3>
+                           <p className="text-[10px] font-black tracking-[0.2em] text-purple-500 uppercase mb-4">{spec.sub}</p>
+                           <p className="text-xs text-gray-500 font-bold leading-relaxed">{spec.desc}</p>
+                        </motion.div>
+                      ))}
+                   </div>
+
+                   {/* Performance Benchmarks */}
+                   <div className="bg-[#0a0a0a] border border-white/5 p-12 md:p-20 rounded-[4rem] text-center aura-box relative overflow-hidden group">
+                      <div className="absolute inset-0 bg-gradient-to-br from-purple-600/5 to-transparent pointer-events-none" />
+                      <h3 className="text-3xl md:text-5xl font-black uppercase tracking-tighter mb-16 relative">Performance <span className="text-purple-600">Benchmarks</span></h3>
+                      
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-16 relative">
+                         <div className="space-y-4">
+                            <p className="text-5xl md:text-7xl font-black text-purple-600 tracking-tighter">&lt;1ms</p>
+                            <div>
+                               <p className="text-xl font-black uppercase text-white">Recognition Lookup</p>
+                               <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-1">Hash-map O(1) access</p>
+                            </div>
+                         </div>
+                         <div className="space-y-4">
+                            <p className="text-5xl md:text-7xl font-black text-white tracking-tighter">300-500ms</p>
+                            <div>
+                               <p className="text-xl font-black uppercase text-white">Detection Time</p>
+                               <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-1">From scan to authenticate</p>
+                            </div>
+                         </div>
+                         <div className="space-y-4">
+                            <p className="text-5xl md:text-7xl font-black text-purple-600 tracking-tighter">~8s</p>
+                            <div>
+                               <p className="text-xl font-black uppercase text-white">Cloud Sync</p>
+                               <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-1">500+ member full sync</p>
+                            </div>
+                         </div>
+                      </div>
+                   </div>
+                </div>
+            </motion.div>
+            {/* Made in India Pride Section */}
+            <motion.div variants={itemVariants} className="mb-8 py-12 px-6 relative overflow-hidden">
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-amber-600/5 blur-[120px] rounded-full pointer-events-none" />
+                
+                <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                   <div className="relative z-10">
+                      <motion.div className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full bg-amber-600/10 border border-amber-600/20 text-amber-500 text-xs font-black tracking-[0.2em] uppercase mb-10 shadow-[0_0_30px_rgba(217,119,6,0.1)]">
+                        <CheckCircle2 className="w-4 h-4" /> Made in India
+                      </motion.div>
+                      
+                      <h2 className="text-4xl md:text-[64px] font-black tracking-tighter uppercase leading-[0.9] mb-8 max-w-2xl">
+                         Secure. Reliable.<br/>
+                         <span className="text-amber-600 italic">Built in Chandigarh.</span>
+                      </h2>
+                      
+                      <p className="text-gray-400 font-medium text-lg leading-relaxed mb-12 max-w-xl">
+                         We don't just assemble; we engineer. From PCB design to firmware coding, every aspect of AURALOCK is developed in-house by <span className="text-white">Englabs' R&D team.</span>
+                      </p>
+                      
+                      <ul className="space-y-6">
+                         {[
+                           "100% In-House R&D",
+                           "Custom-Built to Your Needs",
+                           "Engineered with Pride in Chandigarh"
+                         ].map((point, pIdx) => (
+                           <li key={pIdx} className="flex items-center gap-4 text-sm font-bold text-gray-200">
+                             <div className="w-2 h-2 rounded-full bg-amber-600 shadow-[0_0_10px_rgba(217,119,6,0.5)]" />
+                             {point}
+                           </li>
+                         ))}
+                      </ul>
+                   </div>
+                   
+                   <div className="relative">
+                      <motion.div 
+                        whileHover={{ scale: 1.02 }}
+                        className="bg-gradient-to-br from-[#0a0a0a] to-[#020202] border border-amber-600/20 p-16 rounded-[4rem] text-center aura-box shadow-2xl relative group overflow-hidden"
+                      >
+                         <div className="absolute top-0 right-0 w-48 h-48 bg-amber-600/5 blur-[60px] group-hover:bg-amber-600/10 transition-colors" />
+                         <div className="relative z-10">
+                            <p className="text-[120px] font-black text-white leading-none tracking-tighter mb-4">IN</p>
+                            <p className="text-6xl font-black text-amber-600 leading-none mb-4">100%</p>
+                            <p className="text-lg font-bold text-gray-400 uppercase tracking-[0.2em]">In-House R&D</p>
+                         </div>
+                      </motion.div>
+                      
+                      <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-amber-600/10 blur-3xl rounded-full" />
+                      <div className="absolute -top-6 -left-6 w-32 h-32 bg-amber-600/10 blur-3xl rounded-full" />
+                   </div>
+                </div>
+            </motion.div>
+            {/* Limited Availability CTA Section */}
+            <motion.div variants={itemVariants} className="mb-12 py-12 px-6 text-center relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-600/5 to-transparent pointer-events-none" />
+                
+                <div className="max-w-4xl mx-auto relative z-10">
+                   <motion.div className="inline-flex items-center gap-1 px-4 py-1.5 rounded-full bg-purple-600/10 border border-purple-600/20 text-purple-500 text-[10px] font-black tracking-widest uppercase mb-10">
+                      LIMITED AVAILABILITY
+                   </motion.div>
+                   
+                   <h2 className="text-5xl md:text-8xl font-black tracking-widest uppercase font-mono leading-[1] mb-10">
+                      Transform Your <span className="text-purple-600">Access Control</span> Today
+                   </h2>
+                   
+                   <p className="text-gray-400 font-medium text-lg leading-relaxed mb-16 max-w-2xl mx-auto">
+                      Join forward-thinking businesses using AURALOCK. Get a custom solution designed for your needs. <br/>
+                      <span className="text-gray-500 text-sm mt-4 block uppercase font-black tracking-widest">Fast setup. Expert support. Built in India. Ready to deploy.</span>
+                   </p>
+                   
+                   <div className="flex flex-col md:flex-row gap-6 justify-center mb-24">
+                      <motion.a 
+                        href="https://wa.me/919878407934?text=Hi, I am interested in AuraLock biometric solutions for my facility."
+                        target="_blank"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="flex items-center justify-center gap-3 bg-purple-600 hover:bg-purple-700 text-white px-10 py-6 rounded-full text-sm font-black uppercase tracking-widest transition-all shadow-[0_0_30px_rgba(147,51,234,0.3)] group"
+                      >
+                         <MessageCircle className="w-5 h-5" /> Get Started on WhatsApp <ArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform" />
+                      </motion.a>
+                      
+                      <motion.a 
+                        href="mailto:barrydevloperindia@gmail.com?subject=AuraLock Inquiry&body=Hi, I would like to request a quote for my facility."
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="flex items-center justify-center gap-3 bg-transparent border border-white/10 hover:border-white/30 text-white px-10 py-6 rounded-full text-sm font-black uppercase tracking-widest transition-all"
+                      >
+                         <FileText className="w-5 h-5" /> Request a Quote
+                      </motion.a>
+                   </div>
+                   
+                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                      {[
+                        { title: "Custom Built", desc: "Tailored to Your Needs", icon: CheckCircle2 },
+                        { title: "Fast Setup", desc: "Deploy in Days", icon: Zap },
+                        { title: "Expert Support", desc: "Always Available", icon: MessageCircle }
+                      ].map((item, idX) => (
+                        <div key={idX} className="bg-black/20 border border-white/5 p-8 rounded-[2rem] aura-box flex flex-col items-center group">
+                           <div className="w-12 h-12 rounded-2xl bg-purple-600/5 flex items-center justify-center text-purple-600/50 mb-6 group-hover:scale-110 transition-transform">
+                              <item.icon className="w-6 h-6" />
+                           </div>
+                           <h4 className="text-xl font-black uppercase text-white mb-2">{item.title}</h4>
+                           <p className="text-xs text-gray-500 font-bold uppercase tracking-widest">{item.desc}</p>
+                        </div>
+                      ))}
+                   </div>
+                </div>
+            </motion.div>
+
+            {/* Final Contact Hub Section */}
+            <motion.div variants={itemVariants} className="py-12 px-6 border-t border-white/5 bg-[#020202]">
+                <div className="max-w-4xl mx-auto text-center mb-24">
+                   <h2 className="text-4xl md:text-7xl font-black tracking-widest uppercase font-mono leading-[1] mb-10">
+                      Ready to <span className="text-purple-600">Upgrade</span> Your Access Control?
+                   </h2>
+                   
+                   <p className="text-gray-400 font-medium text-lg leading-relaxed mb-16 max-w-2xl mx-auto">
+                      Get a custom solution for your gym, library, office, or facility. Our team designs the perfect biometric door management system for you.
+                   </p>
+                   
+                   <div className="flex flex-col md:flex-row gap-6 justify-center">
+                      <motion.a 
+                        href="https://wa.me/918595737067?text=Hi, I want a custom biometric access solution for my facility."
+                        target="_blank"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="flex items-center justify-center gap-3 bg-[#111111] border border-white/10 hover:border-purple-600/50 text-white px-10 py-6 rounded-full text-sm font-black uppercase tracking-widest transition-all group"
+                      >
+                         <MessageCircle className="w-5 h-5 text-[#25D366]" /> WhatsApp Sales <ArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform" />
+                      </motion.a>
+                      
+                      <motion.a 
+                        href="mailto:info@auralock.in?subject=Quote Request&body=Hi, I am interested in a biometric solution for my facility."
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="flex items-center justify-center gap-3 bg-transparent border border-white/10 hover:border-white/30 text-white px-10 py-6 rounded-full text-sm font-black uppercase tracking-widest transition-all"
+                      >
+                         <FileText className="w-5 h-5 text-gray-400" /> Email for Quote
+                      </motion.a>
+                   </div>
+                </div>
+
+                <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                   {[
+                     { label: "SALES & ORDERS", value: "info@auralock.in", href: "mailto:info@auralock.in" },
+                     { label: "SUPPORT ONLY", value: "support@englabs.co.in", href: "mailto:support@englabs.co.in" },
+                     { label: "WHATSAPP", value: "+91 85957 37067", href: "https://wa.me/918595737067" }
+                   ].map((contact, cIdx) => (
+                     <div key={cIdx} className="bg-[#0a0a0a] border border-white/5 p-10 rounded-[2.5rem] aura-box group">
+                        <p className="text-[10px] font-black tracking-[0.3em] text-purple-600 mb-4">{contact.label}</p>
+                        <a href={contact.href} target="_blank" className="text-xl font-bold text-white group-hover:text-purple-400 transition-colors">{contact.value}</a>
+                     </div>
+                   ))}
+                </div>
             </motion.div>
 
           </motion.div>
@@ -732,7 +1191,7 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
         )}
       </AnimatePresence>
 
-      <footer className="py-12 border-t border-white/5 bg-[#020202]">
+      <footer className="py-8 border-t border-white/5 bg-[#020202]">
         <div className="max-w-7xl mx-auto px-6 text-center">
           <div className="text-3xl font-black tracking-widest uppercase font-mono mb-8">Aura<span className="text-purple-600">Lock</span></div>
           <p className="text-gray-600 text-[10px] font-bold uppercase tracking-[0.5em] mb-12">Building the future of architectural security</p>
@@ -761,27 +1220,42 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
           to { transform: rotate(360deg); }
         }
 
+        .aura-box {
+          position: relative;
+        }
+
         .aura-box::before {
           content: '';
           position: absolute;
-          inset: -3px;
-          padding: 3px;
-          border-radius: 2.5rem;
-          background: linear-gradient(to right, #8b5cf6, #ec4899, #06b6d4, #10b981);
+          inset: -1px;
+          padding: 1px;
+          border-radius: inherit;
+          background: linear-gradient(90deg, #8b5cf6, #ec4899, #06b6d4, #10b981, #8b5cf6);
+          background-size: 200% auto;
           -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
           mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
           -webkit-mask-composite: xor;
           mask-composite: exclude;
-          opacity: 0.3;
+          opacity: 0.1;
           transition: opacity 0.5s;
+          animation: shimmer 4s linear infinite;
         }
 
         .aura-box:hover::before {
-          opacity: 0.8;
+          opacity: 1;
         }
 
         @keyframes fade-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .animate-in { animation: fade-in 0.8s ease-out forwards; }
+
+        @keyframes shimmer {
+          0% { background-position: -200% 0; }
+          100% { background-position: 200% 0; }
+        }
+        .animate-shimmer {
+          background-size: 200% auto;
+          animation: shimmer 4s linear infinite;
+        }
       `}</style>
     </div>
   );
