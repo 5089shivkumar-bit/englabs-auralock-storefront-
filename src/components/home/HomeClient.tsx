@@ -134,12 +134,12 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
         <div className="hidden md:flex items-center gap-10 text-[11px] font-bold uppercase tracking-widest text-gray-400">
           <button onClick={() => setActiveTab('home')} className={`hover:text-white transition ${activeTab === 'home' ? 'text-purple-500' : ''}`}>Home</button>
           <button onClick={() => setActiveTab('products')} className={`hover:text-white transition ${activeTab === 'products' ? 'text-purple-500' : ''}`}>Products</button>
-          <Link href="/developers" className="hover:text-white transition">Developers</Link>
+          <Link href="/support" className="hover:text-white transition">Support</Link>
           <Link href="/legal" className="hover:text-white transition">Legal</Link>
         </div>
 
         <button 
-          onClick={() => window.open('https://wa.me/918595737067?text=Hi, I am interested in Auralock products.', '_blank')}
+          onClick={() => window.open('https://wa.me/919878407934?text=Hi, I am interested in Auralock products.', '_blank')}
           className="px-8 py-3 bg-gradient-to-r from-purple-600 to-cyan-500 rounded-full text-[11px] font-black uppercase tracking-widest text-white shadow-[0_0_30px_rgba(147,51,234,0.4)] hover:shadow-[0_0_50px_rgba(147,51,234,0.7)] transition-all duration-300 flex items-center gap-3 border border-white/20 group"
         >
           <div className="w-5 h-5 rounded-full bg-white/30 flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform">
@@ -919,7 +919,7 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                       </motion.a>
                       
                       <motion.a 
-                        href="mailto:barrydevloperindia@gmail.com?subject=AuraLock Inquiry&body=Hi, I would like to request a quote for my facility."
+                        href="mailto:barrydeveloperindia@gmail.com?subject=AuraLock Inquiry&body=Hi, I would like to request a quote for my facility."
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                         className="flex items-center justify-center gap-3 bg-transparent border border-white/10 hover:border-white/30 text-white px-10 py-6 rounded-full text-sm font-black uppercase tracking-widest transition-all"
@@ -959,7 +959,7 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                    
                    <div className="flex flex-col md:flex-row gap-6 justify-center">
                       <motion.a 
-                        href="https://wa.me/918595737067?text=Hi, I want a custom biometric access solution for my facility."
+                        href="https://wa.me/919878407934?text=Hi, I want a custom biometric access solution for my facility."
                         target="_blank"
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
@@ -969,7 +969,7 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                       </motion.a>
                       
                       <motion.a 
-                        href="mailto:info@auralock.in?subject=Quote Request&body=Hi, I am interested in a biometric solution for my facility."
+                        href="mailto:barrydeveloperindia@gmail.com?subject=Quote Request&body=Hi, I am interested in a biometric solution for my facility."
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                         className="flex items-center justify-center gap-3 bg-transparent border border-white/10 hover:border-white/30 text-white px-10 py-6 rounded-full text-sm font-black uppercase tracking-widest transition-all"
@@ -981,13 +981,13 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
 
                 <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
                    {[
-                     { label: "SALES & ORDERS", value: "info@auralock.in", href: "mailto:info@auralock.in" },
+                     { label: "SALES & ORDERS", value: "barrydeveloperindia@gmail.com", href: "mailto:barrydeveloperindia@gmail.com" },
                      { label: "SUPPORT ONLY", value: "support@englabs.co.in", href: "mailto:support@englabs.co.in" },
-                     { label: "WHATSAPP", value: "+91 85957 37067", href: "https://wa.me/918595737067" }
+                     { label: "WHATSAPP", value: "+91 98784 07934", href: "https://wa.me/919878407934" }
                    ].map((contact, cIdx) => (
                      <div key={cIdx} className="bg-[#0a0a0a] border border-white/5 p-10 rounded-[2.5rem] aura-box group">
                         <p className="text-[10px] font-black tracking-[0.3em] text-purple-600 mb-4">{contact.label}</p>
-                        <a href={contact.href} target="_blank" className="text-xl font-bold text-white group-hover:text-purple-400 transition-colors">{contact.value}</a>
+                        <a href={contact.href} target="_blank" className="text-sm sm:text-base lg:text-lg font-bold text-white group-hover:text-purple-400 transition-colors break-all">{contact.value}</a>
                      </div>
                    ))}
                 </div>
