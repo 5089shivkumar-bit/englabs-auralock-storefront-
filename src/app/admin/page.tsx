@@ -20,14 +20,23 @@ export default function AdminPanel() {
   const [selectedOrder, setSelectedOrder] = useState<any>(null);
   const [orderSearchQuery, setOrderSearchQuery] = useState("");
   const [orderStatusFilter, setOrderStatusFilter] = useState("All");
+  const [notification, setNotification] = useState<{ message: string, type: 'success' | 'error' | 'info' } | null>(null);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Auto-hide notification
+  useEffect(() => {
+    if (notification) {
+      const timer = setTimeout(() => setNotification(null), 4000);
+      return () => clearTimeout(timer);
+    }
+  }, [notification]);
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       if (file.size > 2 * 1024 * 1024) {
-        alert("Image exceeds 2MB limit. Please provide a smaller asset for optimal database performance.");
+        setNotification({ message: "Payload too large. Max 2MB allowed.", type: 'error' });
         return;
       }
       const reader = new FileReader();
@@ -96,7 +105,7 @@ export default function AdminPanel() {
       body: JSON.stringify(settings),
       headers: { 'Content-Type': 'application/json' }
     });
-    alert("Settings saved successfully!");
+    setNotification({ message: "System Nodes Synchronized Successfully", type: 'success' });
   };
 
   const filteredOrders = orders.filter(order => {
