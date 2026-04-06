@@ -77,7 +77,7 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
     }
   }, []);
 
-  if (!mounted) return <div className="min-h-screen bg-black" />;
+  // if (!mounted) return <div className="min-h-screen bg-black" />;
 
   const containerVariants = {
     hidden: { opacity: 0 },

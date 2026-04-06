@@ -14,7 +14,7 @@ async function ProductsSection() {
 
 export default function Home() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-black flex items-center justify-center font-mono text-orange-600">Initializing Aura Protocol...</div>}>
+    <Suspense fallback={<div className="min-h-screen bg-black flex items-center justify-center font-mono text-purple-600">Initializing Aura Protocol...</div>}>
       <ProductsSection />
     </Suspense>
   );
