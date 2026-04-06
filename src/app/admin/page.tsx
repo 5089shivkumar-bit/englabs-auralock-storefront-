@@ -1,6 +1,7 @@
 "use client";
-import React, { useEffect, useState } from 'react';
-import { Plus, Trash2, Edit2, Check, X, ShoppingCart, CreditCard, Clock, Truck, BarChart3, ShieldCheck } from 'lucide-react';
+import React, { useEffect, useState, useRef } from 'react';
+import { Plus, Trash2, Edit2, Check, X, ShoppingCart, CreditCard, Clock, Truck, BarChart3, ShieldCheck, Image as ImageIcon, Upload } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import LogisticsHub from '@/components/admin/LogisticsHub';
 import CommunicationHub from '@/components/admin/CommunicationHub';
 import BillingSummary from '@/components/admin/BillingSummary';
@@ -19,6 +20,23 @@ export default function AdminPanel() {
   const [selectedOrder, setSelectedOrder] = useState<any>(null);
   const [orderSearchQuery, setOrderSearchQuery] = useState("");
   const [orderStatusFilter, setOrderStatusFilter] = useState("All");
+
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (file.size > 2 * 1024 * 1024) {
+        alert("Image exceeds 2MB limit. Please provide a smaller asset for optimal database performance.");
+        return;
+      }
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setEditingProduct({ ...editingProduct, image: reader.result as string });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   const login = (e: React.FormEvent) => {
     e.preventDefault();
@@ -245,73 +263,51 @@ export default function AdminPanel() {
           </div>
         )}
 
-        {/* PRODUCTS TAB */}
         {activeTab === 'products' && (
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-            <div className="lg:col-span-2 space-y-6">
-               <div className="flex justify-between items-center mb-8">
-                  <h2 className="text-3xl font-black italic uppercase tracking-tighter">Hardware <span className="text-orange-600">Inventory</span></h2>
-                  <button onClick={() => setEditingProduct({ name: '', price: 0, features: [], image: '' })} className="px-6 py-3 bg-orange-600 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-lg hover:bg-orange-500 transition">
+          <div className="space-y-12">
+            <div className="space-y-6">
+               <div className="flex justify-between items-center mb-12">
+                  <div>
+                    <h2 className="text-4xl font-black italic uppercase tracking-tighter">Hardware <span className="text-orange-600">Inventory</span></h2>
+                    <p className="text-gray-500 text-xs font-bold uppercase tracking-widest mt-2">Managing corporate hardware assets</p>
+                  </div>
+                  <button onClick={() => setEditingProduct({ name: '', price: 0, features: [], image: '', description: '', quantity: 0 })} className="px-10 py-4 bg-orange-600 rounded-2xl text-[10px] font-black uppercase tracking-widest shadow-[0_10px_30px_rgba(234,88,12,0.3)] hover:bg-orange-500 transition-all hover:scale-105 active:scale-95">
                      Deploy SKU
                   </button>
                </div>
-               {products.map(product => (
-                 <div key={product.id} className="p-8 bg-[#0a0a0a] border border-white/5 rounded-[2.5rem] flex items-center justify-between group hover:border-orange-600/30 transition-all duration-500">
-                    <div className="flex items-center gap-8">
-                       <div className="w-24 h-24 bg-black rounded-3xl p-4 border border-white/5 group-hover:border-orange-600/20 transition">
-                          <img src={product.image || product.images?.[0]} className="w-full h-full object-contain drop-shadow-xl" alt="" />
-                       </div>
-                       <div>
-                          <h3 className="text-2xl font-black italic uppercase italic tracking-tighter mb-1">{product.name}</h3>
-                          <p className="text-orange-500 font-black italic mb-2 tracking-tighter">
-                            ₹{Number(product.price).toLocaleString('en-IN')} 
-                            <span className="text-gray-500 text-[10px] ml-3 opacity-50 tracking-widest uppercase italic">// STOCK_UNITS: {product.quantity || 0}</span>
-                          </p>
-                          <div className="flex gap-2 flex-wrap">
-                             {product.features?.slice(0, 3).map((f: any, i: any) => (
-                               <span key={i} className="text-[8px] font-black uppercase tracking-widest text-gray-600 border border-white/5 px-2 py-1 rounded-full">{f}</span>
-                             ))}
+               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {products.map(product => (
+                    <div key={product.id} className="p-8 bg-[#0a0a0a] border border-white/5 rounded-[2.5rem] flex items-center justify-between group hover:border-orange-600/30 transition-all duration-500 shadow-xl">
+                       <div className="flex items-center gap-8">
+                          <div className="w-24 h-24 bg-black rounded-[2rem] p-4 border border-white/5 group-hover:border-orange-600/20 transition relative overflow-hidden">
+                             <div className="absolute inset-0 bg-gradient-to-br from-orange-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                             <img src={product.image || product.images?.[0]} className="w-full h-full object-contain drop-shadow-2xl relative z-10" alt="" />
+                          </div>
+                          <div>
+                             <h3 className="text-2xl font-black italic uppercase italic tracking-tighter mb-1">{product.name}</h3>
+                             <p className="text-orange-500 font-black italic mb-2 tracking-tighter">
+                               ₹{Number(product.price).toLocaleString('en-IN')} 
+                               <span className="text-gray-500 text-[10px] ml-3 opacity-50 tracking-widest uppercase italic font-mono">// STOCK: {product.quantity || 0}</span>
+                             </p>
+                             <div className="flex gap-2 flex-wrap">
+                                {product.features?.slice(0, 3).map((f: any, i: any) => (
+                                  <span key={i} className="text-[8px] font-black uppercase tracking-widest text-gray-400 bg-white/5 border border-white/5 px-3 py-1 rounded-full">{f}</span>
+                                ))}
+                             </div>
                           </div>
                        </div>
+                       <div className="flex gap-3">
+                          <button onClick={() => setEditingProduct(product)} className="w-12 h-12 bg-white/5 hover:bg-white/10 rounded-2xl transition-all text-gray-400 hover:text-white border border-white/5 flex items-center justify-center">
+                             <Edit2 className="w-5 h-5" />
+                          </button>
+                          <button onClick={() => deleteProduct(product.id)} className="w-12 h-12 bg-red-600/10 hover:bg-red-600/20 rounded-2xl transition-all text-red-500 border border-red-600/20 flex items-center justify-center">
+                             <Trash2 className="w-5 h-5" />
+                          </button>
+                       </div>
                     </div>
-                    <div className="flex flex-col gap-2">
-                       <button onClick={() => setEditingProduct(product)} className="p-3 bg-white/5 hover:bg-white/10 rounded-xl transition text-gray-400 hover:text-white border border-white/5">
-                          <Edit2 className="w-4 h-4" />
-                       </button>
-                       <button onClick={() => deleteProduct(product.id)} className="p-3 bg-red-600/10 hover:bg-red-600/20 rounded-xl transition text-red-500 border border-red-600/20">
-                          <Trash2 className="w-4 h-4" />
-                       </button>
-                    </div>
-                 </div>
-               ))}
+                  ))}
+               </div>
             </div>
-
-            {editingProduct && (
-              <div className="bg-[#0a0a0a] border border-orange-600/20 p-10 rounded-[3rem] h-fit sticky top-24 shadow-2xl">
-                 <h2 className="text-2xl font-black italic uppercase tracking-tighter mb-8">Configure <span className="text-orange-600">Unit</span></h2>
-                 <form onSubmit={saveProduct} className="space-y-6">
-                    <div className="space-y-2">
-                       <label className="text-[10px] font-black text-gray-600 uppercase tracking-widest">Product Title</label>
-                       <input type="text" value={editingProduct.name} onChange={e => setEditingProduct({...editingProduct, name: e.target.value})} className="w-full bg-black border border-white/5 p-4 rounded-xl text-sm font-bold focus:border-orange-600 focus:outline-none" />
-                    </div>
-                    <div className="space-y-2">
-                       <label className="text-[10px] font-black text-gray-600 uppercase tracking-widest">Base MSP (INR)</label>
-                       <input type="number" value={editingProduct.price} onChange={e => setEditingProduct({...editingProduct, price: Number(e.target.value)})} className="w-full bg-black border border-white/5 p-4 rounded-xl text-sm font-bold focus:border-orange-600 focus:outline-none" />
-                    </div>
-                    <div className="space-y-2">
-                       <label className="text-[10px] font-black text-gray-600 uppercase tracking-widest">Stock Quantity</label>
-                       <input type="number" value={editingProduct.quantity || 0} onChange={e => setEditingProduct({...editingProduct, quantity: Number(e.target.value)})} className="w-full bg-black border border-white/5 p-4 rounded-xl text-sm font-bold focus:border-orange-600 focus:outline-none" />
-                    </div>
-                    <div className="space-y-2">
-                       <label className="text-[10px] font-black text-gray-600 uppercase tracking-widest">Features Array</label>
-                       <textarea rows={4} value={(editingProduct.features || []).join(', ')} onChange={e => setEditingProduct({...editingProduct, features: e.target.value.split(',').map(f => f.trim())})} className="w-full bg-black border border-white/5 p-4 rounded-xl text-xs font-bold focus:border-orange-600 focus:outline-none" />
-                    </div>
-                    <button className="w-full py-5 bg-orange-600 text-white font-black uppercase italic tracking-tighter text-xl rounded-2xl hover:bg-orange-500 transition shadow-xl">
-                       Update Database
-                    </button>
-                 </form>
-              </div>
-            )}
           </div>
         )}
 
@@ -336,6 +332,184 @@ export default function AdminPanel() {
         )}
 
       </div>
+
+      {/* PRODUCT EDIT MODAL */}
+      <AnimatePresence>
+        {editingProduct && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[1000] bg-black/95 backdrop-blur-2xl flex items-center justify-center p-4 md:p-12 overflow-y-auto"
+            onClick={() => setEditingProduct(null)}
+          >
+            <motion.div 
+              initial={{ scale: 0.9, opacity: 0, y: 50 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0, y: 50 }}
+              onClick={e => e.stopPropagation()}
+              className="bg-[#050505] border border-white/10 w-full max-w-6xl min-h-[85vh] rounded-[3.5rem] overflow-hidden flex flex-col md:flex-row shadow-[0_0_100px_rgba(234,88,12,0.15)] relative mb-auto mt-auto"
+            >
+              {/* Close Button */}
+              <button 
+                onClick={() => setEditingProduct(null)}
+                className="absolute top-8 right-8 z-[1100] w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:bg-red-600/20 hover:border-red-600/40 transition-all active:scale-95"
+              >
+                <X className="w-6 h-6" />
+              </button>
+
+              {/* LEFT: Visual Preview */}
+              <div className="w-full md:w-5/12 bg-black flex flex-col p-8 md:p-12 border-b md:border-b-0 md:border-r border-white/5 relative items-center justify-center overflow-hidden">
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(234,88,12,0.05)_0%,transparent_70%)]" />
+                
+                <div className="relative group w-full aspect-square max-w-[400px] mb-12">
+                   {/* Aura Box Effect */}
+                   <div className="absolute inset-0 z-0 pointer-events-none rounded-[3rem] overflow-hidden">
+                      <div className="absolute left-1/2 top-1/2 w-[300%] h-[300%] -translate-x-1/2 -translate-y-1/2 animate-[spin_6s_linear_infinite] bg-[conic-gradient(from_0deg,transparent_75%,#ea3a0c_85%,#fb923c_100%)] opacity-40 group-hover:opacity-80 transition-opacity" />
+                      <div className="absolute inset-[2px] rounded-[calc(3rem-2px)] bg-black" />
+                   </div>
+                   
+                   <div className="relative z-10 w-full h-full p-10 flex items-center justify-center">
+                      {(editingProduct.image || editingProduct.images?.length > 0) ? (
+                        <img src={editingProduct.image || editingProduct.images?.[0]} className="w-full h-full object-contain drop-shadow-[0_0_50px_rgba(234,88,12,0.4)]" alt="Preview" />
+                      ) : (
+                        <div className="flex flex-col items-center gap-4 text-gray-700">
+                           <ImageIcon className="w-24 h-24" />
+                           <p className="text-[10px] font-black uppercase tracking-widest">Image Matrix Offline</p>
+                        </div>
+                      )}
+                   </div>
+                </div>
+
+                <div className="w-full space-y-6 relative z-10">
+                   <div className="space-y-2">
+                      <div className="flex justify-between items-end mb-1">
+                        <label className="text-[9px] font-black text-orange-600/60 uppercase tracking-[0.3em] font-mono">Image Asset URL</label>
+                        <button 
+                          type="button"
+                          onClick={() => fileInputRef.current?.click()}
+                          className="flex items-center gap-2 group/btn px-3 py-1 rounded-lg bg-orange-600/10 border border-orange-600/20 hover:bg-orange-600 hover:border-orange-600 transition-all"
+                        >
+                           <Upload className="w-3 h-3 text-orange-600 group-hover/btn:text-white transition-colors" />
+                           <span className="text-[8px] font-black uppercase tracking-widest text-orange-600 group-hover/btn:text-white transition-colors">Upload Asset</span>
+                        </button>
+                      </div>
+                      <input 
+                        type="text" 
+                        value={editingProduct.image || editingProduct.images?.[0] || ''} 
+                        onChange={e => setEditingProduct({...editingProduct, image: e.target.value})}
+                        className="w-full bg-white/5 border border-white/10 p-4 rounded-xl text-[10px] font-bold text-gray-400 focus:text-white focus:border-orange-600 focus:outline-none transition-all placeholder:text-gray-800"
+                        placeholder="PROTOCOL://RESOURCE.PATH/IMAGE.PNG"
+                      />
+                      <input 
+                        type="file" 
+                        ref={fileInputRef}
+                        className="hidden" 
+                        accept="image/*"
+                        onChange={handleImageUpload}
+                      />
+                   </div>
+                   <p className="text-[8px] text-gray-600 font-bold uppercase tracking-widest text-center italic">Supported Formats: PNG, WEBP, SVG (Transparent preferred)</p>
+                </div>
+              </div>
+
+              {/* RIGHT: Configuration Matrix */}
+              <form onSubmit={saveProduct} className="flex-1 flex flex-col h-[85vh] md:h-auto">
+                <div className="flex-1 p-8 md:p-12 overflow-y-auto custom-scrollbar space-y-10">
+                  <div className="flex justify-between items-start gap-8">
+                     <div className="flex-1">
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-600/10 border border-orange-600/20 text-orange-600 text-[9px] font-black tracking-widest uppercase mb-4">
+                           SKU: {editingProduct.id || "NEW_DEPLOYMENT"}
+                        </div>
+                        <h2 className="text-4xl font-black italic uppercase tracking-tighter leading-none">System <span className="text-orange-600">Configuration</span></h2>
+                     </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                     <div className="space-y-2">
+                        <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest">Hardware Descriptor</label>
+                        <input 
+                          type="text" 
+                          required
+                          value={editingProduct.name} 
+                          onChange={e => setEditingProduct({...editingProduct, name: e.target.value})} 
+                          className="w-full bg-black/40 border border-white/10 p-5 rounded-2xl text-lg font-black uppercase italic italic focus:border-orange-600 focus:bg-black transition-all outline-none" 
+                        />
+                     </div>
+                     <div className="space-y-2">
+                        <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest">Base MSP (INR)</label>
+                        <div className="relative">
+                          <span className="absolute left-5 top-1/2 -translate-y-1/2 text-orange-600 font-black text-lg">₹</span>
+                          <input 
+                            type="number" 
+                            required
+                            value={editingProduct.price} 
+                            onChange={e => setEditingProduct({...editingProduct, price: Number(e.target.value)})} 
+                            className="w-full bg-black/40 border border-white/10 pl-10 pr-5 py-5 rounded-2xl text-2xl font-black focus:border-orange-600 focus:bg-black transition-all outline-none" 
+                          />
+                        </div>
+                     </div>
+                  </div>
+
+                  <div className="space-y-2">
+                     <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest">Technical Brief (Description)</label>
+                     <textarea 
+                        rows={3} 
+                        value={editingProduct.description || ''} 
+                        onChange={e => setEditingProduct({...editingProduct, description: e.target.value})} 
+                        className="w-full bg-black/40 border border-white/10 p-5 rounded-2xl text-sm font-medium leading-relaxed focus:border-orange-600 focus:bg-black transition-all outline-none"
+                        placeholder="Provide detailed hardware specifications and environmental operational requirements..."
+                     />
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                     <div className="space-y-2">
+                        <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest">Inventory Reservoir (Stock)</label>
+                        <input 
+                          type="number" 
+                          value={editingProduct.quantity || 0} 
+                          onChange={e => setEditingProduct({...editingProduct, quantity: Number(e.target.value)})} 
+                          className="w-full bg-black/40 border border-white/10 p-5 rounded-2xl text-xl font-mono focus:border-orange-600 focus:bg-black transition-all outline-none" 
+                        />
+                     </div>
+                     <div className="space-y-2">
+                        <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest">Video Relay URL (Optional)</label>
+                        <input 
+                          type="text" 
+                          value={editingProduct.video || ''} 
+                          onChange={e => setEditingProduct({...editingProduct, video: e.target.value})} 
+                          className="w-full bg-black/40 border border-white/10 p-5 rounded-2xl text-xs font-mono focus:border-orange-600 focus:bg-black transition-all outline-none" 
+                          placeholder="HTTPS://..."
+                        />
+                     </div>
+                  </div>
+
+                  <div className="space-y-2">
+                     <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest">Capabilities Matrix (Features - Comma Separated)</label>
+                     <textarea 
+                        rows={4} 
+                        value={(editingProduct.features || []).join(', ')} 
+                        onChange={e => setEditingProduct({...editingProduct, features: e.target.value.split(',').map(f => f.trim())})} 
+                        className="w-full bg-black/40 border border-white/10 p-5 rounded-2xl text-xs font-bold focus:border-orange-600 focus:bg-black transition-all outline-none"
+                        placeholder="Feature A, Feature B, Feature C..."
+                     />
+                  </div>
+                </div>
+
+                {/* Footer Actions */}
+                <div className="flex-shrink-0 p-8 md:p-12 bg-white/2 border-t border-white/5 flex gap-4">
+                  <button type="submit" className="flex-1 py-5 bg-orange-600 text-white font-black uppercase italic tracking-tighter text-xl rounded-2xl hover:bg-white hover:text-orange-600 transition-all shadow-[0_20px_50px_rgba(234,88,12,0.3)] flex items-center justify-center gap-3 active:scale-[0.98]">
+                     <Check className="w-6 h-6" /> Commit Changes
+                  </button>
+                  <button type="button" onClick={() => setEditingProduct(null)} className="px-10 py-5 bg-white/5 border border-white/10 text-white font-black uppercase italic tracking-tighter text-xl rounded-2xl hover:bg-red-600/20 hover:border-red-600/40 transition-all active:scale-[0.98]">
+                     Abstain
+                  </button>
+                </div>
+              </form>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* DETAIL MODAL (Placeholder reuse) */}
       {selectedOrder && (
