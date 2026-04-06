@@ -8,12 +8,26 @@ import { getDB } from '@/lib/db';
 export async function GET() {
   try {
     const { data, error } = await supabase.from('products').select('*');
+    const db = getDB();
     if (error || !data || data.length === 0) {
       console.log("Supabase fetch failed or empty, falling back to local database.json");
-      const db = getDB();
       return NextResponse.json(db.products || []);
     }
-    return NextResponse.json(data);
+    
+    // Merge database.json products with Supabase products
+    const allProducts = data.map((item: any) => ({ ...item }));
+    if (db.products && db.products.length > 0) {
+      db.products.forEach((p: any) => {
+        const existing = allProducts.find((x: any) => x.id === p.id);
+        if (!existing) {
+          allProducts.push(p);
+        } else if (!existing.image && p.image) {
+          existing.image = p.image;
+        }
+      });
+    }
+    
+    return NextResponse.json(allProducts);
   } catch (err) {
     console.error("Supabase connection error, falling back to local database.json");
     const db = getDB();

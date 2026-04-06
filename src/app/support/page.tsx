@@ -205,14 +205,16 @@ export default function SupportPage() {
                 title: "Call Us", 
                 desc: "Talk to an engineer", 
                 action: "tel:+919878407934",
-                color: "from-blue-600 to-indigo-700" 
+                color: "from-blue-600 to-indigo-700",
+                borderConic: "bg-[conic-gradient(from_0deg,transparent_75%,#2563eb_85%,#4f46e5_100%)]"
               },
               { 
                 icon: MessageCircle, 
                 title: "WhatsApp", 
                 desc: "Live technical support", 
                 action: "https://wa.me/919878407934",
-                color: "from-emerald-500 to-teal-600" 
+                color: "from-emerald-500 to-teal-600",
+                borderConic: "bg-[conic-gradient(from_0deg,transparent_75%,#10b981_85%,#0d9488_100%)]"
               }
             ].map((btn, i) => (
               <motion.a
@@ -221,15 +223,23 @@ export default function SupportPage() {
                 target={btn.action.startsWith('http') ? '_blank' : undefined}
                 variants={itemVariants}
                 whileHover={{ y: -10, scale: 1.02 }}
-                className="group relative p-8 bg-[#0a0a0a]/80 backdrop-blur-xl border border-white/5 rounded-[2.5rem] overflow-hidden transition-all duration-300 hover:border-white/20 shadow-2xl"
+                className="group relative rounded-[2.5rem] overflow-hidden transition-all duration-300 shadow-2xl bg-[#0a0a0a]"
               >
-                <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${btn.color} opacity-10 blur-[50px] transition-opacity group-hover:opacity-20`} />
-                <div className="relative z-10">
-                  <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${btn.color} flex items-center justify-center text-white mb-6 shadow-lg group-hover:rotate-12 transition-transform duration-500`}>
-                    <btn.icon className="w-6 h-6" />
+                {/* Spinning Border */}
+                <div className="absolute inset-0 z-0 pointer-events-none rounded-[2.5rem] overflow-hidden">
+                  <div className={`absolute left-1/2 top-1/2 w-[300%] h-[300%] -translate-x-1/2 -translate-y-1/2 animate-[spin_4s_linear_infinite] ${btn.borderConic} opacity-70 group-hover:opacity-100 transition-opacity`} />
+                  <div className="absolute inset-[1px] rounded-[calc(2.5rem-1px)] bg-[#0a0a0a] group-hover:bg-[#0c0c0c] transition-colors" />
+                </div>
+                
+                <div className="relative z-10 p-8 h-full">
+                  <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${btn.color} opacity-10 blur-[50px] transition-opacity group-hover:opacity-20 z-0`} />
+                  <div className="relative z-10">
+                    <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${btn.color} flex items-center justify-center text-white mb-6 shadow-lg group-hover:rotate-12 transition-transform duration-500`}>
+                      <btn.icon className="w-6 h-6" />
+                    </div>
+                    <h3 className="text-xl font-black uppercase tracking-widest mb-2 font-mono">{btn.title}</h3>
+                    <p className="text-sm text-gray-500 font-bold uppercase tracking-widest">{btn.desc}</p>
                   </div>
-                  <h3 className="text-xl font-black uppercase tracking-widest mb-2 font-mono">{btn.title}</h3>
-                  <p className="text-sm text-gray-500 font-bold uppercase tracking-widest">{btn.desc}</p>
                 </div>
               </motion.a>
             ))}

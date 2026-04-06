@@ -87,6 +87,48 @@
       ],
       "quantity": 10,
       "description": "Englabs 3-in-1 access control provides a Flexible Modular and Scalable approach for modern secure entrances. A smart efficient Fingerprint, Smartphone and NFC cards based solution."
+    },
+    {
+      "name": "Englabs AURA",
+      "price": 10500,
+      "features": [
+        "Access control reader blending elegant aesthetics with high security.",
+        "Effortless access through BLE, NFC, and keypad authentication.",
+        "Sleek glass finish with a glowing light indicator."
+      ],
+      "image": "/images/spintly_aura.png",
+      "stock": 10,
+      "category": "Hardware",
+      "description": "Sleek and advanced access control reader.",
+      "id": "1775456537697363"
+    },
+    {
+      "name": "Englabs KREO",
+      "price": 13500,
+      "features": [
+        "Advanced access control reader with IP-65 rugged rating.",
+        "Seamless door unlocking using BLE, NFC, and Keypad.",
+        "Highest level of security and reliability for critical entry points."
+      ],
+      "image": "/images/spintly_kreo.png",
+      "stock": 5,
+      "category": "Hardware",
+      "description": "Advanced rugged access control reader.",
+      "id": "1775456537697746"
+    },
+    {
+      "name": "Englabs Face Recognition",
+      "price": 25000,
+      "features": [
+        "Biometric access control via advanced face recognition.",
+        "High-speed detection with an elegant dark-mode screen interface.",
+        "Wall-mounted smart device integrating seamlessly into professional spaces."
+      ],
+      "image": "/images/spintly_face_recognition.png",
+      "stock": 5,
+      "category": "Biometric",
+      "description": "High-speed modern face recognition device.",
+      "id": "1775456537697679"
     }
   ],
   "settings": {

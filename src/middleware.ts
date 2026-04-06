@@ -6,8 +6,8 @@ export function middleware(request: NextRequest) {
 
   // Protect /admin routes
   if (pathname.startsWith('/admin')) {
-    // Skip protection for login page if it exists
-    if (pathname === '/admin/login') {
+    // Skip protection for the admin dashboard itself since it contains the login form
+    if (pathname === '/admin' || pathname === '/admin/login') {
       return NextResponse.next();
     }
 

@@ -4,6 +4,7 @@ import { Plus, Trash2, Edit2, Check, X, ShoppingCart, CreditCard, Clock, Truck, 
 import LogisticsHub from '@/components/admin/LogisticsHub';
 import CommunicationHub from '@/components/admin/CommunicationHub';
 import BillingSummary from '@/components/admin/BillingSummary';
+import AnalyticsDashboard from '@/components/admin/AnalyticsDashboard';
 
 export default function AdminPanel() {
   const [products, setProducts] = useState<any[]>([]);
@@ -12,7 +13,7 @@ export default function AdminPanel() {
   
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [password, setPassword] = useState("");
-  const [activeTab, setActiveTab] = useState<'dashboard' | 'orders' | 'products' | 'settings'>('dashboard');
+  const [activeTab, setActiveTab] = useState<'dashboard' | 'orders' | 'products' | 'settings' | 'analytics'>('dashboard');
 
   const [editingProduct, setEditingProduct] = useState<any>(null);
   const [selectedOrder, setSelectedOrder] = useState<any>(null);
@@ -129,7 +130,7 @@ export default function AdminPanel() {
              <h1 className="text-3xl font-black tracking-tighter uppercase italic">Aura<span className="text-orange-600">Lock</span> Control</h1>
           </div>
           <div className="flex bg-[#0a0a0a] rounded-2xl p-1.5 border border-white/5 shadow-xl">
-            {['dashboard', 'orders', 'products', 'settings'].map(tab => (
+            {['dashboard', 'orders', 'products', 'settings', 'analytics'].map(tab => (
               <button key={tab} 
                 onClick={() => setActiveTab(tab as any)}
                 className={`px-8 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all duration-300 ${activeTab === tab ? 'bg-orange-600 text-white shadow-lg' : 'text-gray-500 hover:text-white'}`}>
@@ -138,6 +139,10 @@ export default function AdminPanel() {
             ))}
           </div>
         </header>
+
+        {activeTab === 'analytics' && (
+          <AnalyticsDashboard />
+        )}
 
         {activeTab === 'dashboard' && (
           <div className="space-y-12">

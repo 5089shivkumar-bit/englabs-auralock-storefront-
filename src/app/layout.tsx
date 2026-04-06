@@ -4,6 +4,7 @@ import "./globals.css";
 import React, { Suspense } from "react";
 import FacebookPixel from "@/components/marketing/FacebookPixel";
 import ChatBot from "@/components/ai/ChatBot";
+import AnalyticsTracker from "@/components/analytics/AnalyticsTracker";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -53,6 +54,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <Suspense fallback={null}>
           <FacebookPixel />
+          <AnalyticsTracker />
         </Suspense>
         {children}
         <ChatBot />

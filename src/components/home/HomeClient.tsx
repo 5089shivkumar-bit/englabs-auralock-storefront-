@@ -49,7 +49,7 @@ import {
   TrendingUp
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-
+import LoginModal from "@/components/auth/LoginModal";
 interface HomeClientProps {
   initialProducts: any[];
 }
@@ -62,6 +62,7 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
   const [mounted, setMounted] = useState(false);
   const [activeTab, setActiveTab] = useState("home");
   const [currentGalleryIndex, setCurrentGalleryIndex] = useState(0);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -91,6 +92,8 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
 
   return (
     <div className="min-h-screen bg-[#020202] text-white selection:bg-purple-500/30 overflow-x-hidden">
+      
+      <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} />
       
       {/* Cinematic Splash Screen */}
       <AnimatePresence>
@@ -138,15 +141,23 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
           <Link href="/legal" className="hover:text-white transition">Legal</Link>
         </div>
 
-        <button 
-          onClick={() => window.open('https://wa.me/919878407934?text=Hi, I am interested in Auralock products.', '_blank')}
-          className="px-8 py-3 bg-gradient-to-r from-purple-600 to-cyan-500 rounded-full text-[11px] font-black uppercase tracking-widest text-white shadow-[0_0_30px_rgba(147,51,234,0.4)] hover:shadow-[0_0_50px_rgba(147,51,234,0.7)] transition-all duration-300 flex items-center gap-3 border border-white/20 group"
-        >
-          <div className="w-5 h-5 rounded-full bg-white/30 flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform">
-             <MessageCircle className="w-3 h-3" />
-          </div>
-          SALES
-        </button>
+        <div className="flex items-center gap-4">
+          <button 
+            onClick={() => setIsLoginModalOpen(true)}
+            className="hidden md:block px-6 py-3 text-[11px] font-bold uppercase tracking-widest text-gray-300 hover:text-white transition-colors"
+          >
+            LOGIN
+          </button>
+          <button 
+            onClick={() => window.open('https://wa.me/919878407934?text=Hi, I am interested in Auralock products.', '_blank')}
+            className="px-8 py-3 bg-gradient-to-r from-purple-600 to-cyan-500 rounded-full text-[11px] font-black uppercase tracking-widest text-white shadow-[0_0_30px_rgba(147,51,234,0.4)] hover:shadow-[0_0_50px_rgba(147,51,234,0.7)] transition-all duration-300 flex items-center gap-3 border border-white/20 group"
+          >
+            <div className="w-5 h-5 rounded-full bg-white/30 flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform">
+               <MessageCircle className="w-3 h-3" />
+            </div>
+            SALES
+          </button>
+        </div>
       </nav>
 
       {/* Main Content */}
@@ -1016,7 +1027,7 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {products.filter(p => p.name.toLowerCase().includes(searchQuery.toLowerCase())).map((product, idx) => (
                 <motion.div 
                   key={product.id}
@@ -1024,33 +1035,41 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: idx * 0.1 }}
                   onClick={() => { setSelectedProduct(product); setCurrentGalleryIndex(0); }}
-                  className="group relative bg-[#0a0a0a] border border-white/5 p-8 rounded-[2.5rem] hover:border-purple-600/50 transition-all duration-500 cursor-pointer overflow-hidden shadow-2xl"
+                  className="group relative bg-[#0a0a0a] rounded-[2rem] hover:shadow-[0_0_50px_rgba(147,51,234,0.3)] transition-all duration-500 cursor-pointer overflow-hidden shadow-2xl"
                 >
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-purple-600/5 blur-[40px] rounded-full group-hover:bg-purple-600/10 transition" />
-                  
-                  <div className="h-64 mb-8 flex items-center justify-center">
-                    {product.image || product.images?.[0] ? (
-                      <img src={product.image || product.images[0]} alt={product.name} className="max-h-full object-contain group-hover:scale-110 transition duration-700 drop-shadow-[0_20px_40px_rgba(147,51,234,0.2)]" />
-                    ) : (
-                      <Lock className="w-20 h-20 text-gray-800" />
-                    )}
+                  {/* The Running Coloured Border */}
+                  <div className="absolute inset-0 z-0 pointer-events-none rounded-[2rem] overflow-hidden">
+                    <div className="absolute left-1/2 top-1/2 w-[300%] h-[300%] -translate-x-1/2 -translate-y-1/2 animate-[spin_4s_linear_infinite] bg-[conic-gradient(from_0deg,transparent_75%,#8b5cf6_85%,#06b6d4_100%)] opacity-70 group-hover:opacity-100 transition-opacity" />
+                    <div className="absolute inset-[1px] rounded-[calc(2rem-1px)] bg-[#0a0a0a] group-hover:bg-black transition-colors" />
                   </div>
-                  
-                  <div className="relative">
-                    <div className="flex justify-between items-start mb-4">
-                       <div>
-                         <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1">Aura SKU: {product.id.slice(-4).toUpperCase()}</p>
-                         <h3 className="text-2xl font-black italic uppercase tracking-tighter">{product.name}</h3>
-                       </div>
+
+                  <div className="relative z-10 w-full h-full p-6 flex flex-col">
+                    <div className="absolute top-0 right-0 w-24 h-24 bg-purple-600/5 blur-[30px] rounded-full group-hover:bg-purple-600/10 transition z-0" />
+                    
+                    <div className="h-44 mb-6 flex items-center justify-center relative z-20">
+                      {product.image || product.images?.[0] ? (
+                        <img src={product.image || product.images[0]} alt={product.name} className="max-h-full object-contain group-hover:scale-110 transition duration-700 drop-shadow-[0_20px_40px_rgba(147,51,234,0.2)]" />
+                      ) : (
+                        <Lock className="w-16 h-16 text-gray-800" />
+                      )}
                     </div>
                     
-                    <div className="flex items-center gap-4 mb-8">
-                       <span className="text-3xl font-black text-purple-500">₹{Number(product.price).toLocaleString('en-IN')}</span>
-                    </div>
+                    <div className="relative z-20 mt-auto">
+                      <div className="flex justify-between items-start mb-3">
+                         <div>
+                           <p className="text-[9px] font-bold text-gray-500 uppercase tracking-widest mb-1">Aura SKU: {product.id.slice(-4).toUpperCase()}</p>
+                           <h3 className="text-xl font-black italic uppercase tracking-tighter">{product.name}</h3>
+                         </div>
+                      </div>
+                      
+                      <div className="flex items-center gap-3 mb-6">
+                         <span className="text-2xl font-black text-purple-500">₹{Number(product.price).toLocaleString('en-IN')}</span>
+                      </div>
 
-                    <button className="w-full py-4 bg-white text-black font-black uppercase font-mono tracking-widest rounded-xl group-hover:bg-purple-600 group-hover:text-white transition duration-500">
-                      View Specifications
-                    </button>
+                      <button className="w-full py-3 text-sm bg-white text-black font-black uppercase font-mono tracking-widest rounded-xl hover:bg-purple-600 hover:text-white transition duration-500 relative z-30">
+                        View Specifications
+                      </button>
+                    </div>
                   </div>
                 </motion.div>
               ))}
@@ -1113,16 +1132,16 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.9, opacity: 0, y: 50 }}
               onClick={e => e.stopPropagation()}
-              className="bg-[#0a0a0a] border border-white/10 w-full max-w-5xl h-[90vh] md:h-auto rounded-[3.5rem] overflow-hidden flex flex-col md:flex-row shadow-2xl relative"
+              className="bg-[#0a0a0a] border border-white/10 w-full max-w-5xl max-h-[90vh] md:h-[85vh] rounded-[2rem] md:rounded-[3.5rem] overflow-hidden flex flex-col md:flex-row shadow-2xl relative"
             >
               <button 
                 onClick={() => setSelectedProduct(null)}
-                className="absolute top-8 right-8 z-50 w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white transition"
+                className="absolute top-4 right-4 md:top-8 md:right-8 z-50 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:bg-white/10 transition"
               >
-                <X className="w-6 h-6" />
+                <X className="w-5 h-5 md:w-6 md:h-6" />
               </button>
 
-              <div className="w-full md:w-1/2 p-12 bg-black flex items-center justify-center border-b md:border-b-0 md:border-r border-white/5 relative group">
+              <div className="w-full md:w-1/2 p-6 md:p-12 bg-black flex items-center justify-center border-b md:border-b-0 md:border-r border-white/5 relative group min-h-[250px]">
                 {(() => {
                    const mediaLinks = [];
                    if (selectedProduct.video) mediaLinks.push({ url: selectedProduct.video, type: 'video' });
@@ -1139,9 +1158,9 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                    return (
                      <>
                        {current.type === 'video' ? (
-                         <video src={current.url} autoPlay loop muted playsInline className="max-w-full max-h-[50vh] object-contain drop-shadow-[0_20px_50px_rgba(147,51,234,0.3)] rounded-2xl" />
+                         <video src={current.url} autoPlay loop muted playsInline className="max-w-full max-h-[40vh] md:max-h-[50vh] object-contain drop-shadow-[0_20px_50px_rgba(147,51,234,0.3)] rounded-2xl" />
                        ) : (
-                         <img src={current.url} alt={selectedProduct.name} className="max-h-[50vh] object-contain drop-shadow-[0_20px_50px_rgba(147,51,234,0.3)]" />
+                         <img src={current.url} alt={selectedProduct.name} className="max-h-[40vh] md:max-h-[50vh] object-contain drop-shadow-[0_20px_50px_rgba(147,51,234,0.3)]" />
                        )}
 
                        {mediaLinks.length > 1 && (
@@ -1159,23 +1178,33 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                 })()}
               </div>
 
-              <div className="w-full md:w-1/2 p-12 flex flex-col">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-600/10 border border-purple-600/20 text-purple-500 text-[9px] font-black tracking-widest uppercase mb-6 w-fit">
-                   Precision Engineering
+              <div className="w-full md:w-1/2 p-6 md:p-10 flex flex-col h-full max-h-[90vh] md:max-h-[85vh]">
+                <div className="flex-shrink-0">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-600/10 border border-purple-600/20 text-purple-500 text-[9px] font-black tracking-widest uppercase mb-4 w-fit">
+                     Precision Engineering
+                  </div>
+                  <h2 className="text-3xl md:text-4xl lg:text-5xl font-black tracking-widest uppercase font-mono leading-none mb-6">{selectedProduct.name}</h2>
                 </div>
-                <h2 className="text-5xl font-black tracking-widest uppercase font-mono leading-none mb-8">{selectedProduct.name}</h2>
-                <div className="flex-1 space-y-6 overflow-y-auto pr-4 mb-8 custom-scrollbar">
-                   <p className="text-gray-400 font-medium leading-relaxed">Hardware designed for high-security environments. Features autonomous AI verification, AES-encrypted communication paths.</p>
-                   <div className="space-y-3">
-                      {selectedProduct.features?.map((f: string, i: number) => (
-                        <div key={i} className="flex items-center gap-3 text-sm font-bold text-gray-300">
-                           <Check className="w-4 h-4 text-purple-600" /> {f}
+                
+                <div className="flex-1 min-h-[50px] overflow-y-auto pr-2 space-y-4 custom-scrollbar">
+                   <p className="text-gray-400 text-sm md:text-base font-medium leading-relaxed">
+                     {selectedProduct.description || "Hardware designed for high-security environments. Features autonomous AI verification, AES-encrypted communication paths."}
+                   </p>
+                   <div className="space-y-3 pb-4">
+                      {selectedProduct.features && Array.isArray(selectedProduct.features) && selectedProduct.features.length > 0 ? selectedProduct.features.map((f: string, i: number) => (
+                        <div key={i} className="flex items-start gap-3 text-xs md:text-sm font-bold text-gray-300">
+                           <Check className="w-4 h-4 text-purple-600 shrink-0 mt-0.5" /> <span className="flex-1">{f}</span>
                         </div>
-                      ))}
+                      )) : (
+                        <div className="flex items-start gap-3 text-xs md:text-sm font-bold text-gray-300">
+                           <Check className="w-4 h-4 text-purple-600 shrink-0 mt-0.5" /> <span className="flex-1">Industrial grade durability and AES encryption.</span>
+                        </div>
+                      )}
                    </div>
                 </div>
-                <div className="pt-8 border-t border-white/5">
-                   <div className="flex justify-between items-center mb-10">
+                
+                <div className="flex-shrink-0 pt-6 border-t border-white/5 mt-4">
+                   <div className="flex justify-between items-center mb-6">
                       <div>
                         <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Fixed MSRP</p>
                         <p className="text-4xl font-black text-white">₹{Number(selectedProduct.price).toLocaleString('en-IN')}</p>
