@@ -2,19 +2,7 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #020202;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #020202;
-    --foreground: #fcfcfc;
-  }
+  --foreground: #0f172a;
 }
 
 body {
@@ -26,8 +14,8 @@ body {
 }
 
 ::selection {
-  background: rgba(234, 88, 12, 0.3);
-  color: #fff;
+  background: rgba(147, 51, 234, 0.3);
+  color: #000;
 }
 
 @keyframes spin-slow {
@@ -46,25 +34,25 @@ body {
 }
 
 @keyframes border-blink {
-  0%, 100% { opacity: 1; filter: brightness(1.5) drop-shadow(0 0 15px rgba(147, 51, 234, 0.5)); }
-  50% { opacity: 0.8; filter: brightness(0.9) drop-shadow(0 0 5px rgba(147, 51, 234, 0.2)); }
+  0%, 100% { opacity: 1; filter: brightness(1.2) drop-shadow(0 0 10px rgba(147, 51, 234, 0.3)); }
+  50% { opacity: 0.9; filter: brightness(0.95) drop-shadow(0 0 5px rgba(147, 51, 234, 0.1)); }
 }
 
 .aura-box-animated {
   position: relative;
   background-clip: padding-box;
-  background-color: #0a0a0a;
+  background-color: #ffffff;
   border: 1px solid transparent !important;
 }
 
 .aura-box-animated::after {
   content: "";
   position: absolute;
-  inset: -3px; /* High visibility thickness */
-  background: linear-gradient(90deg, #ff00ff, #00ffff, #ff00ff, #00ffff);
+  inset: -2px;
+  background: linear-gradient(90deg, #8b5cf6, #06b6d4, #ec4899, #8b5cf6);
   background-size: 300% 300%;
   border-radius: inherit;
   z-index: -1;
-  animation: border-glow-move 3s linear infinite, border-blink 1s ease-in-out infinite;
+  animation: border-glow-move 3s linear infinite, border-blink 2s ease-in-out infinite;
 }
 

@@ -91,7 +91,7 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
   };
 
   return (
-    <div className="min-h-screen bg-[#020202] text-white selection:bg-purple-500/30 overflow-x-hidden">
+    <div className="min-h-screen bg-white text-slate-900 selection:bg-purple-500/30 overflow-x-hidden font-sans">
       
       <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} />
       
@@ -100,7 +100,7 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
         {showSplash && (
           <motion.div 
             exit={{ opacity: 0, scale: 1.1 }}
-            className="fixed inset-0 z-[1000] bg-black flex flex-col items-center justify-center p-6"
+            className="fixed inset-0 z-[1000] bg-white flex flex-col items-center justify-center p-6"
           >
             <motion.div
               initial={{ opacity: 0, filter: "blur(10px)" }}
@@ -123,10 +123,10 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
       </AnimatePresence>
 
       {/* Modern Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-[500] px-6 py-6 md:px-12 flex justify-between items-center bg-black/40 backdrop-blur-2xl border-b border-white/5">
+      <nav className="fixed top-0 left-0 right-0 z-[500] px-6 py-6 md:px-12 flex justify-between items-center bg-white/90 backdrop-blur-2xl border-b border-slate-200/60 shadow-sm">
         <div className="flex items-center gap-2 cursor-pointer" onClick={() => setActiveTab('home')}>
-          <div className="w-8 h-8 rounded-lg bg-purple-600 flex items-center justify-center shadow-[0_0_15px_rgba(147,51,234,0.5)]">
-            <Lock className="w-5 h-5 text-white" />
+          <div className="w-12 h-12 md:w-16 md:h-16 flex items-center justify-center overflow-hidden transition-all duration-300">
+            <img src="/logo.png" alt="Englabs" className="w-full h-full object-contain" />
           </div>
           <div className="flex flex-col leading-none">
             <span className="text-xl font-black tracking-widest uppercase font-mono">Auralock</span>
@@ -134,28 +134,29 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
           </div>
         </div>
         
-        <div className="hidden md:flex items-center gap-10 text-[11px] font-bold uppercase tracking-widest text-gray-400">
-          <button onClick={() => setActiveTab('home')} className={`hover:text-white transition ${activeTab === 'home' ? 'text-purple-500' : ''}`}>Home</button>
-          <button onClick={() => setActiveTab('products')} className={`hover:text-white transition ${activeTab === 'products' ? 'text-purple-500' : ''}`}>Products</button>
-          <Link href="/support" className="hover:text-white transition">Support</Link>
-          <Link href="/legal" className="hover:text-white transition">Legal</Link>
+        
+        <div className="hidden md:flex items-center gap-10 text-[11px] font-bold tracking-widest text-slate-500">
+          <button onClick={() => setActiveTab('home')} className={`hover:text-black transition ${activeTab === 'home' ? 'text-purple-600' : ''}`}>Home</button>
+          <button onClick={() => setActiveTab('products')} className={`hover:text-black transition ${activeTab === 'products' ? 'text-purple-600' : ''}`}>Products</button>
+          <Link href="/support" className="hover:text-black transition">Support</Link>
+          <Link href="/legal" className="hover:text-black transition">Legal</Link>
         </div>
 
         <div className="flex items-center gap-4">
           <button 
             onClick={() => setIsLoginModalOpen(true)}
-            className="hidden md:block px-6 py-3 text-[11px] font-bold uppercase tracking-widest text-gray-300 hover:text-white transition-colors"
+            className="hidden md:block px-6 py-3 text-[11px] font-bold tracking-widest text-slate-600 hover:text-black transition-colors"
           >
-            LOGIN
+            Login
           </button>
           <button 
             onClick={() => window.open('https://wa.me/919878407934?text=Hi, I am interested in Auralock products.', '_blank')}
-            className="px-8 py-3 bg-gradient-to-r from-purple-600 to-cyan-500 rounded-full text-[11px] font-black uppercase tracking-widest text-white shadow-[0_0_30px_rgba(147,51,234,0.4)] hover:shadow-[0_0_50px_rgba(147,51,234,0.7)] transition-all duration-300 flex items-center gap-3 border border-white/20 group"
+            className="px-8 py-3 bg-gradient-to-r from-purple-600 to-cyan-500 rounded-full text-[11px] font-black tracking-widest text-slate-900 shadow-[0_0_30px_rgba(147,51,234,0.4)] hover:shadow-[0_0_50px_rgba(147,51,234,0.7)] transition-all duration-300 flex items-center gap-3 border border-white/20 group"
           >
-            <div className="w-5 h-5 rounded-full bg-white/30 flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform">
+            <div className="w-5 h-5 rounded-full bg-white/30 flex items-center justify-center text-slate-900 shadow-lg group-hover:scale-110 transition-transform">
                <MessageCircle className="w-3 h-3" />
             </div>
-            SALES
+            Sales
           </button>
         </div>
       </nav>
@@ -183,7 +184,7 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                  transition={{ duration: 1, delay: 0.5 }}
                  className="z-10 mb-8"
                >
-                 <div className="px-6 py-1.5 rounded-full bg-black/40 backdrop-blur-md border border-white/10 text-[9px] font-bold text-gray-400 tracking-[0.3em] uppercase flex items-center gap-3 shadow-2xl">
+                 <div className="px-6 py-1.5 rounded-full bg-white/40 backdrop-blur-md border border-white/10 text-[9px] font-bold text-slate-500 tracking-[0.3em] uppercase flex items-center gap-3 shadow-2xl">
                     <span className="w-1.5 h-1.5 rounded-full bg-purple-500 animate-pulse" />
                     Englabs IoT Project • R&D Division
                  </div>
@@ -196,15 +197,14 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                    animate={{ opacity: 1, scale: 1 }}
                    transition={{ duration: 1.2, ease: "easeOut" }}
                    className="relative rounded-[3.5rem] text-center aura-box-animated shadow-[0_0_80px_rgba(147,51,234,0.3)] group transition-all duration-700"
-                 >
-                    <div className="relative bg-black/80 backdrop-blur-3xl rounded-[3.5rem] p-16 md:p-24 z-20">
+                 >                    <div className="relative bg-white shadow-[0_20px_100px_rgba(147,51,234,0.15)] rounded-[3.5rem] p-16 md:p-24 z-20 border border-slate-100">
                     
                     <div className="relative z-20">
                       <h1 className="text-5xl md:text-[90px] font-black tracking-tighter uppercase font-mono mb-8 leading-none">
                          <span className="relative inline-block">
-                            <span className="absolute -inset-1 blur-3xl bg-purple-600/20 opacity-50 z-0" />
-                            <span className="relative z-10 bg-gradient-to-br from-white via-white/80 to-purple-400 bg-clip-text text-transparent drop-shadow-2xl">
-                               AuraLock
+                            <span className="absolute -inset-1 blur-3xl bg-purple-600/10 opacity-30 z-0" />
+                            <span className="relative z-10 bg-gradient-to-br from-slate-900 via-slate-800 to-purple-600 bg-clip-text text-transparent drop-shadow-sm">
+                                AuraLock
                             </span>
                          </span>
                          <br/>
@@ -215,10 +215,10 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                       
                       <div className="flex flex-col gap-2 relative">
                         <div className="h-[1px] w-12 bg-gradient-to-r from-purple-500 to-transparent mx-auto mb-4" />
-                        <p className="text-xs md:text-sm text-gray-300 font-black tracking-[0.6em] uppercase flex items-center justify-center gap-3">
+                        <p className="text-xs md:text-sm text-slate-500 font-extrabold tracking-[0.6em] uppercase flex items-center justify-center gap-3">
                           Smart Access Series
                         </p>
-                        <p className="text-[9px] md:text-[10px] text-purple-500 font-extrabold tracking-[0.4em] uppercase opacity-90 mt-1">
+                        <p className="text-[9px] md:text-[10px] text-purple-600 font-black tracking-[0.4em] uppercase opacity-90 mt-1">
                           BY ENGLABS
                         </p>
                       </div>
@@ -266,7 +266,7 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                    key={i}
                    variants={itemVariants}
                    whileHover={{ y: -8 }}
-                   className="group relative p-8 bg-[#0a0a0a] border border-white/5 rounded-[2rem] transition duration-500 overflow-hidden shadow-xl aura-box"
+                   className="group relative p-8 bg-white border border-slate-100 rounded-[2rem] transition duration-500 overflow-hidden shadow-xl aura-box"
                  >
                    {/* Background Image */}
                    <div className="absolute inset-0 z-0">
@@ -275,7 +275,7 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                        alt={feat.title}
                        className="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700 ease-in-out"
                      />
-                     <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/50 to-transparent z-10" />
+                     <div className="absolute inset-0 bg-gradient-to-t from-white/95 via-white/80/50 to-transparent z-10" />
                      <div className="absolute inset-0 bg-purple-900/10 mix-blend-overlay z-10" />
                    </div>
 
@@ -284,8 +284,8 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                      <div className="w-14 h-14 rounded-2xl bg-purple-600/20 backdrop-blur-md flex items-center justify-center text-purple-500 mb-6 border border-purple-600/30 shadow-[0_0_20px_rgba(147,51,234,0.15)] group-hover:shadow-[0_0_30px_rgba(147,51,234,0.4)] transition-shadow duration-500">
                        <feat.icon className="w-7 h-7" />
                      </div>
-                     <h3 className="text-xl font-black uppercase font-mono tracking-widest mb-4 text-white drop-shadow-lg">{feat.title}</h3>
-                     <p className="text-sm text-gray-300 leading-relaxed font-medium drop-shadow-md">{feat.desc}</p>
+                     <h3 className="text-xl font-black uppercase font-mono tracking-widest mb-4 text-slate-900 drop-shadow-lg">{feat.title}</h3>
+                     <p className="text-sm text-slate-600 leading-relaxed font-medium drop-shadow-md">{feat.desc}</p>
                    </div>
                  </motion.div>
                ))}
@@ -309,7 +309,7 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                    <motion.div 
                      key={i}
                      whileHover={{ y: -8 }}
-                     className={`group relative overflow-hidden bg-gradient-to-br from-[#0a0a0a] to-[#020202] p-8 rounded-[2rem] border border-white/5 transition-all duration-300 hover:border-white/20 shadow-xl aura-box ${useCase.glow}`}
+                     className={`group relative overflow-hidden bg-gradient-to-br from-white/95 to-white p-8 rounded-[2rem] border border-slate-100 transition-all duration-300 hover:border-white/20 shadow-xl aura-box ${useCase.glow}`}
                    >
                       <div className={`absolute top-0 right-0 w-32 h-32 ${useCase.bg} blur-[40px] rounded-full group-hover:opacity-100 transition-opacity opacity-20 z-0`} />
                       
@@ -320,15 +320,15 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                              alt={useCase.title}
                              className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700 ease-in-out mix-blend-screen"
                            />
-                           <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a]/90 via-[#0a0a0a]/60 to-transparent z-10" />
+                           <div className="absolute inset-0 bg-gradient-to-t from-white/95/90 via-white/80/60 to-transparent z-10" />
                          </div>
                       )}
 
                       <div className={`w-14 h-14 rounded-2xl ${useCase.bg} flex items-center justify-center ${useCase.color} mb-6 border ${useCase.border} relative z-10 shadow-lg`}>
                         <useCase.icon className="w-7 h-7" />
                       </div>
-                      <h3 className="text-2xl font-black italic uppercase tracking-tighter mb-2 z-10 relative text-white drop-shadow-lg">{useCase.title}</h3>
-                      <p className="text-sm text-gray-300 font-medium z-10 relative drop-shadow-md">{useCase.desc}</p>
+                      <h3 className="text-2xl font-black italic uppercase tracking-tighter mb-2 z-10 relative text-slate-900 drop-shadow-lg">{useCase.title}</h3>
+                      <p className="text-sm text-slate-600 font-medium z-10 relative drop-shadow-md">{useCase.desc}</p>
                    </motion.div>
                  ))}
                </div>
@@ -341,26 +341,26 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                       <motion.div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-600/10 border border-purple-600/20 text-purple-500 text-[10px] font-black tracking-widest uppercase mb-8">
                         Key Benefits
                       </motion.div>
-                      <h2 className="text-5xl md:text-7xl font-black tracking-widest uppercase font-mono leading-[1] mb-8">
+                      <h2 className="text-5xl md:text-7xl font-black tracking-widest uppercase font-mono leading-[1] mb-8 text-slate-900">
                         Why Choose<br/>
                         <span className="text-purple-600">AURALOCK</span>
                       </h2>
-                      <p className="text-gray-400 font-medium text-lg leading-relaxed mb-12">
+                      <p className="text-slate-500 font-medium text-lg leading-relaxed mb-12">
                          Designed for modern businesses that need reliable, fast, and secure biometric door lock systems with cloud management.
                       </p>
 
                       <div className="flex gap-4">
-                         <div className="bg-[#0a0a0a] border border-white/5 p-6 rounded-3xl text-center flex-1 shadow-xl">
-                            <p className="text-3xl font-black text-white italic">500+</p>
-                            <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-1">Users</p>
+                         <div className="bg-white border border-slate-100 p-6 rounded-3xl text-center flex-1 shadow-xl">
+                            <p className="text-3xl font-black text-slate-900 italic">500+</p>
+                            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Users</p>
                          </div>
-                         <div className="bg-[#0a0a0a] border border-white/5 p-6 rounded-3xl text-center flex-1 shadow-xl">
-                            <p className="text-3xl font-black text-purple-500 italic">&lt;1ms</p>
-                            <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-1">Lookup</p>
+                         <div className="bg-white border border-slate-100 p-6 rounded-3xl text-center flex-1 shadow-xl">
+                            <p className="text-3xl font-black text-purple-600 italic">&lt;1ms</p>
+                            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Lookup</p>
                          </div>
-                         <div className="bg-[#0a0a0a] border border-white/5 p-6 rounded-3xl text-center flex-1 shadow-xl">
-                            <p className="text-3xl font-black text-white italic">24/7</p>
-                            <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-1">Cloud</p>
+                         <div className="bg-white border border-slate-100 p-6 rounded-3xl text-center flex-1 shadow-xl">
+                            <p className="text-3xl font-black text-slate-900 italic">24/7</p>
+                            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Cloud</p>
                          </div>
                       </div>
                    </div>
@@ -374,13 +374,13 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                         <motion.div 
                           key={i}
                           whileHover={{ x: 10 }}
-                          className="bg-[#0a0a0a] border border-white/5 p-8 rounded-[2.5rem] flex items-center gap-8 hover:border-purple-600/30 transition-all duration-300 shadow-2xl"
+                          className="bg-white border border-slate-100 p-8 rounded-[2.5rem] flex items-center gap-8 hover:border-purple-600/30 transition-all duration-300 shadow-2xl"
                         >
                            <div className="w-14 h-14 rounded-2xl bg-purple-600/10 border border-purple-600/20 flex items-center justify-center text-purple-500 flex-shrink-0">
                               <pkg.icon className="w-7 h-7" />
                            </div>
                            <div>
-                              <h3 className="text-xl font-black uppercase tracking-tight mb-2 text-white">{pkg.title}</h3>
+                              <h3 className="text-xl font-black uppercase tracking-tight mb-2 text-slate-900">{pkg.title}</h3>
                               <p className="text-sm text-gray-500 font-medium leading-relaxed">{pkg.desc}</p>
                            </div>
                         </motion.div>
@@ -406,15 +406,15 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                 </div>
                 
                 <div className="max-w-6xl mx-auto px-6 relative z-10 text-center">
-                   <h2 className="text-6xl md:text-[100px] font-black tracking-tighter uppercase leading-[0.9] italic text-white mb-16">
+                   <h2 className="text-6xl md:text-[100px] font-black tracking-tighter uppercase leading-[0.9] italic text-slate-900 mb-16">
                       The New Standard In<br/>
                       <span className="text-purple-600">Architectural</span> Intelligence
                    </h2>
                    
                    <div className="max-w-4xl mx-auto">
-                      <p className="text-xl md:text-3xl text-gray-400 font-bold leading-relaxed mb-8">
+                      <p className="text-xl md:text-3xl text-slate-500 font-bold leading-relaxed mb-8">
                          AuraLock by Englabs isn't just a lock. It's a statement of absolute control and sophisticated engineering. 
-                         <span className="text-white"> Designed in India, built for the world's most high-security environments.</span>
+                         <span className="text-slate-900"> Designed in India, built for the world's most high-security environments.</span>
                       </p>
                       
                       <div className="h-0.5 w-32 bg-purple-600 mx-auto mt-12 mb-8" />
@@ -440,7 +440,7 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                  <h2 className="text-4xl md:text-6xl font-black tracking-widest uppercase font-mono leading-[1.1] mb-6">
                    Access <span className="text-purple-600">Flow</span>
                  </h2>
-                 <p className="text-gray-400 font-medium max-w-2xl mx-auto">
+                 <p className="text-slate-500 font-medium max-w-2xl mx-auto">
                    From app launch to door unlock in seconds. Secure, autonomous, and lightning fast.
                  </p>
                </div>
@@ -455,7 +455,7 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                     <motion.div 
                       key={i}
                       whileHover={{ y: -5 }}
-                      className="group relative bg-[#0a0a0a] border border-white/5 p-8 rounded-[2.5rem] flex flex-col items-center text-center transition-all duration-300 shadow-2xl aura-box"
+                      className="group relative bg-white border border-slate-100 p-8 rounded-[2.5rem] flex flex-col items-center text-center transition-all duration-300 shadow-2xl aura-box"
                     >
                        <div className="w-16 h-16 rounded-2xl bg-purple-600/10 border border-purple-600/20 flex items-center justify-center text-purple-500 mb-6 group-hover:scale-110 transition-transform">
                           <step.icon className="w-8 h-8" />
@@ -483,7 +483,7 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                    Tired of Old-School<br/>
                    <span className="text-purple-600">Access Control?</span>
                  </h2>
-                 <p className="text-gray-400 font-medium max-w-2xl mx-auto">
+                 <p className="text-slate-500 font-medium max-w-2xl mx-auto">
                    Manual keys get lost. Traditional tags are slow. Traditional systems can't scale. There had to be a better way.
                  </p>
                </div>
@@ -492,7 +492,7 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                   {/* The Problem Card */}
                   <motion.div 
                     whileHover={{ scale: 1.02 }}
-                    className="relative bg-[#0a0a0a] border border-red-900/20 p-10 rounded-[2.5rem] shadow-2xl transition-all duration-300 aura-box"
+                    className="relative bg-white border border-red-900/20 p-10 rounded-[2.5rem] shadow-2xl transition-all duration-300 aura-box"
                   >
                      <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-600/10 border border-red-600/20 text-red-500 text-[9px] font-black tracking-widest uppercase mb-8">
                        <X className="w-3 h-3" /> The Problem
@@ -522,7 +522,7 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                   {/* The Solution Card */}
                   <motion.div 
                     whileHover={{ scale: 1.02 }}
-                    className="relative bg-[#0a0a0a] border border-purple-600/30 p-10 rounded-[2.5rem] shadow-[0_0_50px_rgba(147,51,234,0.1)] transition-all duration-300 overflow-hidden aura-box"
+                    className="relative bg-white border border-purple-600/30 p-10 rounded-[2.5rem] shadow-[0_0_50px_rgba(147,51,234,0.1)] transition-all duration-300 overflow-hidden aura-box"
                   >
                      <div className="absolute top-0 right-0 w-32 h-32 bg-purple-600/10 blur-[50px] rounded-full" />
                      <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-600/10 border border-purple-600/20 text-purple-400 text-[9px] font-black tracking-widest uppercase mb-8">
@@ -542,8 +542,8 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                                 <Check className="w-5 h-5 shadow-[0_0_10px_rgba(34,197,94,0.5)]" />
                              </div>
                              <div>
-                                <h4 className="text-sm font-bold text-white">{item.title}</h4>
-                                <p className="text-xs text-gray-400 font-medium mt-1">{item.desc}</p>
+                                <h4 className="text-sm font-bold text-slate-900">{item.title}</h4>
+                                <p className="text-xs text-slate-500 font-medium mt-1">{item.desc}</p>
                              </div>
                           </div>
                         ))}
@@ -561,7 +561,7 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                    Complete Control Over<br/>
                    <span className="text-purple-600">Member Access</span>
                  </h2>
-                 <p className="text-gray-400 font-medium max-w-2xl mx-auto">
+                 <p className="text-slate-500 font-medium max-w-2xl mx-auto">
                    Manage who can access your facility, when they can access it, and track every entry—all from one cloud dashboard.
                  </p>
                </div>
@@ -575,12 +575,12 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                     <motion.div 
                       key={i}
                       whileHover={{ y: -5 }}
-                      className="bg-[#0a0a0a] border border-white/5 p-10 rounded-[2.5rem] transition-all duration-300 shadow-2xl aura-box"
+                      className="bg-white border border-slate-100 p-10 rounded-[2.5rem] transition-all duration-300 shadow-2xl aura-box"
                     >
                        <div className="w-14 h-14 rounded-2xl bg-purple-600/10 border border-purple-600/20 flex items-center justify-center text-purple-500 mb-8">
                           <feat.icon className="w-7 h-7" />
                        </div>
-                       <h3 className="text-2xl font-black uppercase tracking-tight mb-4 text-white">{feat.title}</h3>
+                       <h3 className="text-2xl font-black uppercase tracking-tight mb-4 text-slate-900">{feat.title}</h3>
                        <p className="text-sm text-gray-500 font-medium leading-relaxed">{feat.desc}</p>
                     </motion.div>
                   ))}
@@ -590,7 +590,7 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                <div className="max-w-6xl mx-auto px-4 mb-16">
                   <motion.div 
                     whileHover={{ scale: 1.01 }}
-                    className="relative bg-gradient-to-br from-[#0a0a0a] to-[#050505] border border-purple-600/20 p-10 rounded-[2.5rem] shadow-2xl overflow-hidden group"
+                    className="relative bg-gradient-to-br from-white/95 to-[#050505] border border-purple-600/20 p-10 rounded-[2.5rem] shadow-2xl overflow-hidden group"
                   >
                      <div className="absolute top-0 right-0 w-64 h-64 bg-purple-600/5 blur-[80px] rounded-full -mr-20 -mt-20 group-hover:bg-purple-600/10 transition-colors" />
                      
@@ -599,8 +599,8 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                            <Zap className="w-8 h-8" />
                         </div>
                         <div>
-                           <h3 className="text-2xl font-black uppercase mb-4 text-white font-mono tracking-wider">Real-Time Access Control</h3>
-                           <p className="text-sm md:text-base text-gray-400 font-medium leading-relaxed max-w-4xl">
+                           <h3 className="text-2xl font-black uppercase mb-4 text-slate-900 font-mono tracking-wider">Real-Time Access Control</h3>
+                           <p className="text-sm md:text-base text-slate-500 font-medium leading-relaxed max-w-4xl">
                               When a member's access expires, access is denied instantly—no waiting, no manual intervention. Add a new member? They get access within 8 seconds. Remove someone? Access is revoked immediately. All managed through your cloud dashboard, accessible from anywhere.
                            </p>
                         </div>
@@ -620,7 +620,7 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                  <h2 className="text-4xl md:text-7xl font-black tracking-widest uppercase font-mono leading-[1.1] mb-6">
                    Built for <span className="text-purple-600">Performance</span>
                  </h2>
-                 <p className="text-gray-400 font-medium max-w-2xl mx-auto">
+                 <p className="text-slate-500 font-medium max-w-2xl mx-auto">
                    Every feature engineered for speed, reliability, and scale. See what makes AURALOCK different.
                  </p>
                </div>
@@ -637,12 +637,12 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                     <motion.div 
                       key={i}
                       whileHover={{ y: -8, border: "rgba(147, 51, 234, 0.4) 1px solid" }}
-                      className="group bg-[#0a0a0a] border border-white/5 p-10 rounded-[3rem] transition-all duration-300 shadow-xl aura-box"
+                      className="group bg-white border border-slate-100 p-10 rounded-[3rem] transition-all duration-300 shadow-xl aura-box"
                     >
-                       <div className="w-14 h-14 rounded-2xl bg-[#1c1c1c] border border-white/5 flex items-center justify-center text-purple-500 mb-8 group-hover:scale-110 transition-transform shadow-inner">
+                       <div className="w-14 h-14 rounded-2xl bg-[#1c1c1c] border border-slate-100 flex items-center justify-center text-purple-500 mb-8 group-hover:scale-110 transition-transform shadow-inner">
                           <feat.icon className="w-7 h-7" />
                        </div>
-                       <h3 className="text-2xl font-black uppercase tracking-tight mb-4 text-white">{feat.title}</h3>
+                       <h3 className="text-2xl font-black uppercase tracking-tight mb-4 text-slate-900">{feat.title}</h3>
                        <p className="text-sm text-gray-500 font-bold leading-relaxed mb-6">{feat.desc}</p>
                        <button className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-purple-500 group/btn">
                           Learn More <ChevronRight className="w-3 h-3 group-hover/btn:translate-x-1 transition-transform" />
@@ -653,7 +653,7 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
             </motion.div>
 
             {/* Everything You Need Section */}
-            <motion.div variants={itemVariants} className="mb-24 py-12 bg-[#050505] border-y border-white/5">
+            <motion.div variants={itemVariants} className="mb-24 py-12 bg-[#050505] border-y border-slate-100">
                 <div className="max-w-7xl mx-auto px-6">
                     <div className="text-center mb-16">
                         <motion.div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-600/10 border border-purple-600/20 text-purple-500 text-[10px] font-black tracking-widest uppercase mb-6">
@@ -662,7 +662,7 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                         <h2 className="text-4xl md:text-6xl font-black tracking-widest uppercase font-mono leading-[1.1] mb-6">
                             Everything You Need to <span className="text-purple-600">Manage Access</span>
                         </h2>
-                        <p className="text-gray-400 font-medium max-w-2xl mx-auto">
+                        <p className="text-slate-500 font-medium max-w-2xl mx-auto">
                             Check out all the powerful features that make AURALOCK the perfect solution for your facility.
                         </p>
                     </div>
@@ -678,27 +678,27 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                         ].map((feat, i) => (
                             <motion.div 
                                 key={i}
-                                className="flex gap-6 bg-[#0a0a0a] border border-white/5 p-8 rounded-[2rem] hover:border-white/10 transition-colors shadow-lg aura-box"
+                                className="flex gap-6 bg-white border border-slate-100 p-8 rounded-[2rem] hover:border-white/10 transition-colors shadow-lg aura-box"
                             >
                                 <div className="w-14 h-14 rounded-2xl bg-purple-600/10 border border-purple-600/20 flex items-center justify-center text-purple-500 flex-shrink-0">
                                     <feat.icon className="w-6 h-6" />
                                 </div>
                                 <div>
-                                    <h4 className="text-xl font-black uppercase mb-2 text-white">{feat.title}</h4>
-                                    <p className="text-sm text-gray-400 font-medium leading-relaxed">{feat.desc}</p>
+                                    <h4 className="text-xl font-black uppercase mb-2 text-slate-900">{feat.title}</h4>
+                                    <p className="text-sm text-slate-500 font-medium leading-relaxed">{feat.desc}</p>
                                 </div>
                             </motion.div>
                         ))}
                     </div>
 
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                        <div className="bg-gradient-to-br from-[#0a0a0a] to-[#020202] border border-purple-600/20 p-10 rounded-[2.5rem] shadow-2xl relative overflow-hidden group aura-box">
+                        <div className="bg-gradient-to-br from-white/95 to-white border border-purple-600/20 p-10 rounded-[2.5rem] shadow-2xl relative overflow-hidden group aura-box">
                            <div className="absolute top-0 right-0 w-32 h-32 bg-purple-600/5 blur-3xl group-hover:bg-purple-600/10 transition-colors" />
                            <div className="flex items-center gap-3 mb-6">
                                <CheckCircle2 className="w-5 h-5 text-purple-500" />
                                <span className="text-xs font-black uppercase tracking-[0.2em] text-gray-200">Membership-Only Access</span>
                            </div>
-                           <p className="text-sm text-gray-400 leading-relaxed mb-8">
+                           <p className="text-sm text-slate-500 leading-relaxed mb-8">
                                AURALOCK ensures only active members can access your facility. Expired memberships are automatically denied. No manual checking needed. The system verifies membership status in real-time before granting access.
                            </p>
                            <ul className="space-y-3">
@@ -707,20 +707,20 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                                     "Expired members: Access denied automatically",
                                     "Unknown profiles: Alert sent, quick sync triggered"
                                 ].map((item, idX) => (
-                                    <li key={idX} className="flex items-center gap-3 text-xs font-bold text-gray-300">
+                                    <li key={idX} className="flex items-center gap-3 text-xs font-bold text-slate-600">
                                         <div className="w-1 h-1 rounded-full bg-purple-600" /> {item}
                                     </li>
                                 ))}
                            </ul>
                         </div>
 
-                        <div className="bg-gradient-to-br from-[#0a0a0a] to-[#020202] border border-purple-600/20 p-10 rounded-[2.5rem] shadow-2xl relative overflow-hidden group aura-box">
+                        <div className="bg-gradient-to-br from-white/95 to-white border border-purple-600/20 p-10 rounded-[2.5rem] shadow-2xl relative overflow-hidden group aura-box">
                            <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-600/5 blur-3xl group-hover:bg-cyan-600/10 transition-colors" />
                            <div className="flex items-center gap-3 mb-6">
                                <Zap className="w-5 h-5 text-cyan-400" />
                                <span className="text-xs font-black uppercase tracking-[0.2em] text-gray-200">Real-Time Verification</span>
                            </div>
-                           <p className="text-sm text-gray-400 leading-relaxed mb-8">
+                           <p className="text-sm text-slate-500 leading-relaxed mb-8">
                                Every recognition attempt is verified against the cloud database in real-time. Membership status, expiry dates, and access permissions are checked instantly before unlocking the door.
                            </p>
                            <ul className="space-y-3">
@@ -729,7 +729,7 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                                     "Offline cache for WiFi drops",
                                     "Automatic sync when connection returns"
                                 ].map((item, idX) => (
-                                    <li key={idX} className="flex items-center gap-3 text-xs font-bold text-gray-300">
+                                    <li key={idX} className="flex items-center gap-3 text-xs font-bold text-slate-600">
                                         <div className="w-1 h-1 rounded-full bg-cyan-500" /> {item}
                                     </li>
                                 ))}
@@ -748,7 +748,7 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                   <h2 className="text-4xl md:text-7xl font-black tracking-widest uppercase font-mono leading-[1] mb-8">
                     Built from <span className="text-purple-600 italic">Scratch</span>
                   </h2>
-                  <p className="text-gray-400 font-medium text-lg leading-relaxed max-w-3xl mx-auto mb-16">
+                  <p className="text-slate-500 font-medium text-lg leading-relaxed max-w-3xl mx-auto mb-16">
                     From concept to production. Every line of code, every component, every feature—designed and built by our R&D team.
                   </p>
                 </div>
@@ -762,7 +762,7 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                    ].map((item, i) => (
                      <motion.div 
                        key={i}
-                       className="relative bg-[#0a0a0a] border border-white/5 p-10 rounded-[3rem] flex flex-col gap-8 aura-box group"
+                       className="relative bg-white border border-slate-100 p-10 rounded-[3rem] flex flex-col gap-8 aura-box group"
                      >
                         <div className="flex justify-between items-start">
                            <div className="w-16 h-16 rounded-3xl bg-purple-600/10 border border-purple-600/20 flex items-center justify-center text-purple-400 group-hover:scale-110 transition-transform shadow-[0_0_20px_rgba(147,51,234,0.1)]">
@@ -771,7 +771,7 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-purple-600 opacity-50 px-4 py-1.5 rounded-full border border-purple-600/20 bg-purple-600/5">{item.date}</span>
                         </div>
                         <div>
-                           <h3 className="text-3xl font-black uppercase tracking-tighter mb-4 text-white leading-none">{item.title}</h3>
+                           <h3 className="text-3xl font-black uppercase tracking-tighter mb-4 text-slate-900 leading-none">{item.title}</h3>
                            <p className="text-sm text-gray-500 font-bold leading-relaxed">{item.desc}</p>
                         </div>
                      </motion.div>
@@ -780,7 +780,7 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
             </motion.div>
 
             {/* Technical Excellence Section */}
-            <motion.div variants={itemVariants} className="mb-12 py-12 bg-[#050505] border-y border-white/5 relative overflow-hidden">
+            <motion.div variants={itemVariants} className="mb-12 py-12 bg-[#050505] border-y border-slate-100 relative overflow-hidden">
                 <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-purple-600/50 to-transparent" />
                 <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-purple-600/50 to-transparent" />
                 
@@ -792,7 +792,7 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                       <h2 className="text-4xl md:text-7xl font-black tracking-widest uppercase font-mono leading-[1] mb-8">
                         Engineered for <span className="text-purple-600">Scale</span>
                       </h2>
-                      <p className="text-gray-400 font-medium text-lg leading-relaxed max-w-3xl mx-auto">
+                      <p className="text-slate-500 font-medium text-lg leading-relaxed max-w-3xl mx-auto">
                         Behind the scenes: the technology that makes AURALOCK fast, reliable, and scalable. Built on the power of DUAL-CORE MCU architecture.
                       </p>
                    </div>
@@ -806,12 +806,12 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                       ].map((spec, i) => (
                         <motion.div 
                           key={i}
-                          className="relative bg-black/40 backdrop-blur-xl border border-white/5 p-8 rounded-[2.5rem] flex flex-col items-center text-center aura-box group"
+                          className="relative bg-white/40 backdrop-blur-xl border border-slate-100 p-8 rounded-[2.5rem] flex flex-col items-center text-center aura-box group"
                         >
                            <div className="w-12 h-12 rounded-2xl bg-purple-600/5 border border-purple-600/10 flex items-center justify-center text-purple-500/50 mb-6 group-hover:scale-110 transition-transform">
                               <spec.icon className="w-6 h-6" />
                            </div>
-                           <h3 className="text-4xl font-black italic text-white mb-2">{spec.title}</h3>
+                           <h3 className="text-4xl font-black italic text-slate-900 mb-2">{spec.title}</h3>
                            <p className="text-[10px] font-black tracking-[0.2em] text-purple-500 uppercase mb-4">{spec.sub}</p>
                            <p className="text-xs text-gray-500 font-bold leading-relaxed">{spec.desc}</p>
                         </motion.div>
@@ -819,7 +819,7 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                    </div>
 
                    {/* Performance Benchmarks */}
-                   <div className="bg-[#0a0a0a] border border-white/5 p-12 md:p-20 rounded-[4rem] text-center aura-box relative overflow-hidden group">
+                   <div className="bg-white border border-slate-100 p-12 md:p-20 rounded-[4rem] text-center aura-box relative overflow-hidden group">
                       <div className="absolute inset-0 bg-gradient-to-br from-purple-600/5 to-transparent pointer-events-none" />
                       <h3 className="text-3xl md:text-5xl font-black uppercase tracking-tighter mb-16 relative">Performance <span className="text-purple-600">Benchmarks</span></h3>
                       
@@ -827,21 +827,21 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                          <div className="space-y-4">
                             <p className="text-5xl md:text-7xl font-black text-purple-600 tracking-tighter">&lt;1ms</p>
                             <div>
-                               <p className="text-xl font-black uppercase text-white">Recognition Lookup</p>
+                               <p className="text-xl font-black uppercase text-slate-900">Recognition Lookup</p>
                                <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-1">Hash-map O(1) access</p>
                             </div>
                          </div>
                          <div className="space-y-4">
-                            <p className="text-5xl md:text-7xl font-black text-white tracking-tighter">300-500ms</p>
+                            <p className="text-5xl md:text-7xl font-black text-slate-900 tracking-tighter">300-500ms</p>
                             <div>
-                               <p className="text-xl font-black uppercase text-white">Detection Time</p>
+                               <p className="text-xl font-black uppercase text-slate-900">Detection Time</p>
                                <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-1">From scan to authenticate</p>
                             </div>
                          </div>
                          <div className="space-y-4">
                             <p className="text-5xl md:text-7xl font-black text-purple-600 tracking-tighter">~8s</p>
                             <div>
-                               <p className="text-xl font-black uppercase text-white">Cloud Sync</p>
+                               <p className="text-xl font-black uppercase text-slate-900">Cloud Sync</p>
                                <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-1">500+ member full sync</p>
                             </div>
                          </div>
@@ -864,8 +864,8 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                          <span className="text-amber-600 italic">Built in Chandigarh.</span>
                       </h2>
                       
-                      <p className="text-gray-400 font-medium text-lg leading-relaxed mb-12 max-w-xl">
-                         We don't just assemble; we engineer. From PCB design to firmware coding, every aspect of AURALOCK is developed in-house by <span className="text-white">Englabs' R&D team.</span>
+                      <p className="text-slate-500 font-medium text-lg leading-relaxed mb-12 max-w-xl">
+                         We don't just assemble; we engineer. From PCB design to firmware coding, every aspect of AURALOCK is developed in-house by <span className="text-slate-900">Englabs' R&D team.</span>
                       </p>
                       
                       <ul className="space-y-6">
@@ -885,13 +885,13 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                    <div className="relative">
                       <motion.div 
                         whileHover={{ scale: 1.02 }}
-                        className="bg-gradient-to-br from-[#0a0a0a] to-[#020202] border border-amber-600/20 p-16 rounded-[4rem] text-center aura-box shadow-2xl relative group overflow-hidden"
+                        className="bg-gradient-to-br from-white/95 to-white border border-amber-600/20 p-16 rounded-[4rem] text-center aura-box shadow-2xl relative group overflow-hidden"
                       >
                          <div className="absolute top-0 right-0 w-48 h-48 bg-amber-600/5 blur-[60px] group-hover:bg-amber-600/10 transition-colors" />
                          <div className="relative z-10">
-                            <p className="text-[120px] font-black text-white leading-none tracking-tighter mb-4">IN</p>
+                            <p className="text-[120px] font-black text-slate-900 leading-none tracking-tighter mb-4">IN</p>
                             <p className="text-6xl font-black text-amber-600 leading-none mb-4">100%</p>
-                            <p className="text-lg font-bold text-gray-400 uppercase tracking-[0.2em]">In-House R&D</p>
+                            <p className="text-lg font-bold text-slate-500 uppercase tracking-[0.2em]">In-House R&D</p>
                          </div>
                       </motion.div>
                       
@@ -913,7 +913,7 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                       Transform Your <span className="text-purple-600">Access Control</span> Today
                    </h2>
                    
-                   <p className="text-gray-400 font-medium text-lg leading-relaxed mb-16 max-w-2xl mx-auto">
+                   <p className="text-slate-500 font-medium text-lg leading-relaxed mb-16 max-w-2xl mx-auto">
                       Join forward-thinking businesses using AURALOCK. Get a custom solution designed for your needs. <br/>
                       <span className="text-gray-500 text-sm mt-4 block uppercase font-black tracking-widest">Fast setup. Expert support. Built in India. Ready to deploy.</span>
                    </p>
@@ -924,7 +924,7 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                         target="_blank"
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
-                        className="flex items-center justify-center gap-3 bg-purple-600 hover:bg-purple-700 text-white px-10 py-6 rounded-full text-sm font-black uppercase tracking-widest transition-all shadow-[0_0_30px_rgba(147,51,234,0.3)] group"
+                        className="flex items-center justify-center gap-3 bg-purple-600 hover:bg-purple-700 text-slate-900 px-10 py-6 rounded-full text-sm font-black uppercase tracking-widest transition-all shadow-[0_0_30px_rgba(147,51,234,0.3)] group"
                       >
                          <MessageCircle className="w-5 h-5" /> Get Started on WhatsApp <ArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform" />
                       </motion.a>
@@ -933,7 +933,7 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                         href="mailto:barrydeveloperindia@gmail.com?subject=AuraLock Inquiry&body=Hi, I would like to request a quote for my facility."
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
-                        className="flex items-center justify-center gap-3 bg-transparent border border-white/10 hover:border-white/30 text-white px-10 py-6 rounded-full text-sm font-black uppercase tracking-widest transition-all"
+                        className="flex items-center justify-center gap-3 bg-transparent border border-white/10 hover:border-white/30 text-slate-900 px-10 py-6 rounded-full text-sm font-black uppercase tracking-widest transition-all"
                       >
                          <FileText className="w-5 h-5" /> Request a Quote
                       </motion.a>
@@ -945,11 +945,11 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                         { title: "Fast Setup", desc: "Deploy in Days", icon: Zap },
                         { title: "Expert Support", desc: "Always Available", icon: MessageCircle }
                       ].map((item, idX) => (
-                        <div key={idX} className="bg-black/20 border border-white/5 p-8 rounded-[2rem] aura-box flex flex-col items-center group">
+                        <div key={idX} className="bg-black/20 border border-slate-100 p-8 rounded-[2rem] aura-box flex flex-col items-center group">
                            <div className="w-12 h-12 rounded-2xl bg-purple-600/5 flex items-center justify-center text-purple-600/50 mb-6 group-hover:scale-110 transition-transform">
                               <item.icon className="w-6 h-6" />
                            </div>
-                           <h4 className="text-xl font-black uppercase text-white mb-2">{item.title}</h4>
+                           <h4 className="text-xl font-black uppercase text-slate-900 mb-2">{item.title}</h4>
                            <p className="text-xs text-gray-500 font-bold uppercase tracking-widest">{item.desc}</p>
                         </div>
                       ))}
@@ -958,13 +958,13 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
             </motion.div>
 
             {/* Final Contact Hub Section */}
-            <motion.div variants={itemVariants} className="py-12 px-6 border-t border-white/5 bg-[#020202]">
+            <motion.div variants={itemVariants} className="py-12 px-6 border-t border-slate-100 bg-white">
                 <div className="max-w-4xl mx-auto text-center mb-24">
-                   <h2 className="text-4xl md:text-7xl font-black tracking-widest uppercase font-mono leading-[1] mb-10">
+                   <h2 className="text-4xl md:text-7xl font-black tracking-widest uppercase font-mono leading-[1] mb-10 text-slate-900">
                       Ready to <span className="text-purple-600">Upgrade</span> Your Access Control?
                    </h2>
                    
-                   <p className="text-gray-400 font-medium text-lg leading-relaxed mb-16 max-w-2xl mx-auto">
+                   <p className="text-slate-600 font-medium text-lg leading-relaxed mb-16 max-w-2xl mx-auto">
                       Get a custom solution for your gym, library, office, or facility. Our team designs the perfect biometric door management system for you.
                    </p>
                    
@@ -974,7 +974,7 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                         target="_blank"
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
-                        className="flex items-center justify-center gap-3 bg-[#111111] border border-white/10 hover:border-purple-600/50 text-white px-10 py-6 rounded-full text-sm font-black uppercase tracking-widest transition-all group"
+                        className="flex items-center justify-center gap-3 bg-slate-50 border border-slate-200 hover:border-purple-600/50 text-slate-900 px-10 py-6 rounded-full text-sm font-black uppercase tracking-widest transition-all group shadow-sm"
                       >
                          <MessageCircle className="w-5 h-5 text-[#25D366]" /> WhatsApp Sales <ArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform" />
                       </motion.a>
@@ -983,9 +983,9 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                         href="mailto:barrydeveloperindia@gmail.com?subject=Quote Request&body=Hi, I am interested in a biometric solution for my facility."
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
-                        className="flex items-center justify-center gap-3 bg-transparent border border-white/10 hover:border-white/30 text-white px-10 py-6 rounded-full text-sm font-black uppercase tracking-widest transition-all"
+                        className="flex items-center justify-center gap-3 bg-white border border-slate-200 hover:border-white/30 text-slate-900 px-10 py-6 rounded-full text-sm font-black uppercase tracking-widest transition-all shadow-sm"
                       >
-                         <FileText className="w-5 h-5 text-gray-400" /> Email for Quote
+                         <FileText className="w-5 h-5 text-slate-500" /> Email for Quote
                       </motion.a>
                    </div>
                 </div>
@@ -996,9 +996,9 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                      { label: "SUPPORT ONLY", value: "support@englabs.co.in", href: "mailto:support@englabs.co.in" },
                      { label: "WHATSAPP", value: "+91 98784 07934", href: "https://wa.me/919878407934" }
                    ].map((contact, cIdx) => (
-                     <div key={cIdx} className="bg-[#0a0a0a] border border-white/5 p-10 rounded-[2.5rem] aura-box group">
+                     <div key={cIdx} className="bg-white border border-slate-100 p-10 rounded-[2.5rem] aura-box group">
                         <p className="text-[10px] font-black tracking-[0.3em] text-purple-600 mb-4">{contact.label}</p>
-                        <a href={contact.href} target="_blank" className="text-sm sm:text-base lg:text-lg font-bold text-white group-hover:text-purple-400 transition-colors break-all">{contact.value}</a>
+                        <a href={contact.href} target="_blank" className="text-sm sm:text-base lg:text-lg font-bold text-slate-900 group-hover:text-purple-400 transition-colors break-all">{contact.value}</a>
                      </div>
                    ))}
                 </div>
@@ -1013,7 +1013,7 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
             <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
               <div>
                 <h2 className="text-5xl font-black tracking-widest uppercase font-mono leading-none mb-6">Hardware <span className="text-purple-600">Inventory</span></h2>
-                <p className="text-gray-400 font-medium">Select your grade of security deployment.</p>
+                <p className="text-slate-500 font-medium">Select your grade of security deployment.</p>
               </div>
               <div className="relative w-full md:w-96">
                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
@@ -1022,7 +1022,7 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                   placeholder="SEARCH SECURITY SKUs..."
                   value={searchQuery}
                   onChange={e => setSearchQuery(e.target.value)}
-                  className="w-full bg-[#0a0a0a] border border-white/10 rounded-2xl pl-12 pr-4 py-4 text-xs font-bold uppercase tracking-widest focus:outline-none focus:border-purple-600 transition"
+                  className="w-full bg-white border border-white/10 rounded-2xl pl-12 pr-4 py-4 text-xs font-bold uppercase tracking-widest focus:outline-none focus:border-purple-600 transition"
                 />
               </div>
             </div>
@@ -1035,12 +1035,12 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: idx * 0.1 }}
                   onClick={() => { setSelectedProduct(product); setCurrentGalleryIndex(0); }}
-                  className="group relative bg-[#0a0a0a] rounded-[2rem] hover:shadow-[0_0_50px_rgba(147,51,234,0.3)] transition-all duration-500 cursor-pointer overflow-hidden shadow-2xl"
+                  className="group relative bg-white rounded-[2rem] hover:shadow-[0_0_50px_rgba(147,51,234,0.3)] transition-all duration-500 cursor-pointer overflow-hidden shadow-2xl"
                 >
                   {/* The Running Coloured Border */}
                   <div className="absolute inset-0 z-0 pointer-events-none rounded-[2rem] overflow-hidden">
-                    <div className="absolute left-1/2 top-1/2 w-[300%] h-[300%] -translate-x-1/2 -translate-y-1/2 animate-[spin_4s_linear_infinite] bg-[conic-gradient(from_0deg,transparent_75%,#8b5cf6_85%,#06b6d4_100%)] opacity-70 group-hover:opacity-100 transition-opacity" />
-                    <div className="absolute inset-[1px] rounded-[calc(2rem-1px)] bg-[#0a0a0a] group-hover:bg-black transition-colors" />
+                    <div className="absolute left-1/2 top-1/2 w-[300%] h-[300%] -translate-x-1/2 -translate-y-1/2 animate-[spin_4s_linear_infinite] bg-[conic-gradient(from_0deg,transparent_20%,#06b6d4_30%,#8b5cf6_50%,#ec4899_70%,transparent_100%)] opacity-80 group-hover:opacity-100 transition-opacity" />
+                    <div className="absolute inset-[1px] rounded-[calc(2rem-1px)] bg-white group-hover:bg-slate-50 transition-colors" />
                   </div>
 
                   <div className="relative z-10 w-full h-full p-6 flex flex-col">
@@ -1066,7 +1066,7 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                          <span className="text-2xl font-black text-purple-500">₹{Number(product.price).toLocaleString('en-IN')}</span>
                       </div>
 
-                      <button className="w-full py-3 text-sm bg-white text-black font-black uppercase font-mono tracking-widest rounded-xl hover:bg-purple-600 hover:text-white transition duration-500 relative z-30">
+                      <button className="w-full py-3 text-sm bg-white text-black font-black uppercase font-mono tracking-widest rounded-xl hover:bg-purple-600 hover:text-slate-900 transition duration-500 relative z-30">
                         View Specifications
                       </button>
                     </div>
@@ -1081,7 +1081,7 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
             <motion.div 
                initial={{ opacity: 0, y: 40 }}
                animate={{ opacity: 1, y: 0 }}
-               className="bg-[#0a0a0a] border border-white/10 rounded-[3.5rem] p-12 text-center relative overflow-hidden"
+               className="bg-white border border-white/10 rounded-[3.5rem] p-12 text-center relative overflow-hidden"
             >
                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-purple-600/10 blur-[100px] rounded-full" />
                
@@ -1092,22 +1092,22 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                  
                  <h2 className="text-5xl font-black tracking-widest uppercase font-mono leading-none mb-8">Intelligence <span className="text-purple-600">Support</span></h2>
                  
-                 <p className="text-gray-400 font-medium leading-relaxed max-w-xl mx-auto mb-16">
+                 <p className="text-slate-500 font-medium leading-relaxed max-w-xl mx-auto mb-16">
                    Establish a secure connection with our engineering team for deployment queries, bulk provisioning, or technical architectural support.
                  </p>
 
                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left mb-16">
-                    <div className="p-8 bg-white/5 border border-white/5 rounded-3xl hover:border-purple-600/50 transition duration-500">
+                    <div className="p-8 bg-white/5 border border-slate-100 rounded-3xl hover:border-purple-600/50 transition duration-500">
                        <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2">Technical Gateway</p>
                        <p className="text-2xl font-black italic uppercase">support@auralock.io</p>
                     </div>
-                    <div className="p-8 bg-white/5 border border-white/5 rounded-3xl hover:border-purple-600/50 transition duration-500">
+                    <div className="p-8 bg-white/5 border border-slate-100 rounded-3xl hover:border-purple-600/50 transition duration-500">
                        <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2">Secure Line</p>
                        <p className="text-2xl font-black italic uppercase">+91 94000 00000</p>
                     </div>
                  </div>
 
-                 <button className="px-12 py-5 bg-white text-black font-black uppercase font-mono tracking-widest text-2xl rounded-2xl hover:bg-purple-600 hover:text-white transition-all duration-500">
+                 <button className="px-12 py-5 bg-white text-black font-black uppercase font-mono tracking-widest text-2xl rounded-2xl hover:bg-purple-600 hover:text-slate-900 transition-all duration-500">
                    Initialize Handshake
                  </button>
                </div>
@@ -1124,7 +1124,7 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[1000] bg-black/90 backdrop-blur-xl flex items-center justify-center p-6"
+            className="fixed inset-0 z-[1000] bg-white/90 backdrop-blur-xl flex items-center justify-center p-6"
             onClick={() => setSelectedProduct(null)}
           >
             <motion.div 
@@ -1132,16 +1132,16 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.9, opacity: 0, y: 50 }}
               onClick={e => e.stopPropagation()}
-              className="bg-[#0a0a0a] border border-white/10 w-full max-w-5xl max-h-[90vh] md:h-[85vh] rounded-[2rem] md:rounded-[3.5rem] overflow-hidden flex flex-col md:flex-row shadow-2xl relative"
+              className="bg-white border border-white/10 w-full max-w-5xl max-h-[90vh] md:h-[85vh] rounded-[2rem] md:rounded-[3.5rem] overflow-hidden flex flex-col md:flex-row shadow-2xl relative"
             >
               <button 
                 onClick={() => setSelectedProduct(null)}
-                className="absolute top-4 right-4 md:top-8 md:right-8 z-50 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:bg-white/10 transition"
+                className="absolute top-4 right-4 md:top-8 md:right-8 z-50 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-500 hover:text-slate-900 hover:bg-white/10 transition"
               >
                 <X className="w-5 h-5 md:w-6 md:h-6" />
               </button>
 
-              <div className="w-full md:w-1/2 p-6 md:p-12 bg-black flex items-center justify-center border-b md:border-b-0 md:border-r border-white/5 relative group min-h-[250px]">
+              <div className="w-full md:w-1/2 p-6 md:p-12 bg-slate-50 flex items-center justify-center border-b md:border-b-0 md:border-r border-slate-100 relative group min-h-[250px]">
                 {(() => {
                    const mediaLinks = [];
                    if (selectedProduct.video) mediaLinks.push({ url: selectedProduct.video, type: 'video' });
@@ -1165,10 +1165,10 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
 
                        {mediaLinks.length > 1 && (
                          <>
-                           <button onClick={(e) => { e.stopPropagation(); setCurrentGalleryIndex((prev) => (prev - 1 + mediaLinks.length) % mediaLinks.length); }} className="absolute left-6 w-12 h-12 bg-white/5 border border-white/10 rounded-full flex items-center justify-center text-white hover:bg-purple-600 transition-all opacity-0 group-hover:opacity-100 z-50">
+                           <button onClick={(e) => { e.stopPropagation(); setCurrentGalleryIndex((prev) => (prev - 1 + mediaLinks.length) % mediaLinks.length); }} className="absolute left-6 w-12 h-12 bg-white/5 border border-white/10 rounded-full flex items-center justify-center text-slate-900 hover:bg-purple-600 transition-all opacity-0 group-hover:opacity-100 z-50">
                              <ChevronLeft className="w-6 h-6" />
                            </button>
-                           <button onClick={(e) => { e.stopPropagation(); setCurrentGalleryIndex((prev) => (prev + 1) % mediaLinks.length); }} className="absolute right-6 w-12 h-12 bg-white/5 border border-white/10 rounded-full flex items-center justify-center text-white hover:bg-purple-600 transition-all opacity-0 group-hover:opacity-100 z-50">
+                           <button onClick={(e) => { e.stopPropagation(); setCurrentGalleryIndex((prev) => (prev + 1) % mediaLinks.length); }} className="absolute right-6 w-12 h-12 bg-white/5 border border-white/10 rounded-full flex items-center justify-center text-slate-900 hover:bg-purple-600 transition-all opacity-0 group-hover:opacity-100 z-50">
                              <ChevronRight className="w-6 h-6" />
                            </button>
                          </>
@@ -1187,30 +1187,30 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
                 </div>
                 
                 <div className="flex-1 min-h-[50px] overflow-y-auto pr-2 space-y-4 custom-scrollbar">
-                   <p className="text-gray-400 text-sm md:text-base font-medium leading-relaxed">
+                   <p className="text-slate-500 text-sm md:text-base font-medium leading-relaxed">
                      {selectedProduct.description || "Hardware designed for high-security environments. Features autonomous AI verification, AES-encrypted communication paths."}
                    </p>
                    <div className="space-y-3 pb-4">
                       {selectedProduct.features && Array.isArray(selectedProduct.features) && selectedProduct.features.length > 0 ? selectedProduct.features.map((f: string, i: number) => (
-                        <div key={i} className="flex items-start gap-3 text-xs md:text-sm font-bold text-gray-300">
+                        <div key={i} className="flex items-start gap-3 text-xs md:text-sm font-bold text-slate-600">
                            <Check className="w-4 h-4 text-purple-600 shrink-0 mt-0.5" /> <span className="flex-1">{f}</span>
                         </div>
                       )) : (
-                        <div className="flex items-start gap-3 text-xs md:text-sm font-bold text-gray-300">
+                        <div className="flex items-start gap-3 text-xs md:text-sm font-bold text-slate-600">
                            <Check className="w-4 h-4 text-purple-600 shrink-0 mt-0.5" /> <span className="flex-1">Industrial grade durability and AES encryption.</span>
                         </div>
                       )}
                    </div>
                 </div>
                 
-                <div className="flex-shrink-0 pt-6 border-t border-white/5 mt-4">
+                <div className="flex-shrink-0 pt-6 border-t border-slate-100 mt-4">
                    <div className="flex justify-between items-center mb-6">
                       <div>
                         <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Fixed MSRP</p>
-                        <p className="text-4xl font-black text-white">₹{Number(selectedProduct.price).toLocaleString('en-IN')}</p>
+                        <p className="text-4xl font-black text-slate-900">₹{Number(selectedProduct.price).toLocaleString('en-IN')}</p>
                       </div>
                    </div>
-                   <Link href={`/checkout?productId=${selectedProduct.id}&name=${encodeURIComponent(selectedProduct.name)}&price=${selectedProduct.price}`} className="w-full py-5 bg-purple-600 text-white font-black uppercase font-mono tracking-widest text-xl rounded-2xl flex items-center justify-center gap-3 hover:bg-purple-500 transition shadow-[0_10px_30px_rgba(147,51,234,0.3)]">
+                   <Link href={`/checkout?productId=${selectedProduct.id}&name=${encodeURIComponent(selectedProduct.name)}&price=${selectedProduct.price}`} className="w-full py-5 bg-purple-600 text-slate-900 font-black uppercase font-mono tracking-widest text-xl rounded-2xl flex items-center justify-center gap-3 hover:bg-purple-500 transition shadow-[0_10px_30px_rgba(147,51,234,0.3)]">
                       Order Unit Now <ArrowRight className="w-6 h-6" />
                    </Link>
                 </div>
@@ -1220,23 +1220,23 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
         )}
       </AnimatePresence>
 
-      <footer className="py-8 border-t border-white/5 bg-[#020202]">
+      <footer className="py-12 border-t border-slate-100 bg-white">
         <div className="max-w-7xl mx-auto px-6 text-center">
           <div className="text-3xl font-black tracking-widest uppercase font-mono mb-8">Aura<span className="text-purple-600">Lock</span></div>
           <p className="text-gray-600 text-[10px] font-bold uppercase tracking-[0.5em] mb-12">Building the future of architectural security</p>
-          <div className="flex justify-center gap-8 text-xs font-bold uppercase tracking-widest text-gray-400">
+          <div className="flex justify-center gap-8 text-xs font-bold uppercase tracking-widest text-slate-500">
              <Link href="/admin" className="hover:text-purple-600 transition">Control Center</Link>
              <Link href="/track" className="hover:text-purple-600 transition">Telemetry</Link>
              <button onClick={() => setActiveTab('contact')} className="hover:text-purple-600 transition">Direct Line</button>
           </div>
-          <div className="mt-20 text-[10px] font-bold text-gray-800 uppercase tracking-widest">&copy; 2026 AuraLock Security Systems. All Rights Protocolized.</div>
+          <div className="mt-20 text-[10px] font-bold text-slate-400 uppercase tracking-widest">&copy; 2026 AuraLock Security Systems. All Rights Protocolized.</div>
         </div>
       </footer>
 
       <style jsx global>{`
         .custom-scrollbar::-webkit-scrollbar { width: 4px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(147, 51, 234, 0.2); border-radius: 10px; }
         
         .aura-glow {
           background: conic-gradient(from 0deg at 50% 50%, #8b5cf6, #ec4899, #06b6d4, #10b981, #8b5cf6);
@@ -1256,17 +1256,17 @@ export default function HomeClient({ initialProducts }: HomeClientProps) {
         .aura-box::before {
           content: '';
           position: absolute;
-          inset: -1px;
-          padding: 1px;
+          inset: -1.5px;
+          padding: 1.5px;
           border-radius: inherit;
-          background: linear-gradient(90deg, #8b5cf6, #ec4899, #06b6d4, #10b981, #8b5cf6);
+          background: linear-gradient(90deg, #06b6d4, #8b5cf6, #ec4899, #8b5cf6, #06b6d4);
           background-size: 200% auto;
           -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
           mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
           -webkit-mask-composite: xor;
           mask-composite: exclude;
-          opacity: 0.1;
-          transition: opacity 0.5s;
+          opacity: 0.3;
+          transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
           animation: shimmer 4s linear infinite;
         }
 
